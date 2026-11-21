@@ -4293,5 +4293,117 @@ img[src*="gstatic.com/images/branding"], img[src*="translate.google"] { display:
   }, 8000);
 })();
 </script>
+<script>
+(function () {
+  var st = document.createElement('style');
+  st.textContent =
+    '.fb-lightbox{background:#05070d}' +
+    '.fb-lightbox-body{overflow:hidden}' +
+    '.rk-amb{position:absolute;inset:-60px;background-size:cover;background-position:center;filter:blur(55px) saturate(1.6) brightness(.42);z-index:0;transition:background-image .4s}' +
+    '.rk-amb:not(.img){background:radial-gradient(circle at 50% 28%,#12306b 0,#070b16 62%);filter:none}' +
+    '.fb-lightbox-content{position:relative;z-index:1}' +
+    '.fb-lightbox-content img.rk-photo{max-width:94vw;max-height:78vh;object-fit:contain;border-radius:18px;border:1px solid rgba(255,255,255,.14);box-shadow:0 24px 70px rgba(0,0,0,.65),0 0 0 6px rgba(255,255,255,.04)}' +
+    '.rkp{position:relative;display:flex;border-radius:18px;overflow:hidden;background:#000;border:1px solid rgba(255,255,255,.14);box-shadow:0 24px 70px rgba(0,0,0,.65),0 0 0 6px rgba(255,255,255,.04);max-width:94vw}' +
+    '.rkp video{max-width:94vw;max-height:76vh;display:block;border-radius:0!important;box-shadow:none!important;cursor:pointer}' +
+    '.rkp-big{position:absolute;left:50%;top:50%;width:76px;height:76px;margin:-38px 0 0 -38px;border-radius:50%;background:rgba(255,255,255,.14);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1.5px solid rgba(255,255,255,.45);color:#fff;font-size:30px;display:grid;place-items:center;pointer-events:none;opacity:0;transform:scale(.85);transition:.25s}' +
+    '.rkp.paused .rkp-big{opacity:1;transform:none}' +
+    '.rkp-bar{position:absolute;left:0;right:0;bottom:0;padding:34px 14px 10px;background:linear-gradient(transparent,rgba(5,7,13,.85));color:#fff;opacity:0;transition:opacity .25s;pointer-events:none}' +
+    '.rkp.ui .rkp-bar,.rkp.paused .rkp-bar{opacity:1;pointer-events:auto}' +
+    '.rkp-seek{width:100%;margin:0 0 6px;height:18px;accent-color:#ffc400;display:block}' +
+    '.rkp-row{display:flex;align-items:center;gap:6px}' +
+    '.rkp-row button{background:rgba(255,255,255,.14);border:0;color:#fff;min-width:38px;height:36px;border-radius:12px;font-size:15px;font-weight:800;cursor:pointer;padding:0 8px;backdrop-filter:blur(8px)}' +
+    '.rkp-row button.main{background:linear-gradient(135deg,#ffc400,#ffb000);color:#082d72;min-width:44px}' +
+    '.rkp-time{flex:1;text-align:center;font-size:12px;font-weight:700;letter-spacing:.3px}';
+  document.head.appendChild(st);
+
+  var body = document.getElementById('lightboxBody');
+  var amb = document.createElement('div');
+  amb.className = 'rk-amb';
+  body.insertBefore(amb, body.firstChild);
+
+  function fmt(t) {
+    if (!isFinite(t)) return '0:00';
+    var m = Math.floor(t / 60), s = Math.floor(t % 60);
+    return m + ':' + (s < 10 ? '0' : '') + s;
+  }
+
+  function buildPlayer(c, v) {
+    var w = document.createElement('div');
+    w.className = 'rkp paused';
+    c.insertBefore(w, v);
+    w.appendChild(v);
+    v.controls = false;
+    v.removeAttribute('controls');
+    var ui = document.createElement('div');
+    ui.innerHTML =
+      '<div class="rkp-big">▶</div>' +
+      '<div class="rkp-bar"><input type="range" class="rkp-seek" min="0" max="1000" value="0">' +
+      '<div class="rkp-row"><button type="button" class="main" data-a="play">▶</button>' +
+      '<button type="button" data-a="back">−10</button><button type="button" data-a="fwd">+10</button>' +
+      '<span class="rkp-time">0:00 / 0:00</span>' +
+      '<button type="button" data-a="mute">🔊</button><button type="button" data-a="full">⛶</button></div></div>';
+    while (ui.firstChild) w.appendChild(ui.firstChild);
+
+    var bar = w.querySelector('.rkp-bar');
+    var seek = w.querySelector('.rkp-seek');
+    var time = w.querySelector('.rkp-time');
+    var playBtn = w.querySelector('[data-a=play]');
+    var muteBtn = w.querySelector('[data-a=mute]');
+    var timer = null;
+
+    ['touchstart', 'touchend', 'click'].forEach(function (ev) {
+      bar.addEventListener(ev, function (e) { e.stopPropagation(); }, { passive: true });
+    });
+
+    function showUi() {
+      w.classList.add('ui');
+      clearTimeout(timer);
+      timer = setTimeout(function () { if (!v.paused) w.classList.remove('ui'); }, 2800);
+    }
+    function toggle() { if (v.paused) v.play(); else v.pause(); }
+    function upd() {
+      time.textContent = fmt(v.currentTime) + ' / ' + fmt(v.duration);
+      if (v.duration) seek.value = Math.round(v.currentTime / v.duration * 1000);
+    }
+
+    v.addEventListener('play', function () { w.classList.remove('paused'); playBtn.textContent = '❚❚'; showUi(); });
+    v.addEventListener('pause', function () { w.classList.add('paused'); playBtn.textContent = '▶'; });
+    v.addEventListener('timeupdate', upd);
+    v.addEventListener('loadedmetadata', upd);
+    v.addEventListener('click', function () { toggle(); showUi(); });
+    w.addEventListener('mousemove', showUi);
+    seek.addEventListener('input', function () {
+      if (v.duration) v.currentTime = seek.value / 1000 * v.duration;
+      showUi();
+    });
+    w.querySelector('[data-a=play]').addEventListener('click', toggle);
+    w.querySelector('[data-a=back]').addEventListener('click', function () { v.currentTime = Math.max(0, v.currentTime - 10); });
+    w.querySelector('[data-a=fwd]').addEventListener('click', function () { v.currentTime = Math.min(v.duration || 0, v.currentTime + 10); });
+    muteBtn.addEventListener('click', function () { v.muted = !v.muted; muteBtn.textContent = v.muted ? '🔇' : '🔊'; });
+    w.querySelector('[data-a=full]').addEventListener('click', function () {
+      if (w.requestFullscreen) w.requestFullscreen();
+      else if (v.webkitEnterFullscreen) v.webkitEnterFullscreen();
+    });
+    if (!v.paused) { w.classList.remove('paused'); playBtn.textContent = '❚❚'; }
+    showUi();
+  }
+
+  function enhance() {
+    var c = document.getElementById('lightboxContainer');
+    var img = c.querySelector('img');
+    var v = c.querySelector('video');
+    amb.className = 'rk-amb' + (img ? ' img' : '');
+    amb.style.backgroundImage = img ? 'url("' + img.src + '")' : 'none';
+    if (img) img.classList.add('rk-photo');
+    if (v) buildPlayer(c, v);
+  }
+
+  var prev = showLightboxItem;
+  showLightboxItem = function () {
+    prev.apply(this, arguments);
+    try { enhance(); } catch (e) {}
+  };
+})();
+</script>
 </body>
 </html>
