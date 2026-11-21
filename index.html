@@ -1098,6 +1098,25 @@ html.rk-locked, html.rk-locked body { overflow: hidden !important; height: 100%;
     <div id="infoPageCta" style="margin-top:24px"></div>
   </div>
 </div>
+<style>
+.ap-head{display:flex;align-items:center;gap:16px;margin-bottom:18px}
+.ap-avatar{width:92px;height:92px;border-radius:50%;object-fit:cover;border:3px solid #e9f0ff;flex:none}
+.ap-name{font-size:24px;font-weight:850;color:var(--navy);margin:0}
+.ap-tagline{font-size:14px;color:#53617f;font-style:italic;margin:4px 0 0}
+.ap-gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:20px}
+.ap-item{border-radius:12px;overflow:hidden;background:#f1f4ff;border:1px solid #e2e8f5}
+.ap-item img,.ap-item video{width:100%;display:block;max-height:260px;object-fit:cover}
+.ap-cap{padding:8px 10px;font-size:12.5px;color:#26365f;line-height:1.4}
+</style>
+<div id="viewAdminProfile" class="site-view">
+  <div class="standalone-page" style="max-width:800px;">
+    <div class="page-back-bar">
+      <button class="back-btn" onclick="switchView('home')">← Retour à l'accueil</button>
+      <span style="font-size:12px;color:var(--muted);font-weight:700">The Rock Solidarity Foundation</span>
+    </div>
+    <div id="adminProfileContent"></div>
+  </div>
+</div>
 <button class="chat-launcher" id="chatLauncher" onclick="openWhatsAppChat()" aria-label="Ouvrir WhatsApp">
   <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
   <span class="chat-label-text" id="chatLabelText">Écrivez-nous sur WhatsApp</span>
@@ -4468,5 +4487,244 @@ img[src*="gstatic.com/images/branding"], img[src*="translate.google"] { display:
   });
 })();
 </script>
-</body>
+<script>
+(function () {
+  var PKEY = 'rock_admin_profiles';
+
+  var st = document.createElement('style');
+  st.textContent = '.project-avatar,.post-author{cursor:pointer}.ap-item img{cursor:pointer}';
+  document.head.appendChild(st);
+
+  function adminById(id) {
+    var l = getAdminsList() || [];
+    for (var i = 0; i < l.length; i++) if (l[i].id === id) return l[i];
+    return null;
+  }
+
+  function guessAdminId(post) {
+    if (post.authorId && adminById(post.authorId)) return post.authorId;
+    var l = getAdminsList() || [];
+    for (var i = 0; i < l.length; i++) {
+      if (l[i].name === post.author || l[i].avatar === post.avatar) return l[i].id;
+    }
+    return null;
+  }
+
+  window.openAdminProfile = function (adminId) {
+    var adm = adminById(adminId);
+    if (!adm) return;
+    var all = readJSON(PKEY, {}) || {};
+    var prof = all[adminId] || {};
+    var gal = Array.isArray(prof.gallery) ? prof.gallery : [];
+    mediaUrlCache['profile_' + adminId] = gal.map(function (g) {
+      return { src: g.url, isVideo: g.type === 'video', isYoutube: false };
+    });
+
+    var html = '<div class="ap-head"><img class="ap-avatar" src="' + escapeHtml(adm.avatar) + '" alt="">' +
+      '<div><h1 class="ap-name">' + escapeHtml(adm.name) + '</h1>' +
+      (prof.tagline ? '<p class="ap-tagline">' + escapeHtml(prof.tagline) + '</p>' : '') + '</div></div>';
+    html += prof.bio ? renderRichText(prof.bio) : '<p style="color:#64748b">Profil en cours de rédaction.</p>';
+
+    if (gal.length) {
+      html += '<div class="ap-gallery">';
+      gal.forEach(function (g, i) {
+        var media = g.type === 'video'
+          ? '<video src="' + escapeHtml(g.url) + '" controls preload="metadata" playsinline></video>'
+          : '<img src="' + escapeHtml(g.url) + '" alt="" loading="lazy" onclick="openLightboxPost(\'profile_' + adminId + '\',' + i + ')">';
+        html += '<div class="ap-item">' + media + (g.caption ? '<div class="ap-cap">' + escapeHtml(g.caption) + '</div>' : '') + '</div>';
+      });
+      html += '</div>';
+    }
+    document.getElementById('adminProfileContent').innerHTML = html;
+    switchView('adminProfile');
+  };
+
+  var _sv2 = window.switchView;
+  window.switchView = function (v) {
+    if (v === 'adminProfile') {
+      $$('.site-view').forEach(function (x) { x.classList.remove('active-view'); });
+      $('#viewAdminProfile').classList.add('active-view');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      closeDrawer();
+      return;
+    }
+    _sv2(v);
+  };
+
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest ? e.target.closest('.project-avatar, .post-author') : null;
+    if (!t) return;
+    var art = t.closest('article.post');
+    if (!art) return;
+    var posts = readJSON('rock_custom_posts', []) || [];
+    var post = null;
+    for (var i = 0; i < posts.length; i++) { if (posts[i].id === art.id) { post = posts[i]; break; } }
+    if (!post) return;
+    var id = guessAdminId(post);
+    if (id) openAdminProfile(id);
+  });
+})();
+</script>
+<script>
+(function () {
+  var PKEY = 'rock_admin_profiles';
+  var PKEY_POSTS = 'rock_custom_posts';
+
+  function findAdminId(post) {
+    if (post.authorId) return post.authorId;
+    var l = getAdminsList() || [];
+    for (var i = 0; i < l.length; i++) {
+      if (l[i].name === post.author || l[i].avatar === post.avatar) return l[i].id;
+    }
+    return null;
+  }
+
+  var panel = document.getElementById('adminNavPanel');
+  if (panel) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'admin-btn admin-btn-purple';
+    b.innerHTML = 'Profils des administrateurs <span>👤</span>';
+    b.onclick = function () { openAdminForm('profils_admins'); };
+    panel.appendChild(b);
+  }
+
+  var _oaf2 = window.openAdminForm;
+  window.openAdminForm = function (type, extra) {
+    if (type !== 'profils_admins') return _oaf2(type, extra);
+    currentAdminActionType = 'profils_admins';
+    closeDrawer();
+    $('#adminFormTitle').textContent = '👤 Profils des administrateurs';
+    var admins = getAdminsList() || [];
+    var all = readJSON(PKEY, {}) || {};
+    var html = '<div style="max-height:62vh;overflow-y:auto;display:flex;flex-direction:column;gap:10px;">';
+    admins.forEach(function (adm) {
+      var p = all[adm.id] || {};
+      var gal = Array.isArray(p.gallery) ? p.gallery : [];
+      html += '<details style="border:1px solid #e2e8f5;border-radius:12px;padding:10px 12px;background:#f8fafc;">' +
+        '<summary style="font-weight:800;cursor:pointer;color:var(--navy);font-size:13.5px;">👤 ' + escapeHtml(adm.name) + '</summary>' +
+        '<div style="display:flex;flex-direction:column;gap:12px;margin-top:12px;">' +
+        '<div class="admin-form-group" style="margin:0;"><label>Phrase d\'accroche :</label>' +
+        '<input type="text" class="admin-form-input" id="adm_pf_' + adm.id + '_tag" value="' + escapeHtml(p.tagline || '') + '"></div>' +
+        '<div class="admin-form-group" style="margin:0;"><label>Biographie et carrière :</label>' +
+        '<textarea class="admin-form-textarea" style="min-height:200px;" id="adm_pf_' + adm.id + '_bio">' + escapeHtml(p.bio || '') + '</textarea>' +
+        '<span style="font-size:11.5px;color:#64748b;">Astuce : <b>## Sous-titre</b> · <b>- une puce</b> · <b>**mot en gras**</b></span></div>';
+      if (gal.length) {
+        html += '<div style="font-weight:800;font-size:12.5px;color:#4a5568;">Galerie actuelle :</div>';
+        gal.forEach(function (g, k) {
+          html += '<div style="border:1px solid #e2e8f5;border-radius:10px;padding:8px;background:#fff;display:flex;flex-direction:column;gap:6px;">' +
+            (g.type === 'video'
+              ? '<video src="' + escapeHtml(g.url) + '" style="width:100%;max-height:120px" preload="metadata"></video>'
+              : '<img src="' + escapeHtml(g.url) + '" style="width:100%;max-height:120px;object-fit:cover;border-radius:8px" alt="">') +
+            '<input type="text" class="admin-form-input" id="adm_pf_' + adm.id + '_cap_' + k + '" value="' + escapeHtml(g.caption || '') + '" placeholder="Légende">' +
+            '<label style="font-size:12px;color:#dc2626;font-weight:700;display:flex;gap:6px;align-items:center;"><input type="checkbox" id="adm_pf_' + adm.id + '_del_' + k + '"> Supprimer cet élément</label></div>';
+        });
+      }
+      html += '<div class="admin-form-group" style="margin:0;"><label>Ajouter des images / vidéos :</label>' +
+        '<input type="file" class="admin-form-input" id="adm_pf_' + adm.id + '_files" accept="image/*,video/*" multiple></div>' +
+        '<div class="admin-form-group" style="margin:0;"><label>Légendes des nouveaux fichiers (une par ligne, dans l\'ordre) :</label>' +
+        '<textarea class="admin-form-textarea" style="min-height:70px;" id="adm_pf_' + adm.id + '_newcaps"></textarea></div>' +
+        '</div></details>';
+    });
+    html += '</div><div class="admin-form-actions"><button type="button" class="custom-modal-btn cancel" onclick="closeAdminForm()">Annuler</button>' +
+      '<button type="submit" class="custom-modal-btn confirm" style="background:var(--blue);">Enregistrer</button></div>';
+    $('#adminFormContent').innerHTML = html;
+    $('#adminFormOverlay').classList.add('open');
+  };
+
+  var _saf3 = window.submitAdminForm;
+  window.submitAdminForm = async function (ev) {
+    ev.preventDefault();
+    var type = currentAdminActionType;
+
+    if (type === 'profils_admins') {
+      try {
+        showToast('⏳ Enregistrement en cours…');
+        var admins = getAdminsList() || [];
+        var old = readJSON(PKEY, {}) || {};
+        var out = {};
+        for (var a = 0; a < admins.length; a++) {
+          var id = admins[a].id;
+          var prev = old[id] || {};
+          var oldGal = Array.isArray(prev.gallery) ? prev.gallery : [];
+          var gal = [];
+          for (var k = 0; k < oldGal.length; k++) {
+            var del = $('#adm_pf_' + id + '_del_' + k);
+            if (del && del.checked) continue;
+            var capEl = $('#adm_pf_' + id + '_cap_' + k);
+            gal.push({ url: oldGal[k].url, type: oldGal[k].type, caption: capEl ? capEl.value.trim() : (oldGal[k].caption || '') });
+          }
+          var fi = $('#adm_pf_' + id + '_files');
+          var capsEl = $('#adm_pf_' + id + '_newcaps');
+          var caps = (capsEl ? capsEl.value : '').split(/\r?\n/);
+          if (fi && fi.files && fi.files.length) {
+            for (var f = 0; f < fi.files.length; f++) {
+              showToast('⏳ Envoi ' + (f + 1) + '/' + fi.files.length + ' (' + admins[a].name + ')…');
+              var file = fi.files[f];
+              var url = await uploadMedia(file);
+              gal.push({ url: url, type: file.type.indexOf('video') === 0 ? 'video' : 'image', caption: (caps[f] || '').trim() });
+            }
+          }
+          out[id] = {
+            tagline: $('#adm_pf_' + id + '_tag').value.trim(),
+            bio: $('#adm_pf_' + id + '_bio').value.trim(),
+            gallery: gal
+          };
+        }
+        await writeJSON(PKEY, out);
+        closeAdminForm();
+        showToast('✅ Profils enregistrés !');
+      } catch (e) {
+        showToast('❌ Erreur : ' + e.message);
+      }
+      return;
+    }
+
+    var admins2 = getAdminsList() || [];
+    var preAdmin = null, editId = null, beforeIds = null;
+    if (type === 'faire_publication') {
+      var ix = parseInt($('#adm_selectedAdminIndex').value, 10);
+      preAdmin = admins2[ix] || admins2[0];
+      beforeIds = (readJSON(PKEY_POSTS, []) || []).map(function (p) { return p.id; });
+    } else if (type === 'modifier_publication') {
+      var jx = parseInt($('#adm_editPostAuthor').value, 10);
+      preAdmin = admins2[jx] || null;
+      editId = currentEditPostId;
+    } else if (type === 'gerer_admins') {
+      try {
+        var ps = readJSON(PKEY_POSTS, []) || [], ch = false;
+        ps = ps.map(function (p) {
+          if (!p.authorId) {
+            var fid = findAdminId(p);
+            if (fid) { ch = true; return Object.assign({}, p,
+             { authorId: fid }); }
+          }
+          return p;
+        });
+        if (ch) await writeJSON(PKEY_POSTS, ps);
+      } catch (e) {}
+    }
+
+    await _saf3.call(this, ev);
+
+    try {
+      if (type === 'faire_publication' && preAdmin && beforeIds) {
+        var cur = readJSON(PKEY_POSTS, []) || [], c2 = false;
+        cur = cur.map(function (p) {
+          if (beforeIds.indexOf(p.id) === -1 && !p.authorId) { c2 = true; return Object.assign({}, p, { authorId: preAdmin.id }); }
+          return p;
+        });
+        if (c2) await writeJSON(PKEY_POSTS, cur);
+      } else if (type === 'modifier_publication' && preAdmin && editId) {
+        var cur2 = readJSON(PKEY_POSTS, []) || [], c3 = false;
+        cur2 = cur2.map(function (p) {
+          if (p.id === editId) { c3 = true; return Object.assign({}, p, { authorId: preAdmin.id }); }
+          return p;
+        });
+        if (c3) await writeJSON(PKEY_POSTS, cur2);
+      }
+    } catch (e) {}
+  };
+})();
+</script></body>
 </html>
