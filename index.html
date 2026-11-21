@@ -3406,6 +3406,7 @@ img[src*="gstatic.com/images/branding"], img[src*="translate.google"] { display:
   var html = document.documentElement;
   var currentUser = null;
   var configured = GOOGLE_CLIENT_ID.indexOf('GOOGLE_CLIENT_ID') !== 0;
+    window.rkGetUser = function () { return currentUser; };
   function initialsOf(name, email) {
     var src = (name || '').trim();
     var letters = '';
@@ -3987,6 +3988,187 @@ img[src*="gstatic.com/images/branding"], img[src*="translate.google"] { display:
       showToast('❌ Erreur : ' + e.message);
     }
   };
+})();
+</script>
+<script>
+(function () {
+  var KEY = 'rock_reactions';
+  var busy = {};
+
+  var st = document.createElement('style');
+  st.textContent =
+    '.rk-react-row{display:flex;align-items:center;gap:8px;margin-top:12px;cursor:pointer;width:fit-content}' +
+    '.rk-av-stack{display:flex}' +
+    '.rk-av-stack img{width:26px;height:26px;border-radius:50%;object-fit:cover;border:2px solid #fff;margin-left:-8px;background:#e2e8f5}' +
+    '.rk-av-stack img:first-child{margin-left:0}' +
+    '.rk-more{font-size:13px;font-weight:800;color:#596786}' +
+    '.rk-emojis{font-size:15px;letter-spacing:1px}' +
+    '#rkListOverlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9500;display:none;align-items:center;justify-content:center;padding:16px}' +
+    '#rkListOverlay.open{display:flex}' +
+    '#rkListCard{background:#fff;width:100%;max-width:420px;max-height:80vh;border-radius:18px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 50px rgba(7,41,105,.3)}' +
+    '#rkListHead{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid #edf0f8;font-weight:850;color:#082d72;font-size:16px}' +
+    '#rkListHead button{background:none;border:0;font-size:20px;color:#64748b;cursor:pointer}' +
+    '#rkListBody{overflow-y:auto;padding:8px 6px}' +
+    '.rk-item{display:flex;align-items:center;gap:12px;padding:8px 12px}' +
+    '.rk-item img{width:42px;height:42px;border-radius:50%;object-fit:cover;background:#e2e8f5}' +
+    '.rk-item .rk-name{flex:1;font-weight:750;color:#101a38;font-size:14px}' +
+    '.rk-item .rk-emo{font-size:24px}';
+  document.head.appendChild(st);
+
+  var ov = document.createElement('div');
+  ov.id = 'rkListOverlay';
+  ov.innerHTML = '<div id="rkListCard"><div id="rkListHead"><span id="rkListTitle">Réactions</span><button type="button" id="rkListClose">✕</button></div><div id="rkListBody"></div></div>';
+  document.body.appendChild(ov);
+  ov.addEventListener('click', function (e) { if (e.target === ov) ov.classList.remove('open'); });
+  document.getElementById('rkListClose').addEventListener('click', function () { ov.classList.remove('open'); });
+
+  function allReactions() {
+    return (supabaseCache && supabaseCache[KEY]) || {};
+  }
+  function rkList(postId) {
+    var p = allReactions()[postId] || {};
+    return Object.keys(p).map(function (sub) {
+      var r = p[sub];
+      return { sub: sub, n: r.n || 'Visiteur', p: r.p || '', e: r.e || '❤️', t: r.t || 0 };
+    }).sort(function (a, b) { return b.t - a.t; });
+  }
+  function rkMine(postId) {
+    var u = window.rkGetUser && window.rkGetUser();
+    if (!u || !u.sub) return null;
+    var p = allReactions()[postId] || {};
+    return p[u.sub] ? { e: p[u.sub].e || '❤️' } : null;
+  }
+  function avatarFor(r) {
+    if (r.p) return r.p;
+    var t = (r.n || '?').trim().slice(0, 1).toUpperCase();
+    return 'data:image/svg+xml;utf8,' + encodeURIComponent(
+      '<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80"><rect width="80" height="80" fill="#075bff"/><text x="50%" y="50%" dy=".35em" text-anchor="middle" font-family="Arial" font-size="38" fill="#fff">' + t + '</text></svg>');
+  }
+
+  updateLikeButtonUI = function (postId) {
+    var list = rkList(postId);
+    var mine = rkMine(postId);
+    var cnt = document.getElementById('like-count-' + postId);
+    var icon = document.getElementById('like-icon-' + postId);
+    var btn = document.getElementById('like-btn-' + postId);
+    if (cnt) cnt.textContent = list.length;
+    if (icon) {
+      icon.textContent = mine ? mine.e : '❤';
+      icon.classList.toggle('has-sticker', !!mine && mine.e !== '❤️');
+    }
+    if (btn) btn.classList.toggle('liked', !!mine);
+  };
+
+  function renderRow(postId) {
+    var art = document.getElementById(postId);
+    if (!art) return;
+    var bar = art.querySelector('.post-actions-bar');
+    if (!bar) return;
+    var row = art.querySelector('.rk-react-row');
+    if (!row) {
+      row = document.createElement('div');
+      row.className = 'rk-react-row';
+      row.addEventListener('click', function () { openList(postId); });
+      bar.parentNode.insertBefore(row, bar);
+    }
+    var list = rkList(postId);
+    if (!list.length) { row.style.display = 'none'; row.innerHTML = ''; return; }
+    row.style.display = 'flex';
+    var counts = {};
+    list.forEach(function (r) { counts[r.e] = (counts[r.e] || 0) + 1; });
+    var top = Object.keys(counts).sort(function (a, b) { return counts[b] - counts[a]; }).slice(0, 3).join('');
+    var imgs = list.slice(0, 3).map(function (r) {
+      return '<img src="' + escapeHtml(avatarFor(r)) + '" alt="">';
+    }).join('');
+    var more = list.length > 3 ? '+' + (list.length - 3) : String(list.length);
+    row.innerHTML = '<span class="rk-emojis">' + top + '</span><span class="rk-av-stack">' + imgs + '</span><span class="rk-more">' + more + '</span>';
+  }
+
+  function openList(postId) {
+    var list = rkList(postId);
+    document.getElementById('rkListTitle').textContent = 'Réactions (' + list.length + ')';
+    document.getElementById('rkListBody').innerHTML = list.map(function (r) {
+      return '<div class="rk-item"><img src="' + escapeHtml(avatarFor(r)) + '" alt=""><span class="rk-name">' +
+        escapeHtml(r.n) + '</span><span class="rk-emo">' + escapeHtml(r.e) + '</span></div>';
+    }).join('') || '<p style="padding:16px;color:#64748b">Aucune réaction.</p>';
+    ov.classList.add('open');
+  }
+
+  function refresh(postId) { updateLikeButtonUI(postId); renderRow(postId); }
+  function refreshAll() {
+    document.querySelectorAll('article.post').forEach(function (a) { refresh(a.id); });
+  }
+
+  async function setReaction(postId, emoji) {
+    var u = window.rkGetUser && window.rkGetUser();
+    if (!u || !u.sub) { showToast('Connecte-toi d\'abord'); return; }
+    if (busy[postId]) return;
+    busy[postId] = true;
+
+    supabaseCache = supabaseCache || {};
+    var oldAll = supabaseCache[KEY] || {};
+    var newAll = Object.assign({}, oldAll);
+    var post = Object.assign({}, newAll[postId] || {});
+    var entry = { n: u.name || 'Visiteur', p: u.picture || '', e: emoji, t: Date.now() };
+    if (emoji) post[u.sub] = entry; else delete post[u.sub];
+    newAll[postId] = post;
+    supabaseCache[KEY] = newAll;
+    refresh(postId);
+
+    try {
+      var base = await getFreshBase();
+      var a = Object.assign({}, base[KEY] || {});
+      var pp = Object.assign({}, a[postId] || {});
+      if (emoji) pp[u.sub] = entry; else delete pp[u.sub];
+      a[postId] = pp;
+      base[KEY] = a;
+      await saveSupabaseData(base);
+      supabaseCache = base;
+      isSupabaseLoaded = true;
+      refresh(postId);
+    } catch (e) {
+      supabaseCache[KEY] = oldAll;
+      refresh(postId);
+      showToast('❌ Réaction non enregistrée : ' + e.message);
+    } finally {
+      busy[postId] = false;
+    }
+  }
+
+  handleLikeClick = async function (postId) {
+    await setReaction(postId, rkMine(postId) ? null : '❤️');
+  };
+  stickToLike = async function (postId, emoji) {
+    document.querySelectorAll('.sticker-picker-popup').forEach(function (p) { p.classList.remove('open'); });
+    await setReaction(postId, emoji);
+    var icon = document.getElementById('like-icon-' + postId);
+    if (icon) {
+      icon.classList.remove('sticker-pop');
+      void icon.offsetWidth;
+      icon.classList.add('sticker-pop');
+    }
+  };
+
+  var _origRender = renderPublicPosts;
+  renderPublicPosts = async function () {
+    await _origRender.apply(this, arguments);
+    refreshAll();
+  };
+
+  setInterval(async function () {
+    if (document.hidden) return;
+    for (var k in busy) { if (busy[k]) return; }
+    try {
+      var r = await fetchLatestRemote();
+      if (!r || !supabaseCache) return;
+      var a = JSON.stringify(r[KEY] || {});
+      var b = JSON.stringify(supabaseCache[KEY] || {});
+      if (a !== b) {
+        supabaseCache[KEY] = r[KEY] || {};
+        refreshAll();
+      }
+    } catch (e) {}
+  }, 8000);
 })();
 </script>
 </body>
