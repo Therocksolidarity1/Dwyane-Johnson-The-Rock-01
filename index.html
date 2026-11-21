@@ -1416,7 +1416,12 @@ function applyContactFooterData() {
   if($('#contactViewPhone')) $('#contactViewPhone').textContent = phoneVal;
   if($('#contactViewEmail')) $('#contactViewEmail').textContent = emailVal;
 }
-
+function applyStatsData() {
+  ['1','2','3'].forEach(n => {
+    const el = document.getElementById('statVal' + n);
+    if (el) el.textContent = readJSON('rock_stat_' + n, el.textContent);
+  });
+}
 function applyHeroSliderData() {
   const p1 = readJSON('rock_hero_p1', "Soutenons ensemble les projets qui bâtissent <em>un avenir meilleur</em>");
   const p2 = readJSON('rock_hero_p2', "Chaque initiative solidaire mérite d'être portée vers le succès");
@@ -2094,12 +2099,12 @@ if(logoFileInput && logoFileInput.files && logoFileInput.files[0]) {
       if($('#welcomeSubtitleContainer')) $('#welcomeSubtitleContainer').textContent = subVal;
       showToast('Message de bienvenue mis à jour !');
     } else if(currentAdminActionType === 'stats_impact') {
-      let s1 = $('#adm_s1').value.trim();
-      let s2 = $('#adm_s2').value.trim();
-      let s3 = $('#adm_s3').value.trim();
-      await writeJSON('rock_stat_1', s1);
-      await writeJSON('rock_stat_2', s2);
-      await writeJSON('rock_stat_3', s3);
+await writeJSONMany({
+  rock_stat_1: $('#adm_s1').value.trim(),
+  rock_stat_2: $('#adm_s2').value.trim(),
+  rock_stat_3: $('#adm_s3').value.trim()
+});
+applyStatsData();
       showToast('Statistiques mises à jour !');
     } else if(currentAdminActionType === 'gerer_admins') {
       let admins = getAdminsList();
@@ -2761,6 +2766,7 @@ async function renderPublicPosts() {
   applyHeaderBranding();
   applyHeroSliderData();
   applyContactFooterData();
+  applyStatsData();
   applyPagesContent();
 
   const container = $('#dynamicFeedContainer');
