@@ -1,0 +1,3981 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<title id="metaSiteTitle">The Rock Solidarity Foundation — Initiative indépendante, non affiliée à Dwayne Douglas Johnson</title>
+<style>
+:root{
+  --navy:#082d72;--blue:#075bff;--blue2:#2678ff;--pale:#edf2ff;
+  --gold:#ffc400;--green:#16a34a;--ink:#101a38;--muted:#697493;
+  --line:#e5eaf7;--surface:#fff;--bg:#f4f6ff;--shadow:0 12px 34px rgba(20,45,105,.09);
+  --radius:18px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;width:100%;overflow-x:hidden}
+body{margin:0;width:100%;overflow-x:hidden;background:linear-gradient(180deg,#f8f9ff 0,#f1f4ff 100%);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:var(--ink);-webkit-text-size-adjust:100%}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+a{color:inherit;text-decoration:none}
+
+.topbar{
+  height:72px;
+  background:rgba(255,255,255,.98);
+  border-bottom:1px solid #e8ecf8;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  padding:0 12px;
+  position:sticky;
+  top:0;
+  z-index:50;
+  backdrop-filter:blur(14px);
+  width:100%;
+}
+.left-nav-group{display:flex;align-items:center;gap:8px;min-width:0;flex:1}
+.hamburger-btn{background:transparent;border:0;width:38px;height:38px;border-radius:10px;display:grid;place-items:center;color:#071c4d;cursor:pointer;transition:background .2s;flex:none;position:relative}
+.hamburger-btn:hover{background:#f1f4ff}
+.hamburger-btn svg{width:20px;height:20px}
+
+.hamburger-progress {
+  position: absolute; bottom: 0; left: 0; height: 3px; background: var(--blue); width: 0%; border-radius: 2px; transition: width 0.1s linear;
+}
+
+.brand{display:flex;align-items:center;gap:8px;min-width:0;flex:1}
+.brand-mark{width:34px;height:34px;flex:none}
+.brand-content{min-width:0;display:flex;flex-direction:column}
+.brand-name{font-size:13.5px;font-weight:850;letter-spacing:-0.4px;color:#071c4d;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand-name span{color:var(--blue)}
+.brand-tag{font-size:7.5px;font-style:italic;color:#53617f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+.nav{display:flex;align-items:center;gap:8px}
+.nav a{display:flex;align-items:center;gap:9px;padding:10px 14px;border-radius:11px;font-size:13px;font-weight:700;color:#26365f;white-space:nowrap;transition:.2s}
+.nav a:hover{background:#eff4ff;color:var(--blue)}
+.nav a.active{background:var(--blue);color:white;box-shadow:0 8px 18px #075bff33}
+.nav svg{width:18px;height:18px}
+
+.top-actions{display:flex;align-items:center;gap:6px;flex:none}
+.cta-apply-btn {
+  background: linear-gradient(135deg, #075bff, #06358c); color: #fff; border: 0; border-radius: 11px; padding: 9px 16px; font-size: 13px; font-weight: 750; cursor: pointer; transition: transform .2s, box-shadow .2s; box-shadow: 0 4px 12px rgba(7,91,255,0.25);
+}
+.cta-apply-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(7,91,255,0.35); }
+
+.mobile-drawer-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:99;opacity:0;pointer-events:none;transition:opacity .3s ease;backdrop-filter:blur(2px)}
+.mobile-drawer-overlay.open{opacity:1;pointer-events:auto}
+.mobile-drawer{position:fixed;top:0;left:0;bottom:0;width:310px;max-width:85vw;background:#fff;z-index:100;transform:translateX(-100%);transition:transform .3s cubic-bezier(0.1,0.9,0.2,1);display:flex;flex-direction:column;box-shadow:5px 0 30px rgba(0,0,0,0.15)}
+.mobile-drawer.open{transform:translateX(0)}
+.drawer-header{height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;border-bottom:1px solid #edf0f8}
+.drawer-title{font-size:17px;font-weight:850;color:#071c4d}
+.drawer-close{background:transparent;border:0;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:#596786;cursor:pointer;transition:background .2s}
+.drawer-close:hover{background:#f1f4ff;color:var(--blue)}
+.drawer-close svg{width:20px;height:20px}
+.drawer-body{flex:1;overflow-y:auto;padding:16px 12px;display:flex;flex-direction:column;gap:4px}
+.drawer-item{display:flex;align-items:center;gap:14px;padding:12px 16px;border-radius:12px;font-size:14px;font-weight:700;color:#26365f;transition:background .2s}
+.drawer-item:hover{background:#f1f4ff;color:var(--blue)}
+.drawer-item svg{width:20px;height:20px;color:var(--blue);flex:none}
+.drawer-divider{height:1px;background:#edf0f8;margin:10px 16px}
+
+.admin-nav-panel {
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+  background: #f8fafc;
+  border: 1px dashed #cbd5e1;
+  border-radius: 14px;
+  padding: 12px;
+  margin-top: 10px;
+}
+.admin-nav-panel.open { display: flex; }
+.admin-panel-title {
+  font-size: 13px; font-weight: 850; color: #1e293b; display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;
+}
+.admin-btn {
+  width: 100%; border: 0; border-radius: 10px; padding: 10px 14px; font-size: 12.5px; font-weight: 750; color: white; cursor: pointer; text-align: left;
+  display: flex; align-items: center; justify-content: space-between; transition: opacity .2s, transform .1s;
+}
+.admin-btn:hover { opacity: 0.9; }
+.admin-btn:active { transform: scale(0.98); }
+.admin-btn-blue { background: #075bff; }
+.admin-btn-purple { background: #7c3aed; }
+.admin-btn-green { background: #059669; }
+.admin-btn-orange { background: #d97706; }
+.admin-btn-pink { background: #db2777; }
+.admin-btn-teal { background: #0d9488; }
+
+.admin-form-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(3px); z-index: 10000;
+  display: none; align-items: center; justify-content: center; padding: 16px;
+}
+.admin-form-overlay.open { display: flex; }
+.admin-form-card {
+  background: #ffffff; width: 100%; max-width: 440px; max-height: 90vh; overflow-y: auto; border-radius: 20px; padding: 24px;
+  box-shadow: 0 20px 40px rgba(7, 41, 105, 0.25); border: 1px solid #e2e8f5; animation: scaleUpModal 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+.admin-form-title { font-size: 17px; font-weight: 850; color: var(--navy); margin: 0 0 16px; display: flex; justify-content: space-between; align-items: center; }
+.admin-form-group { margin-bottom: 14px; display: flex; flex-direction: column; gap: 6px; }
+.admin-form-group label { font-size: 12.5px; font-weight: 700; color: #4a5568; }
+.admin-form-input, .admin-form-textarea, .admin-form-select {
+  width: 100%; border: 1px solid #cbd5e1; border-radius: 10px; padding: 10px 14px; font-size: 13.5px; outline: none; background: #f8fafc; color: #1e293b;
+}
+.admin-form-input:focus, .admin-form-textarea:focus, .admin-form-select:focus { border-color: var(--blue); background: #fff; }
+.admin-form-textarea { min-height: 100px; resize: vertical; }
+.admin-form-actions { display: flex; gap: 10px; margin-top: 20px; }
+
+.impact-stats-bar {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 22px 0 26px 0;
+  width: 100%;
+}
+.impact-stat-card {
+  border-radius: 16px;
+  padding: 18px 16px;
+  text-align: center;
+  box-shadow: 0 8px 22px rgba(7, 41, 105, 0.08);
+  border: 1px solid rgba(255,255,255,0.6);
+  transition: transform .2s, box-shadow .2s;
+  cursor: pointer;
+  position: relative;
+}
+.impact-stat-card:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(7, 41, 105, 0.15); }
+.impact-stat-card::after {
+  content: attr(data-more);
+  position: absolute; bottom: 6px; left: 0; right: 0; font-size: 9.5px; font-weight: 700; opacity: 0.7;
+}
+.impact-stat-card:nth-child(1) { background: linear-gradient(135deg, #eef4ff, #d9e7ff); color: #072d72; }
+.impact-stat-card:nth-child(2) { background: linear-gradient(135deg, #eefdf2, #d1fae5); color: #065f46; }
+.impact-stat-card:nth-child(3) { background: linear-gradient(135deg, #fffbeb, #fef3c7); color: #92400e; }
+
+.impact-stat-number { font-size: 24px; font-weight: 850; margin-bottom: 14px; letter-spacing: -0.5px; }
+.impact-stat-card:nth-child(1) .impact-stat-number { color: var(--blue); }
+.impact-stat-card:nth-child(2) .impact-stat-number { color: var(--green); }
+.impact-stat-card:nth-child(3) .impact-stat-number { color: #d97706; }
+
+.impact-stat-label { font-size: 12.5px; font-weight: 750; opacity: 0.85; }
+@media(max-width:700px){ .impact-stats-bar { grid-template-columns: 1fr; gap: 10px; } }
+/* === STATS À PLAT, 3 COLONNES === */
+.impact-stats-bar{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:0;
+  width:100vw;
+  margin:0 0 22px calc(50% - 50vw);
+  padding:14px 0 16px;
+  background:#fff;
+  border-radius:0;
+  clip-path:none;
+}
+.impact-stats-bar::before{content:none}
+.impact-stat-card,
+.impact-stat-card:nth-child(1),
+.impact-stat-card:nth-child(2),
+.impact-stat-card:nth-child(3){
+  background:transparent;
+  border:0;
+  border-radius:0;
+  box-shadow:none;
+  padding:6px 4px 20px;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+  color:#082d72;
+}
+.impact-stat-card:hover{transform:none;box-shadow:none}
+.impact-stat-card + .impact-stat-card{border-left:2px solid #c9d6f2}
+.impact-stat-icon{width:42px;height:34px;margin-bottom:2px;color:#075bff}
+.impact-stat-number{font-size:clamp(24px,7vw,40px);margin:0 0 2px;line-height:1.05}
+.impact-stat-label{font-size:clamp(12px,3.4vw,17px);font-weight:800;color:#082d72;opacity:1}
+.impact-stat-card::after{font-size:clamp(9px,2.6vw,12px);font-weight:600;bottom:2px;color:#4a5b82}
+@media(max-width:700px){
+  .impact-stats-bar{grid-template-columns:repeat(3,1fr);gap:0}
+}
+/* === FIN STATS === */
+.stats-chart-container { display: flex; flex-direction: column; gap: 14px; margin: 20px 0; width: 100%; }
+.chart-bar-row { display: flex; align-items: center; gap: 12px; font-size: 13px; font-weight: 700; color: #4a5568; width: 100%; }
+.chart-bar-label { width: 130px; flex: none; text-align: right; }
+.chart-bar-track { flex: 1; background: #f1f4ff; height: 26px; border-radius: 13px; overflow: hidden; position: relative; border: 1px solid #e2e8f5; min-width: 0; }
+.chart-bar-fill { height: 100%; background: linear-gradient(90deg, var(--blue), var(--blue2)); border-radius: 13px; display: flex; align-items: center; justify-content: flex-end; padding-right: 12px; color: white; font-size: 12px; font-weight: 800; transition: width 0.8s cubic-bezier(0.1, 0.9, 0.2, 1); }
+
+.site-view { display: none; width: 100%; }
+.site-view.active-view { display: block; width: 100%; }
+
+.dynamic-welcome-header {
+  text-align: center;
+  margin: 22px 0 20px 0;
+  padding: 0 16px;
+  width: 100%;
+}
+.dynamic-welcome-title {
+  font-family: Georgia, serif;
+  font-size: clamp(22px, 3vw, 32px);
+  font-weight: 700;
+  color: var(--navy);
+  letter-spacing: -0.3px;
+  margin: 0 0 8px 0;
+  line-height: 1.25;
+}
+.dynamic-welcome-title span {
+  background: linear-gradient(135deg, #075bff, #2678ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.dynamic-welcome-subtitle {
+  font-family: Georgia, serif;
+  font-size: clamp(14px, 1.8vw, 17px);
+  color: #53617f;
+  font-style: italic;
+  margin: 0;
+  font-weight: normal;
+}
+
+.standalone-page {
+  max-width: 900px;
+  margin: 30px auto;
+  background: var(--surface);
+  border: 1px solid #e7ebf7;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 40px;
+  width: 100%;
+}
+.page-back-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #edf0f8;
+}
+.back-btn {
+  background: var(--pale);
+  color: var(--blue);
+  border: 0;
+  border-radius: 10px;
+  padding: 10px 18px;
+  font-weight: 750;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: background .2s;
+}
+.back-btn:hover { background: #dfe7ff; }
+.standalone-page h1 { font-size: 26px; color: var(--navy); margin-top: 0; display: flex; align-items: center; gap: 12px; }
+.standalone-page p, .standalone-page li { font-size: 15px; line-height: 1.7; color: #26365f; }
+.standalone-page ul { padding-left: 22px; margin: 20px 0; }
+.standalone-page li { margin-bottom: 12px; }
+
+.page{max-width:1560px;margin:18px auto 70px;padding:0 12px;width:100%}
+.content-grid{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:24px;align-items:start;width:100%}
+.feed{min-width:0;display:flex;flex-direction:column;gap:16px;width:100%}
+
+.post, .side-card {background:var(--surface);border:1px solid #e7ebf7;border-radius:var(--radius);box-shadow:var(--shadow);position:relative;width:100%}
+.post {padding:18px 20px 14px; overflow:visible !important;}
+.side-card {overflow:hidden;}
+
+.post-head{display:flex;align-items:center;justify-content:space-between;position:relative}
+.post-author-group{display:flex;align-items:center;gap:12px;min-width:0;flex:1}
+.project-avatar{width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid #e9f0ff;flex:none}
+.post-author{font-size:16px;font-weight:850;color:#101b3e}
+.verified{display:inline-grid;place-items:center;background:var(--blue);color:white;border-radius:50%;width:17px;height:17px;font-size:11px;margin-left:4px}
+.post-meta{font-size:12px;color:#7883a0;margin-top:4px}
+
+.post-actions-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid #edf2f8;
+  border-bottom: 1px solid #edf2f8;
+  margin-top: 14px;
+  padding: 4px 0;
+  position: relative;
+  width: 100%;
+}
+.post-action-btn {
+  flex: 1;
+  background: transparent;
+  border: 0;
+  padding: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #596786;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: background .2s, color .2s;
+  user-select: none;
+}
+.post-action-btn:hover { background: #f4f7ff; color: var(--blue); }
+.post-action-btn.liked { color: #dc2626; }
+
+.like-icon { display: inline-block; }
+.like-icon.has-sticker { font-size: 17px; line-height: 1; }
+.like-icon.sticker-pop { animation: stickerPop .5s cubic-bezier(.175,.885,.32,1.275); }
+@keyframes stickerPop {
+  0% { transform: translateY(-34px) scale(1.9) rotate(-18deg); opacity: 0; }
+  60% { transform: translateY(2px) scale(1.25) rotate(6deg); opacity: 1; }
+  100% { transform: none; opacity: 1; }
+}
+
+.post-comments-section {
+  margin-top: 12px;
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+.post-comments-section.open { display: flex; }
+
+.comment-item {
+  background: #f8f9ff;
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: #26365f;
+  border: 1px solid #edf2f8;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+.comment-item.is-nested {
+  margin-left: 20px;
+  background: #f1f4ff;
+  border-color: #e2e8f5;
+  width: calc(100% - 20px);
+}
+.comment-main-row { display: flex; gap: 10px; position: relative; width: 100%; align-items: flex-start; }
+.comment-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; flex: none; }
+.comment-body-content { flex: 1; min-width: 0; }
+.comment-header-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px; }
+.comment-author-name { font-weight: 800; color: var(--navy); font-size: 12.5px; }
+
+.comment-actions-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 4px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #697493;
+}
+.comment-action-link {
+  background: none; border: 0; padding: 0; color: #697493; font-weight: 700; cursor: pointer; font-size: 11.5px; transition: color .2s;
+}
+.comment-action-link:hover { color: var(--blue); }
+.comment-action-link.liked { color: #dc2626; }
+
+.reply-box-container {
+  display: none;
+  margin-top: 8px;
+  flex-direction: column;
+  gap: 6px;
+}
+.reply-box-container.open { display: flex; }
+
+.comment-form { display: flex; gap: 8px; margin-top: 6px; width: 100%; position: relative; align-items: center; }
+.comment-input { flex: 1; background: #f4f6ff; border: 1px solid #e5eaf7; border-radius: 20px; padding: 8px 36px 8px 14px; font-size: 13px; outline: none; color: var(--ink); min-width: 0; }
+.comment-input:focus { border-color: var(--blue); background: #fff; }
+.comment-submit { background: var(--blue); color: white; border: 0; border-radius: 20px; padding: 0 16px; font-weight: 700; font-size: 12px; cursor: pointer; transition: background .2s; flex: none; height: 34px; }
+.comment-submit:hover { background: #0647cc; }
+
+.sticker-trigger-btn {
+  position: absolute; right: 12px; background: none; border: 0; font-size: 16px; cursor: pointer; padding: 0; display: grid; place-items: center; opacity: 0.8; transition: opacity .2s;
+}
+.sticker-trigger-btn:hover { opacity: 1; }
+
+.sticker-picker-popup {
+  position: absolute; bottom: 45px; right: 0; background: #fff; border: 1px solid #cbd5e1; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); padding: 8px; display: none; grid-template-columns: repeat(4, 1fr); gap: 6px; z-index: 50; width: 180px;
+}
+.sticker-picker-popup.open { display: grid; }
+.sticker-option { background: #f8fafc; border: 1px solid #e2e8f5; border-radius: 8px; font-size: 20px; padding: 6px; text-align: center; cursor: pointer; transition: background .2s, transform .1s; }
+.sticker-option:hover { background: #edf2f8; transform: scale(1.1); }
+
+.comment-menu-wrap { position: relative; }
+.comment-menu-btn { background: transparent; border: 0; color: #94a3b8; font-size: 16px; font-weight: 900; cursor: pointer; padding: 2px 6px; border-radius: 4px; line-height: 1; }
+.comment-menu-btn:hover { background: #edf2f8; color: var(--navy); }
+.comment-menu-dropdown {
+  position: absolute; right: 0; top: 22px; min-width: 130px; background: #fff; border: 1px solid #e2e8f5; border-radius: 10px; box-shadow: 0 8px 20px rgba(0,0,0,0.12); padding: 4px; display: none; flex-direction: column; z-index: 40;
+}
+.comment-menu-dropdown.open { display: flex; }
+.comment-menu-item { background: transparent; border: 0; text-align: left; padding: 8px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; color: #26365f; cursor: pointer; }
+.comment-menu-item:hover { background: #f1f4ff; color: var(--blue); }
+.comment-menu-item.danger { color: #dc2626; }
+.comment-menu-item.danger:hover { background: #fee2e2; color: #b91c1c; }
+.comment-masked-badge { display: inline-block; background: #fef3c7; color: #92400e; font-size: 9.5px; font-weight: 800; padding: 1px 6px; border-radius: 6px; margin-left: 6px; vertical-align: middle; }
+
+.custom-modal-overlay {
+  position: fixed; inset: 0; background: transparent; backdrop-filter: none; z-index: 9999;
+  display: none; align-items: center; justify-content: center; padding: 16px; pointer-events: none;
+}
+.custom-modal-overlay.open { display: flex; }
+.custom-modal-card {
+  pointer-events: auto;
+  background: #ffffff; width: 100%; max-width: 360px; border-radius: 20px; padding: 24px 22px;
+  box-shadow: 0 20px 40px rgba(7, 41, 105, 0.22); border: 1px solid #e2e8f5; text-align: center; position: relative;
+  transform: scale(0.9); animation: scaleUpModal 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+@keyframes scaleUpModal { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+.custom-modal-icon-wrap {
+  width: 56px; height: 56px; margin: 0 auto 14px; background: linear-gradient(135deg, #eff4ff, #d9e6ff); border-radius: 50%;
+  display: grid; place-items: center; box-shadow: inset 0 2px 5px rgba(7, 91, 255, 0.15), 0 8px 16px rgba(7, 91, 255, 0.15);
+}
+.custom-modal-icon-wrap svg { width: 28px; height: 28px; fill: var(--blue); filter: drop-shadow(0 2px 3px rgba(0,0,0,0.1)); }
+.custom-modal-title { font-size: 16px; font-weight: 850; color: var(--navy); margin: 0 0 8px; }
+.custom-modal-message { font-size: 13.5px; color: #4a5568; line-height: 1.5; margin: 0 0 22px; }
+.custom-modal-actions { display: flex; gap: 10px; }
+.custom-modal-btn { flex: 1; padding: 10px 16px; border-radius: 12px; font-size: 13px; font-weight: 750; border: 0; cursor: pointer; transition: transform 0.1s ease, background 0.2s ease; }
+.custom-modal-btn:active { transform: scale(0.96); }
+.custom-modal-btn.cancel { background: #f1f4ff; color: #4a5568; }
+.custom-modal-btn.cancel:hover { background: #e2e8f5; }
+.custom-modal-btn.confirm { background: linear-gradient(135deg, #dc2626, #b91c1c); color: white; box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3); }
+
+.chat-launcher{
+  position:fixed; left:20px; bottom:20px; z-index:40; height:60px; min-width:60px;
+  background:linear-gradient(135deg,#25D366,#128C7E); color:white; border:0; border-radius:30px;
+  box-shadow:0 10px 30px rgba(37, 211, 102, 0.4); display:flex; align-items:center; padding:0 18px 0 14px; gap:12px;
+  cursor:pointer; overflow:hidden; transition:all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.chat-launcher svg{width:28px;height:28px;fill:currentColor;flex:none}
+.chat-label-text{font-size:13px;font-weight:750;white-space:nowrap;max-width:0;opacity:0;overflow:hidden;transition:max-width 0.4s ease, opacity 0.3s ease}
+.chat-launcher.expanded{max-width:400px}
+.chat-launcher.expanded .chat-label-text{max-width:300px;opacity:1}
+.chat-launcher:hover{transform:scale(1.03);box-shadow:0 14px 35px rgba(37, 211, 102, 0.5)}
+
+.meta-media-grid{display:grid;gap:3px;border-radius:12px;overflow:hidden;background:#e9eef9;width:100%;position:relative}
+.meta-media-grid img, .meta-media-grid video, .meta-media-grid iframe{width:100%;height:100%;object-fit:cover;cursor:pointer;display:block;transition:filter .2s}
+.media-item-wrap{position:relative;width:100%;height:100%;overflow:hidden}
+.youtube-container{position:relative;width:100%;height:100%;background:#000}
+.youtube-container iframe{width:100%;height:100%;border:0}
+.youtube-touch-overlay{position:absolute;inset:0;z-index:5;background:transparent;cursor:pointer}
+
+.video-play-badge{position:absolute;inset:0;background:rgba(0,0,0,0.25);display:grid;place-items:center;pointer-events:none;transition:background .25s ease}
+.video-play-badge .play-circle{width:60px;height:60px;background:rgba(0, 0, 0, 0.7);backdrop-filter:blur(8px);border:1.5px solid rgba(255, 255, 255, 0.4);border-radius:50%;display:grid;place-items:center;color:white;box-shadow:0 8px 25px rgba(0,0,0,0.4);transition:transform .25s cubic-bezier(0.175, 0.885, 0.32, 1.275), background .2s ease, border-color .2s ease}
+.video-play-badge .play-circle svg{width:24px;height:24px;fill:white;margin-left:3px}
+
+.meta-media-grid.fb-grid-1{grid-template-columns:1fr;max-height:460px}
+.meta-media-grid.fb-grid-1 .media-item-wrap{height:410px}
+.meta-media-grid.fb-grid-2{grid-template-columns:repeat(2,1fr);height:310px}
+.meta-media-grid.fb-grid-3{grid-template-columns:2fr 1fr;grid-template-rows:repeat(2,152px);height:308px}
+.meta-media-grid.fb-grid-3 .grid-item-0{grid-row:span 2;height:308px}
+.meta-media-grid.fb-grid-4-plus{grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(2,155px);height:314px}
+.meta-media-grid.fb-grid-4-plus .media-item-wrap{height:155px}
+
+.grid-more-overlay{position:relative;width:100%;height:100%}
+.grid-more-badge{position:absolute;inset:0;background:rgba(0,0,0,0.6);color:white;display:grid;place-items:center;font-size:32px;font-weight:800;cursor:pointer;backdrop-filter:blur(2px)}
+
+.fb-lightbox{position:fixed;inset:0;background:rgba(0,0,0,0.96);z-index:100;display:none;flex-direction:column;opacity:0;transition:opacity .25s ease}
+.fb-lightbox.open{display:flex;opacity:1}
+.fb-lightbox-topbar{height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 25px;background:rgba(0,0,0,0.4);border-bottom:1px solid rgba(255,255,255,0.08);z-index:102}
+.fb-lightbox-back{background:rgba(255,255,255,0.15);color:white;border:0;border-radius:10px;padding:9px 16px;font-size:13px;font-weight:750;display:flex;align-items:center;gap:8px;cursor:pointer;transition:background .2s}
+.fb-lightbox-back:hover{background:rgba(255,255,255,0.3)}
+.fb-lightbox-counter{color:white;font-size:13px;font-weight:700;background:rgba(255,255,255,0.15);padding:6px 14px;border-radius:14px}
+.fb-lightbox-body{flex:1;display:flex;align-items:center;justify-content:center;position:relative;padding:20px;user-select:none;}
+.fb-lightbox-content{max-width:88vw;max-height:80vh;display:flex;align-items:center;justify-content:center}
+.fb-lightbox-content img, .fb-lightbox-content video{max-width:88vw;max-height:78vh;object-fit:contain;border-radius:6px;box-shadow:0 10px 40px rgba(0,0,0,0.6);pointer-events:none;}
+.fb-lightbox-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.15);color:white;border:0;border-radius:50%;width:50px;height:50px;font-size:26px;display:grid;place-items:center;cursor:pointer;z-index:102;transition:background .2s}
+.fb-lightbox-nav:hover{background:rgba(255,255,255,0.3)}
+.fb-lightbox-prev{left:25px}
+.fb-lightbox-next{right:25px}
+
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);background:#102b60;color:white;padding:12px 17px;border-radius:12px;font-size:12px;z-index:300;opacity:0;pointer-events:none;transition:.25s;box-shadow:var(--shadow)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+.site-footer{background:#101d3b;color:#d9e2f4;margin-top:55px;padding:48px max(24px,calc((100vw - 1420px)/2)) 0;width:100%}
+.footer-main{max-width:1420px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr 1.25fr;gap:38px;padding-bottom:38px;width:100%}
+.footer-brand{display:inline-flex;align-items:center;gap:10px;color:white;text-decoration:none;font-size:19px;font-weight:850}
+.footer-brand b{color:#ffca35}
+.footer-mark{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,#075bff,#06358c);display:grid;place-items:center;color:#ffca35}
+.footer-about p{max-width:330px;color:#aebbd3;font-size:12px;line-height:1.8;margin:16px 0}
+.footer-column{display:flex;flex-direction:column;gap:12px}
+.footer-column h3{font-size:13px;color:#fff;margin:4px 0 8px}
+.footer-column>a{font-size:11px;color:#aebbd3;text-decoration:none}
+.footer-column>a:hover{color:#fff}
+.footer-contact p{display:flex;gap:10px;align-items:flex-start;margin:0 0 10px 0;color:#aebbd3;font-size:11px;line-height:1.7}
+.footer-contact p>span:first-child{color:#ffca35;font-size:17px;flex:none}
+.footer-contact b{color:white}
+.footer-bottom{max-width:1420px;margin:0 auto;border-top:1px solid #30405f;padding:17px 0;display:flex;justify-content:space-between;color:#8f9db7;font-size:10px;width:100%}
+
+.hero{position:relative;isolation:isolate;background:#08285f;min-height:340px;height:auto;padding:28px 42px;display:flex;align-items:center;overflow:hidden;margin-bottom:18px;border-radius:20px;box-shadow:var(--shadow);color:white;width:100%}
+.hero-copy{position:relative;z-index:3;width:100%;max-width:54%}
+.hero h1{font-size:clamp(24px,2.6vw,40px);line-height:1.08;margin:0 0 11px;font-weight:850}
+.hero h1 em{font-style:normal;color:var(--gold)}
+.hero p{font-size:15px;color:#e3edff;margin:0 0 21px}
+.hero-slider{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.hero-slide{position:absolute;inset:0;background-image:var(--slide-image);background-size:cover;background-position:center;opacity:0;transition:opacity 1s ease}
+.hero-slide.active{opacity:1}
+.hero-shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(3,22,59,.92) 0%,rgba(4,35,83,.82) 50%,rgba(4,35,83,.35) 100%);z-index:1}
+.hero-slide-copy{position:absolute;right:38px;top:28px;z-index:4;display:none;flex-direction:column;gap:5px;width:min(38%,330px);color:#fff;text-align:right}
+.hero-controls{position:absolute;right:28px;bottom:18px;z-index:4;display:flex;align-items:center;gap:12px;pointer-events:auto}
+.hero-arrow{width:32px;height:32px;border-radius:50%;border:1px solid #ffffff99;background:#08285f88;color:#fff;font-size:24px;cursor:pointer;display:grid;place-items:center}
+.hero-dots{display:flex;align-items:center;gap:7px}
+.hero-dots button{width:9px;height:9px;border:1px solid #fff;border-radius:50%;background:transparent;cursor:pointer}
+.hero-dots button.active{background:#fff}
+
+@media(max-width:850px){
+ .topbar{height:66px;padding:0 8px}
+ .nav{display:none}
+ .hero{min-height:380px;padding:20px 16px}.hero-copy{max-width:100%}
+ .sidebar{display:none}.content-grid{grid-template-columns:1fr;gap:0}
+ .page{padding:0 8px;margin-top:10px}
+ .post{border-radius:14px;padding:16px 14px 12px}
+}
+/* === BANNIÈRE PLEIN ÉCRAN + 3D === */
+.hero-kicker{display:none}
+.hero{
+  width:100vw;
+  margin-left:calc(50% - 50vw);
+  border-radius:0;
+  box-shadow:none;
+  min-height:560px;
+  padding:36px 20px 70px;
+  align-items:flex-start;
+}
+.hero-copy{max-width:100%}
+.hero h1{
+  font-size:clamp(34px,9vw,64px);
+  line-height:1.02;
+  text-transform:uppercase;
+  letter-spacing:-1px;
+  margin:0 0 14px;
+  text-shadow:0 3px 14px rgba(0,0,0,.45);
+}
+.hero h1 em{display:block;color:var(--gold)}
+.hero p{
+  font-size:clamp(16px,4.2vw,22px);
+  font-weight:600;
+  color:#fff;
+  max-width:540px;
+  margin:0 0 16px;
+}
+.hero-checks{list-style:none;margin:0 0 22px;padding:0;display:flex;flex-direction:column;gap:9px}
+.hero-checks li{display:flex;align-items:center;gap:10px;font-size:clamp(15px,4vw,20px);font-weight:700}
+.hero-checks svg{width:26px;height:26px;flex:none}
+.hero-cta{
+  border:0;border-radius:30px;padding:14px 26px;
+  background:linear-gradient(90deg,#ffc400,#ffb000);
+  color:#082d72;font-size:16px;font-weight:850;
+  box-shadow:0 8px 20px rgba(0,0,0,.3);
+}
+@media(min-width:851px){
+  .hero{padding:48px 6vw 80px;min-height:520px}
+  .hero-copy{max-width:54%}
+}
+.hero-slide{opacity:0;transform:none;transition:none}
+.hero-slide.active{opacity:1}
+/* === FIN BANNIÈRE === */
+
+.post{scroll-margin-top:84px}
+.post-menu-wrap{position:relative;flex:none;z-index:10}
+.post-menu-btn{background:transparent;border:0;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:#596786;font-size:22px;line-height:1;font-weight:900;cursor:pointer;transition:background .2s,color .2s}
+.post-menu-btn:hover{background:#f1f4ff;color:var(--blue)}
+.post-menu-dropdown{position:absolute;right:0;top:40px;min-width:200px;background:#fff;border:1px solid #e2e8f5;border-radius:14px;box-shadow:0 14px 34px rgba(20,45,105,.18);padding:6px;display:none;flex-direction:column;z-index:30}
+.post-menu-dropdown.open{display:flex}
+.post-menu-item{background:transparent;border:0;text-align:left;padding:10px 12px;border-radius:9px;font-size:13px;font-weight:700;color:#26365f;display:flex;align-items:center;gap:10px;cursor:pointer;width:100%}
+.post-menu-item:hover{background:#f1f4ff;color:var(--blue)}
+.post-menu-item.danger{color:#dc2626}
+.post-menu-item.danger:hover{background:#fee2e2;color:#b91c1c}
+.post-menu-sep{height:1px;background:#edf0f8;margin:4px 6px}
+.post-masked-badge{display:inline-block;background:#fef3c7;color:#92400e;font-size:10.5px;font-weight:800;padding:2px 8px;border-radius:8px;margin-left:8px;vertical-align:middle}
+
+.standalone-page.custom-style{background:var(--pg-bg);border-color:rgba(212,175,55,.35);font-family:var(--pg-font)}
+.standalone-page.custom-style h1,
+.standalone-page.custom-style h2.pg-sub{color:var(--pg-title);font-family:var(--pg-font)}
+.standalone-page.custom-style p,
+.standalone-page.custom-style li{color:var(--pg-text);font-family:var(--pg-font);font-size:var(--pg-size)}
+.standalone-page.custom-style b,
+.standalone-page.custom-style .pg-accent{color:var(--pg-title)}
+.standalone-page.custom-style .page-back-bar{border-bottom-color:rgba(128,128,128,.3)}
+.standalone-page.custom-style .page-back-bar span{color:var(--pg-text)!important;opacity:.75}
+.pg-sub{font-size:18px;margin:22px 0 8px}
+
+@media(max-width:1000px){
+  .footer-main{grid-template-columns:1fr 1fr;gap:24px}
+}
+@media(max-width:600px){
+  .footer-main{grid-template-columns:1fr;gap:24px}
+}
+</style>
+<style>
+html.rk-locked, html.rk-locked body { overflow: hidden !important; height: 100%; }
+#rkWall {
+  position: fixed; inset: 0; z-index: 9000;
+  background: transparent;
+  display: none; align-items: center; justify-content: center; padding: 16px;
+  touch-action: none; overscroll-behavior: none;
+}
+#rkWall.show { display: flex; }
+#rkWallCard {
+  background: #fff; width: 100%; max-width: 360px; border-radius: 20px; padding: 26px 22px;
+  text-align: center; border: 1px solid #e2e8f5;
+  box-shadow: 0 20px 50px rgba(7, 41, 105, .28);
+  animation: scaleUpModal .25s cubic-bezier(.175, .885, .32, 1.275) forwards;
+}
+#rkWallIcon {
+  width: 56px; height: 56px; margin: 0 auto 14px; border-radius: 50%; font-size: 26px;
+  display: grid; place-items: center; user-select: none;
+  background: linear-gradient(135deg, #eff4ff, #d9e6ff);
+}
+#rkWallCard h3 { margin: 0 0 8px; font-size: 17px; font-weight: 850; color: var(--navy); }
+#rkWallCard p { margin: 0 0 18px; font-size: 13.5px; line-height: 1.5; color: #4a5568; }
+#rkGoogleBtn { display: flex; justify-content: center; min-height: 44px; }
+#rkWallErr { margin-top: 12px; font-size: 12px; color: #dc2626; display: none; }
+.rk-user-chip {
+  position: fixed; right: 12px; bottom: 12px; z-index: 55; display: none; align-items: center; gap: 8px;
+  background: #fff; border: 1px solid #e2e8f5; border-radius: 22px; padding: 4px 12px 4px 4px;
+  box-shadow: 0 6px 18px rgba(7, 41, 105, .15); font-size: 12px; font-weight: 700; color: #26365f;
+}
+.rk-user-chip.show { display: flex; }
+.rk-user-chip img { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; }
+.rk-user-chip button { background: none; border: 0; color: #dc2626; font-size: 11px; font-weight: 700; cursor: pointer; padding: 0 0 0 4px; }
+</style>
+<style>
+.rkv{position:relative;display:flex;align-items:center;justify-content:center;max-width:92vw;background:#000;border-radius:8px;overflow:hidden;user-select:none;-webkit-user-select:none}
+.fb-lightbox-content .rkv video{pointer-events:auto;max-width:92vw;max-height:72vh;display:block;border-radius:0;box-shadow:none;cursor:pointer}
+.rkv-center{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none}
+.rkv-bigbtn{width:68px;height:68px;border-radius:50%;background:rgba(0,0,0,.6);border:1.5px solid rgba(255,255,255,.4);color:#fff;font-size:30px;display:grid;place-items:center;opacity:0;transition:opacity .2s}
+.rkv.show-ui .rkv-bigbtn,.rkv.ended .rkv-bigbtn{opacity:1}
+.rkv-bar{position:absolute;left:0;right:0;bottom:0;padding:26px 12px 8px;background:linear-gradient(transparent,rgba(0,0,0,.75));color:#fff;opacity:0;transition:opacity .2s;pointer-events:none}
+.rkv.show-ui .rkv-bar,.rkv.ended .rkv-bar{opacity:1;pointer-events:auto}
+.rkv-seek{width:100%;margin:0 0 6px;accent-color:#075bff;height:18px}
+.rkv-row{display:flex;align-items:center;gap:6px}
+.rkv-row button{background:rgba(255,255,255,.15);border:0;color:#fff;border-radius:8px;min-width:38px;height:34px;font-size:13px;font-weight:700;cursor:pointer;padding:0 8px}
+.rkv-time{flex:1;font-size:12px;font-weight:700;text-align:center}
+</style>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="left-nav-group">
+    <button class="hamburger-btn" id="hamburgerBtn" aria-label="Ouvrir le menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+      <div class="hamburger-progress" id="hamburgerProgress"></div>
+    </button>
+    <a class="brand" href="#" onclick="switchView('home'); return false;">
+      <div class="brand-mark" id="brandMarkContainer" style="width:34px;height:34px;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+        <svg viewBox="0 0 64 64" role="img" style="width:100%;height:100%;">
+          <defs><linearGradient id="lg1" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#075bff"/><stop offset="1" stop-color="#06358c"/></linearGradient><linearGradient id="lg2" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffd52e"/><stop offset="1" stop-color="#ff9f00"/></linearGradient></defs>
+          <path d="M32 56C24 49 7 38 5 24 3 11 18 3 29 13l3 3 4-4C48 2 62 11 59 25 56 39 42 49 32 56Z" fill="url(#lg1)"/>
+          <path d="M31 51C22 43 11 35 10 24c-1-8 7-13 14-9 4 2 6 6 8 9 3-5 7-10 13-10 7 0 12 6 10 13-2 10-15 20-24 24Z" fill="url(#lg2)" opacity=".98"/>
+          <path d="M17 29l10 9 8-10 5 4 8-11" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M23 22l-6 7 10 9" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="brand-content">
+        <div class="brand-name" id="brandNameContainer">The Rock <span>Solidarity Foundation</span></div>
+        <div class="brand-tag" id="brandTagContainer">Initiative indépendante · Non affiliée à Dwayne Douglas Johnson</div>
+      </div>
+    </a>
+  </div>
+  <nav class="nav">
+    <a class="active" href="#" onclick="switchView('home'); return false;"><svg viewBox="0 0 24 24" fill="currentColor"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg>Accueil</a>
+    <a href="#" onclick="switchView('home'); document.querySelector('#campagnes')?.scrollIntoView({behavior:'smooth'}); return false;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 14V5a2 2 0 0 1 2-2h12v13H6a2 2 0 0 0-2 2v-4Zm14-8 4-3v14l-4-3"/></svg>Campagnes</a>
+  </nav>
+  <div class="top-actions">
+    <button class="cta-apply-btn" onclick="switchView('candidature')">💡 Soumettre un projet</button>
+  </div>
+</header>
+<script>
+(function () {
+  try {
+    var c = JSON.parse(localStorage.getItem('rock_site_cache_v1') || 'null');
+    if (!c) return;
+    var m = document.getElementById('brandMarkContainer');
+    var n = document.getElementById('brandNameContainer');
+    var t = document.getElementById('brandTagContainer');
+    if (c.rock_brand_logo && m) {
+      m.innerHTML = '<img src="' + String(c.rock_brand_logo).replace(/"/g, '&quot;') +
+        '" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" alt="Logo">';
+    }
+    if (c.rock_brand_name && n) n.innerHTML = c.rock_brand_name;
+    if (c.rock_brand_tag && t) t.textContent = c.rock_brand_tag;
+  } catch (e) {}
+})();
+</script>
+<script>
+(function () {
+  try {
+    var f = JSON.parse(localStorage.getItem('rock_brand_fast') || 'null');
+    if (!f) return;
+    var m = document.getElementById('brandMarkContainer');
+    var n = document.getElementById('brandNameContainer');
+    var t = document.getElementById('brandTagContainer');
+    if (f.logo && m) {
+      m.innerHTML = '<img src="' + String(f.logo).replace(/"/g, '&quot;') +
+        '" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" alt="Logo">';
+    }
+    if (f.name && n) n.innerHTML = f.name;
+    if (f.tag && t) t.textContent = f.tag;
+  } catch (e) {}
+})();
+</script>
+<div class="mobile-drawer-overlay" id="drawerOverlay"></div>
+<aside class="mobile-drawer" id="mobileDrawer">
+  <div class="drawer-header">
+    <span class="drawer-title">Navigation & Infos</span>
+    <button class="drawer-close" id="drawerClose" aria-label="Fermer le menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div class="drawer-body">
+    <a href="#" class="drawer-item drawer-link" onclick="switchView('home');"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg><span id="menu_link_accueil">Accueil</span></a>
+    <a href="#" class="drawer-item drawer-link" onclick="switchView('home'); document.querySelector('#campagnes')?.scrollIntoView({behavior:'smooth'});"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 14V5a2 2 0 0 1 2-2h12v13H6a2 2 0 0 0-2 2v-4Zm14-8 4-3v14l-4-3"/></svg><span id="menu_link_campagnes">Campagnes et projets</span></a>
+    <a href="#" class="drawer-item drawer-link" onclick="switchView('candidature');"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span id="menu_link_candidature">Soumettre un dossier de projet</span></a>
+    <div class="drawer-divider"></div>
+    <a href="#" class="drawer-item drawer-link" onclick="switchView('criteres');"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span id="menu_link_criteres">Critères d'attribution de l'aide</span></a>
+    <a href="#" class="drawer-item drawer-link" onclick="switchView('confidentialite');"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span id="menu_link_confidentialite">Règles de confidentialité</span></a>
+    <div class="drawer-divider"></div>
+    <a href="#" class="drawer-item drawer-link" onclick="switchView('contact');"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span id="menu_link_contact">Contact & Support</span></a>
+
+    <div class="admin-nav-panel" id="adminNavPanel">
+      <div class="admin-panel-title">
+        <span>Navigation Admin (Sécurisé)</span>
+        <button type="button" onclick="adminLogout()" style="background:none; border:0; color:#dc2626; font-size:11px; cursor:pointer; font-weight:700;">Verrouiller 🔒</button>
+      </div>
+      <button type="button" class="admin-btn admin-btn-blue" onclick="openAdminForm('entete')">Modifier En-tête (Logo, Nom, Phrase) 🛡️</button>
+      <button type="button" class="admin-btn admin-btn-blue" onclick="openAdminForm('menu_burger_config')">Menu Burger & Textes <span>⚙️</span></button>
+      <button type="button" class="admin-btn admin-btn-purple" onclick="openAdminForm('bienvenue')">Message de Bienvenue (Georgia) <span>✏️</span></button>
+      <button type="button" class="admin-btn admin-btn-green" onclick="openAdminForm('stats_impact')">Statistiques & Transparence <span>📊</span></button>
+      <button type="button" class="admin-btn admin-btn-orange" onclick="openAdminForm('dossiers_recus')">Dossiers Reçus (<span id="adminDossierCountBadge">0</span>) 📁</button>
+      <button type="button" class="admin-btn admin-btn-pink" onclick="openAdminForm('gerer_admins')">👥 Gérer les 4 Administrateurs <span>⚙️</span></button>
+      <button type="button" class="admin-btn admin-btn-green" onclick="openAdminForm('banniere')">Bannière / Slider (3 phrases) <span>🖼️</span></button>
+      <button type="button" class="admin-btn admin-btn-pink" onclick="openAdminForm('pied_page')">Pied de page <span>📌</span></button>
+      <button type="button" class="admin-btn admin-btn-teal" onclick="openAdminForm('whatsapp_email')">Modifier WhatsApp & E-mail 📱✉️</button>
+      <button type="button" class="admin-btn admin-btn-purple" onclick="openAdminForm('faire_publication')">+ Faire une Publication <span>➕</span></button>
+      <button type="button" class="admin-btn admin-btn-teal" onclick="openWhatsAppChat()">Discussions WhatsApp <span>💬</span></button>
+    </div>
+  </div>
+</aside>
+
+<div class="admin-form-overlay" id="adminLoginOverlay">
+  <div class="admin-form-card" style="max-width:380px;">
+    <div class="admin-form-title">
+      <span>🔐 Connexion Administrateur</span>
+      <button type="button" onclick="closeAdminLogin()" style="background:none; border:0; font-size:18px; cursor:pointer; color:#64748b;">✕</button>
+    </div>
+    <p style="font-size:13px; color:#53617f; margin-bottom:15px;">Veuillez saisir votre mot de passe administrateur sécurisé :</p>
+    <form onsubmit="submitAdminLogin(event)">
+      <div class="admin-form-group">
+        <label>Mot de passe :</label>
+        <input type="password" class="admin-form-input" id="adm_loginPassword" placeholder="Mot de passe admin" required autofocus>
+      </div>
+      <div class="admin-form-actions">
+        <button type="button" class="custom-modal-btn cancel" onclick="closeAdminLogin()">Annuler</button>
+        <button type="submit" class="custom-modal-btn confirm" style="background:var(--blue);">Se connecter</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="admin-form-overlay" id="adminFormOverlay">
+  <div class="admin-form-card">
+    <div class="admin-form-title">
+      <span id="adminFormTitle">Modifier l'élément</span>
+      <button type="button" onclick="closeAdminForm()" style="background:none; border:0; font-size:18px; cursor:pointer; color:#64748b;">✕</button>
+    </div>
+    <form id="adminFormContent" onsubmit="submitAdminForm(event)">
+    </form>
+  </div>
+</div>
+
+<div id="viewHome" class="site-view active-view">
+  <main class="page" id="accueil">
+    
+    <div class="dynamic-welcome-header">
+      <h2 class="dynamic-welcome-title" id="welcomeTitleContainer">Centre Officiel de <span>The Rock Solidarity Foundation</span></h2>
+      <p class="dynamic-welcome-subtitle" id="welcomeSubtitleContainer">Plateforme solidaire d'accompagnement et de suivi des projets</p>
+    </div>
+
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="hero-kicker"><span>✦</span> LA SOLIDARITÉ QUI FAIT AVANCER</div>
+        <h1 id="heroSlideTitle">Soutenons ensemble les projets qui bâtissent <em>un avenir meilleur</em></h1>
+        <p id="heroSlideDesc">Nous accompagnons les entrepreneurs et les porteurs de projets qui ont besoin d'un nouvel élan.</p>
+<ul class="hero-checks" id="heroChecks">
+  <li><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#ffc400"/><path d="M7 12.5l3.2 3.2L17 9" fill="none" stroke="#082d72" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Aide financière</span></li>
+  <li><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#ffc400"/><path d="M7 12.5l3.2 3.2L17 9" fill="none" stroke="#082d72" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Dons de voitures</span></li>
+  <li><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#ffc400"/><path d="M7 12.5l3.2 3.2L17 9" fill="none" stroke="#082d72" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Moyens de transport</span></li>
+  <li><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#ffc400"/><path d="M7 12.5l3.2 3.2L17 9" fill="none" stroke="#082d72" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Soutien aux projets</span></li>
+</ul>
+<button type="button" class="hero-cta" onclick="switchView('candidature')">Faire une demande d'aide →</button>
+      </div>
+      <div class="hero-slider" id="heroSlider">
+        <div class="hero-slide active" style="--slide-image:url('image1.jpg')"></div>
+        <div class="hero-slide" style="--slide-image:url('image2.jpg')"></div>
+        <div class="hero-slide" style="--slide-image:url('image3.jpg')"></div>
+        <div class="hero-slide" style="--slide-image:url('image8.jpg')"></div>
+<div class="hero-slide" style="--slide-image:url('image9.jpg')"></div>
+<div class="hero-slide" style="--slide-image:url('image10.jpg')"></div>
+        <div class="hero-shade"></div>
+        <div class="hero-slide-copy">
+          <span style="font-size:10px;font-weight:850;letter-spacing:1.4px;color:#ffe18a">À LA UNE</span>
+          <strong id="heroSlideBadgeText">Des projets qui méritent une chance</strong>
+        </div>
+        <div class="hero-controls">
+          <button type="button" class="hero-arrow" id="heroPrev">‹</button>
+          <div class="hero-dots" id="heroDots">
+            <button type="button" class="active"></button>
+            <button type="button"></button>
+            <button type="button"></button>
+            <button type="button"></button>
+<button type="button"></button>
+<button type="button"></button>
+          </div>
+          <button type="button" class="hero-arrow" id="heroNext">›</button>
+        </div>
+      </div>
+    </section>
+
+    <div class="impact-stats-bar" id="impactStatsBarContainer">
+      <div class="impact-stat-card" data-more="📄 Voir la page de statistiques" onclick="openStatsPage(1)">
+        <div class="impact-stat-number" id="statVal1">14</div>
+        <div class="impact-stat-label">Projets soutenus</div>
+      </div>
+      <div class="impact-stat-card" data-more="📄 Voir la page de statistiques" onclick="openStatsPage(2)">
+        <div class="impact-stat-number" id="statVal2">4 200 $</div>
+        <div class="impact-stat-label">Fonds décaissés</div>
+      </div>
+      <div class="impact-stat-card" data-more="📄 Voir la page de statistiques" onclick="openStatsPage(3)">
+        <div class="impact-stat-number" id="statVal3">100%</div>
+        <div class="impact-stat-label">Transparence & Suivi</div>
+      </div>
+    </div>
+<style>
+.mission-wrap{width:100vw;margin:0 0 18px calc(50% - 50vw);background:#f3f6ff}
+.mission-box{display:grid;grid-template-columns:1.25fr .9fr 1fr;gap:6px;align-items:stretch;padding:10px 8px 8px}
+.mission-text{padding:4px 4px 4px 8px;border-left:4px solid #ffc400}
+.mission-text h2{font-family:Georgia,serif;font-size:clamp(20px,6vw,38px);color:#082d72;margin:0 0 6px}
+.mission-text p{font-size:clamp(11px,3vw,16px);line-height:1.45;color:#26365f;margin:0 0 10px}
+.mission-btn{border:0;border-radius:24px;padding:9px 16px;background:linear-gradient(135deg,#082d72,#06358c);color:#fff;font-weight:800;font-size:clamp(11px,3vw,15px)}
+.mission-heart{display:grid;place-items:center}
+.mission-heart svg{width:100%;max-width:170px;height:auto}
+.mission-photos{display:grid;grid-template-rows:1fr 1fr;gap:5px}
+.mission-photos img{width:100%;height:100%;min-height:80px;object-fit:cover;border-radius:10px;background:#dbe5ff;display:block}
+.prog-title{display:flex;align-items:center;gap:10px;padding:6px 10px 8px}
+.prog-title::before,.prog-title::after{content:"";flex:1;height:2px;background:#ffc400}
+.prog-title h3{margin:0;font-family:Georgia,serif;font-size:clamp(15px,4.4vw,26px);color:#082d72;white-space:nowrap}
+.prog-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:0 8px 14px}
+.prog-card{background:#fff;border:1px solid #f1d98a;border-radius:12px;padding:8px 4px 10px;text-align:center;display:flex;flex-direction:column;align-items:center}
+.prog-card svg{width:clamp(34px,10vw,56px);height:clamp(34px,10vw,56px);margin-bottom:4px}
+.prog-card h4{font-family:Georgia,serif;font-size:clamp(10px,2.9vw,16px);color:#082d72;margin:0 0 3px;line-height:1.15}
+.prog-card p{font-size:clamp(8.5px,2.3vw,13px);color:#26365f;margin:0 0 7px;line-height:1.25}
+.prog-card button{margin-top:auto;border:0;border-radius:14px;padding:5px 9px;background:#082d72;color:#fff;font-weight:800;font-size:clamp(8.5px,2.4vw,13px)}
+</style>
+
+<section class="mission-wrap" id="notreMission">
+  <div class="mission-box">
+    <div class="mission-text">
+      <h2 id="missionTitle">Notre Mission</h2>
+      <p id="missionText">Apporter une aide financière et matérielle aux personnes dans le besoin, soutenir leurs projets et contribuer à l'amélioration de leurs conditions de vie.</p>
+      <button type="button" class="mission-btn" onclick="switchView('criteres')">En savoir plus →</button>
+    </div>
+    <div class="mission-heart">
+      <svg viewBox="0 0 200 180" role="img" aria-label="Famille protégée">
+        <defs>
+          <radialGradient id="mhGlow" cx="50%" cy="45%" r="60%"><stop offset="0" stop-color="#fff6c8"/><stop offset="1" stop-color="#ffb000"/></radialGradient>
+        </defs>
+        <path d="M100 160C60 128 14 98 14 56 14 28 36 12 58 12c18 0 33 10 42 26 9-16 24-26 42-26 22 0 44 16 44 44 0 42-46 72-86 104Z" fill="url(#mhGlow)" stroke="#ffc400" stroke-width="4"/>
+        <g fill="#082d72">
+          <circle cx="100" cy="62" r="9"/><path d="M88 76h24l4 42h-8v22h-16v-22h-8z"/>
+          <circle cx="74" cy="80" r="7"/><path d="M65 91h18l3 30h-6v18h-12v-18h-6z"/>
+          <circle cx="127" cy="80" r="7"/><path d="M118 91h18l3 30h-6v18h-12v-18h-6z"/>
+        </g>
+        <path d="M10 150c20-22 50-18 90 4 40-22 70-26 90-4-10 20-40 28-90 8-50 20-80 12-90-8Z" fill="#f0b98a" stroke="#082d72" stroke-width="2"/>
+      </svg>
+    </div>
+    <div class="mission-photos">
+      <img src="image6.jpg" alt="Don de voiture" loading="lazy">
+      <img src="image7.jpg" alt="Accompagnement" loading="lazy">
+    </div>
+  </div>
+
+  <div class="prog-title"><h3 id="progTitle">Nos Programmes d'Assistance</h3></div>
+  <div class="prog-grid">
+    <div class="prog-card">
+      <svg viewBox="0 0 64 64"><path d="M24 8h16l-4 8H28z" fill="#16a34a"/><path d="M28 16h8c14 8 20 20 20 30 0 8-6 12-24 12S8 54 8 46c0-10 6-22 20-30Z" fill="#16a34a"/><text x="32" y="46" text-anchor="middle" font-family="Arial" font-size="24" font-weight="900" fill="#fff">$</text></svg>
+      <h4>Aide Financière</h4><p>Un soutien pour vos besoins essentiels</p>
+      <button type="button" onclick="switchView('candidature')">Demander →</button>
+    </div>
+    <div class="prog-card">
+      <svg viewBox="0 0 64 64"><path d="M6 40c0-6 2-10 6-12l6-10c2-3 5-4 8-4h12c4 0 7 1 9 4l7 10c4 2 6 6 6 12v6H6z" fill="#082d72"/><path d="M20 22h10v8H14zM34 22h8c1 0 2 1 3 2l5 6H34z" fill="#9ec5ff"/><circle cx="18" cy="48" r="6" fill="#0b1b45" stroke="#fff" stroke-width="2"/><circle cx="48" cy="48" r="6" fill="#0b1b45" stroke="#fff" stroke-width="2"/></svg>
+      <h4>Dons de Voitures</h4><p>Pour faciliter vos déplacements</p>
+      <button type="button" onclick="switchView('candidature')">Demander →</button>
+    </div>
+    <div class="prog-card">
+      <svg viewBox="0 0 64 64"><rect x="10" y="6" width="44" height="46" rx="8" fill="#082d72"/><rect x="15" y="12" width="34" height="14" rx="3" fill="#9ec5ff"/><rect x="15" y="30" width="14" height="8" rx="2" fill="#9ec5ff"/><rect x="35" y="30" width="14" height="8" rx="2" fill="#9ec5ff"/><circle cx="19" cy="45" r="3" fill="#ffc400"/><circle cx="45" cy="45" r="3" fill="#ffc400"/><rect x="16" y="52" width="8" height="6" fill="#082d72"/><rect x="40" y="52" width="8" height="6" fill="#082d72"/></svg>
+      <h4>Moyens de Transport</h4><p>Bouger, travailler, réussir</p>
+      <button type="button" onclick="switchView('candidature')">Demander →</button>
+    </div>
+    <div class="prog-card">
+      <svg viewBox="0 0 64 64"><path d="M32 30c0-8 4-14 14-16 0 9-4 15-14 16Z" fill="#16a34a"/><path d="M32 30c0-6-3-10-10-12 0 7 3 11 10 12Z" fill="#16a34a"/><path d="M32 30v8" stroke="#16a34a" stroke-width="3"/><path d="M4 46l12-8 14 2c3 0 4 4 1 5l-8 2 20-1 10-8c3-2 6 1 4 4l-12 14c-2 2-4 3-7 3H18L4 54z" fill="#082d72"/></svg>
+      <h4>Projets Solidaires</h4><p>Ensemble pour un avenir meilleur</p>
+      <button type="button" onclick="switchView('candidature')">Demander →</button>
+    </div>
+  </div>
+</section>
+    <div class="content-grid">
+      <section class="feed" id="campagnes">
+        <div id="dynamicFeedContainer"></div>
+      </section>
+
+      <aside class="sidebar">
+        <section class="side-card">
+          <div class="side-banner"><div class="trophy">🏆</div><h3>Ensemble,<br>plus loin !</h3></div>
+          <div class="side-body">
+            <p>Chaque don compte pour soutenir les projets qui créent de la valeur.</p>
+            <button class="cta-apply-btn" style="width:100%; margin-top:12px; text-align:center;" onclick="switchView('candidature')">💡 Soumettre mon projet</button>
+          </div>
+        </section>
+        <section class="side-card" id="apropos">
+          <div class="values-head"><span style="font-size:25px">💎</span> <span>Nos valeurs</span></div>
+          <ul class="values-list">
+            <li><span class="check">✓</span> Solidarité</li>
+            <li><span class="check">✓</span> Développement</li>
+            <li><span class="check">✓</span> Partage</li>
+            <li><span class="check">✓</span> Réussite collective</li>
+          </ul>
+        </section>
+      </aside>
+    </div>
+  </main>
+</div>
+
+<div id="viewStatsPage" class="site-view">
+  <div class="standalone-page" style="max-width:850px;">
+    <div class="page-back-bar">
+      <button class="back-btn" onclick="switchView('home')">← Retour à l'accueil</button>
+      <span style="font-size:12px;color:var(--muted);font-weight:700">The Rock Solidarity Foundation</span>
+    </div>
+    <h1 id="statsPageHeaderTitle"><span>📊</span> Analyse & Évolution</h1>
+    <p id="statsPageHeaderSub" style="color:#53617f; margin-bottom:20px;">Rapport officiel des performances et de l'impact solidaire.</p>
+    
+    <div id="statsPageContentArea"></div>
+  </div>
+</div>
+
+<div id="viewCandidature" class="site-view">
+  <div class="standalone-page" style="max-width:700px;">
+    <div class="page-back-bar">
+      <button class="back-btn" onclick="switchView('home')">← Retour à l'accueil</button>
+      <span style="font-size:12px;color:var(--muted);font-weight:700">The Rock Solidarity Foundation</span>
+    </div>
+    <h1><span>💡</span> Soumettre un dossier de projet</h1>
+    <p>Remplissez le formulaire ci-dessous pour présenter votre initiative ou votre demande d'accompagnement. Notre comité l'étudiera avec la plus grande attention.</p>
+    
+    <form id="projectSubmitForm" onsubmit="submitCandidatureProject(event)" style="margin-top:24px; display:flex; flex-direction:column; gap:16px;">
+      <div class="admin-form-group">
+        <label>Nom complet du porteur / Représentant :</label>
+        <input type="text" class="admin-form-input" id="cand_name" placeholder="Ex: Jean Dupont" required>
+      </div>
+      <div class="admin-form-group">
+        <label>Intitulé du projet :</label>
+        <input type="text" class="admin-form-input" id="cand_projectTitle" placeholder="Ex: Expansion de notre atelier solidaire" required>
+      </div>
+      <div class="admin-form-group">
+        <label>Catégorie du projet :</label>
+        <select class="admin-form-select" id="cand_category">
+          <option value="Entrepreneuriat local">Entrepreneuriat local</option>
+          <option value="Initiative communautaire">Initiative communautaire</option>
+          <option value="Éducation & Formation">Éducation & Formation</option>
+          <option value="Autre projet solidaire">Autre projet solidaire</option>
+        </select>
+      </div>
+      <div class="admin-form-group">
+        <label>Description détaillée et objectifs :</label>
+        <textarea class="admin-form-textarea" id="cand_description" placeholder="Expliquez en quelques lignes votre besoin et l'impact attendu..." required></textarea>
+      </div>
+      <div class="admin-form-group">
+        <label>Budget estimé / Montant sollicité ($) :</label>
+        <input type="text" class="admin-form-input" id="cand_budget" placeholder="Ex: 500 $" required>
+      </div>
+      <div class="admin-form-group">
+        <label>Numéro de contact / WhatsApp :</label>
+        <input type="text" class="admin-form-input" id="cand_phone" placeholder="Entrez votre numéro personnel" required>
+      </div>
+      <div class="admin-form-actions">
+        <button type="button" class="custom-modal-btn cancel" onclick="switchView('home')">Annuler</button>
+        <button type="submit" class="custom-modal-btn confirm" style="background:var(--blue);">Envoyer mon dossier</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div id="viewCriteres" class="site-view">
+  <div class="standalone-page" id="standaloneCrit">
+    <div class="page-back-bar">
+      <button class="back-btn" onclick="switchView('home')">← Retour à l'accueil</button>
+      <span style="font-size:12px;color:var(--muted);font-weight:700">The Rock Solidarity Foundation</span>
+    </div>
+    <h1 id="pageCritTitle"><span>🎯</span> Critères d'attribution de l'aide</h1>
+    <div id="pageCritBody">
+      <p>Pour bénéficier d'un accompagnement ou d'un soutien financier de la part de la fondation, chaque porteur de projet ou entrepreneur doit remplir les critères fondamentaux suivants :</p>
+      <ul>
+        <li><b>Utilité sociale et locale :</b> Le projet doit présenter un impact positif direct sur la communauté ou le développement économique local.</li>
+        <li><b>Engagement et sérieux :</b> Fournir un dossier clair détaillant les objectifs, le plan d'utilisation des fonds et la motivation de l'équipe.</li>
+        <li><b>Transparence financière :</b> Accepter de rendre compte de l'avancement des réalisations et de l'utilisation de l'aide allouée.</li>
+        <li><b>Indépendance :</b> Le projet ne doit pas aller à l'encontre des valeurs de solidarité, d'éthique et de respect mutuel prônées par l'initiative.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div id="viewConfidentialite" class="site-view">
+  <div class="standalone-page" id="standaloneConf">
+    <div class="page-back-bar">
+      <button class="back-btn" onclick="switchView('home')">← Retour à l'accueil</button>
+      <span style="font-size:12px;color:var(--muted);font-weight:700">The Rock Solidarity Foundation</span>
+    </div>
+    <h1 id="pageConfTitle"><span>🔒</span> Règles de confidentialité</h1>
+    <div id="pageConfBody">
+      <p>La protection de vos données personnelles est une priorité absolue pour The Rock Solidarity Foundation :</p>
+      <ul>
+        <li><b>Collecte minimale :</b> Seules les informations strictement nécessaires fournies via nos formulaires de contact ou de soutien sont conservées.</li>
+        <li><b>Sécurité des échanges :</b> Les messages et dossiers partagés via notre messagerie sécurisée restent strictement confidentiels et ne sont jamais revendus à des tiers.</li>
+        <li><b>Utilisation des médias :</b> Les documents ou photos partagés pour les projets le sont dans le cadre strict de l'évaluation et de la communication autorisée par le demandeur.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div id="viewContact" class="site-view">
+  <div class="standalone-page" id="standaloneContact">
+    <div class="page-back-bar">
+      <button class="back-btn" onclick="switchView('home')">← Retour à l'accueil</button>
+      <span style="font-size:12px;color:var(--muted);font-weight:700">The Rock Solidarity Foundation</span>
+    </div>
+    <h1 id="pageContactTitle"><span>💬</span> Contact & Support</h1>
+    <div id="pageContactBody">
+      <p>Vous pouvez nous contacter directement via les coordonnées ci-dessous pour toute question relative à votre projet ou au suivi de votre dossier :</p>
+      <ul>
+        <li><b>WhatsApp :</b> <span id="contactViewPhone">+229 01 02 03 04</span></li>
+        <li><b>E-mail :</b> <span id="contactViewEmail">contact@therocksolidarity.org</span></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div id="viewInfo" class="site-view">
+  <div class="standalone-page" id="standaloneInfo">
+    <div class="page-back-bar">
+      <button class="back-btn" onclick="switchView('home')">← Retour à l'accueil</button>
+      <span style="font-size:12px;color:var(--muted);font-weight:700">The Rock Solidarity Foundation</span>
+    </div>
+    <h1 id="infoPageTitle"></h1>
+    <div id="infoPageBody"></div>
+    <div id="infoPageCta" style="margin-top:24px"></div>
+  </div>
+</div>
+<button class="chat-launcher" id="chatLauncher" onclick="openWhatsAppChat()" aria-label="Ouvrir WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+  <span class="chat-label-text" id="chatLabelText">Écrivez-nous sur WhatsApp</span>
+</button>
+
+<div class="fb-lightbox" id="fbLightbox">
+  <div class="fb-lightbox-topbar">
+    <button class="fb-lightbox-back" id="lightboxBackBtn">← Retour au site</button>
+    <div class="fb-lightbox-counter" id="lightboxCounter">1 / 1</div>
+  </div>
+  <div class="fb-lightbox-body" id="lightboxBody">
+    <button class="fb-lightbox-nav fb-lightbox-prev" id="lightboxPrevBtn">‹</button>
+    <button class="fb-lightbox-nav fb-lightbox-next" id="lightboxNextBtn">›</button>
+    <div class="fb-lightbox-content" id="lightboxContainer"></div>
+  </div>
+</div>
+
+<div class="custom-modal-overlay" id="customModalOverlay">
+  <div class="custom-modal-card">
+    <div class="custom-modal-icon-wrap" id="modalIconWrap">
+      <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+    </div>
+    <h3 class="custom-modal-title" id="modalTitle">Confirmer l'action</h3>
+    <p class="custom-modal-message" id="modalMessage">Voulez-vous vraiment exécuter cette action ?</p>
+    <div class="custom-modal-actions">
+      <button type="button" class="custom-modal-btn cancel" id="modalCancelBtn">Annuler</button>
+      <button type="button" class="custom-modal-btn confirm" id="modalConfirmBtn">Confirmer</button>
+    </div>
+  </div>
+</div>
+<button id="installBtn" style="display:none;position:fixed;right:16px;bottom:90px;z-index:60;background:#075bff;color:#fff;border:0;border-radius:24px;padding:12px 18px;font-weight:750;box-shadow:0 8px 20px rgba(7,91,255,.35)">📲 Ajouter à l'écran d'accueil</button>
+<div class="toast" id="toast"></div>
+<div id="rkWall" aria-modal="true" role="dialog">
+  <div id="rkWallCard">
+    <div id="rkWallIcon">🔐</div>
+    <h3>Connexion requise</h3>
+    <p>Connecte-toi d'abord avec ton compte Google pour continuer : consulter, commenter, aimer ou soumettre un dossier.</p>
+    <div id="rkGoogleBtn"></div>
+    <div id="rkWallErr"></div>
+  </div>
+</div>
+<div class="rk-user-chip" id="rkUserChip"><img id="rkChipImg" alt=""><span id="rkChipName"></span><button type="button" id="rkLogout">Déconnexion</button></div>
+<!--
+<footer class="site-footer" id="contact">
+  <div class="footer-main">
+    <div class="footer-about">
+      <a class="footer-brand" href="#" onclick="switchView('home'); return false;"><span class="footer-mark">✦</span><span>Solidarité <b>Plus</b></span></a>
+      <p id="footerDescText">Une initiative privée qui accompagne les entrepreneurs, les entreprises et les porteurs de projets dans leurs ambitions de développement.</p>
+    </div>
+    <div class="footer-column"><h3>Navigation</h3><a href="#" onclick="switchView('home'); return false;">Accueil</a><a href="#" onclick="switchView('home'); document.querySelector('#campagnes')?.scrollIntoView({behavior:'smooth'}); return false;">Projets soutenus</a><a href="#" onclick="switchView('candidature'); return false;">Soumettre un projet</a></div>
+    <div class="footer-column"><h3>Informations</h3><a href="#" onclick="switchView('confidentialite'); return false;">Règles de confidentialité</a></div>
+    <div class="footer-column footer-contact">
+      <h3>Nous contacter</h3>
+      <p><span>✆</span><span><b>WhatsApp</b><br><span id="footerPhoneText">+229 01 02 03 04</span></span></p>
+      <p><span>✉</span><span><b>E-mail</b><br><span id="footerEmailText">contact@therocksolidarity.org</span></span></p>
+    </div>
+  </div>
+  <div class="footer-bottom"><span>© 2026 The Rock Solidarity Foundation. Tous droits réservés.</span></div>
+</footer>
+-->
+<style>
+.rkf{background:#0a1a45;color:#d9e2f4;margin-top:50px;width:100%;font-family:inherit}
+.rkf-main{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1.7fr 1fr 1fr 1fr 1.2fr;gap:26px;padding:34px 20px 26px}
+.rkf-brand{display:flex;flex-direction:column;gap:12px}
+.rkf-brandrow{display:flex;align-items:center;gap:12px}
+.rkf-logo{width:64px;height:64px;flex:none;border-radius:50%;overflow:hidden;border:2px solid #ffc400;background:#fff;display:grid;place-items:center}
+.rkf-logo img,.rkf-logo svg{width:100%;height:100%;object-fit:cover;display:block}
+.rkf-name{font-family:Georgia,serif;font-size:clamp(17px,4.6vw,22px);font-weight:700;color:#fff;line-height:1.15}
+.rkf-name span{color:#ffc400}
+.rkf-tag{font-family:Georgia,serif;font-style:italic;font-size:12.5px;color:#aebbd3;line-height:1.5}
+.rkf-desc{font-size:12.5px;line-height:1.75;color:#aebbd3;margin:0;max-width:340px}
+.rkf-col h4{margin:0 0 12px;font-size:14px;font-weight:800;color:#fff;padding-bottom:8px;border-bottom:2px solid #ffc400;display:inline-block}
+.rkf-col a{display:block;font-size:13px;color:#c3cee4;padding:5px 0;transition:color .2s,transform .2s;cursor:pointer}
+.rkf-col a:hover{color:#ffc400;transform:translateX(3px)}
+.rkf-contact-item{display:flex;gap:10px;align-items:flex-start;margin:0 0 12px;font-size:12.5px;color:#c3cee4;line-height:1.5;cursor:pointer}
+.rkf-contact-item:hover{color:#fff}
+.rkf-ic{width:30px;height:30px;flex:none;border-radius:50%;background:#12286a;border:1px solid #ffc400;display:grid;place-items:center}
+.rkf-ic svg{width:15px;height:15px;stroke:#ffc400;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.rkf-contact-item b{display:block;color:#fff;font-size:12.5px}
+.rkf-contact-item span span{word-break:break-all}
+.rkf-btn{display:inline-flex;align-items:center;gap:8px;margin-top:4px;padding:10px 18px;border-radius:24px;border:2px solid #ffc400;background:transparent;color:#ffc400;font-weight:800;font-size:13px;cursor:pointer;transition:background .2s,color .2s}
+.rkf-btn:hover{background:#ffc400;color:#082d72}
+.rkf-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.rkf-bottom{border-top:3px solid #ffc400;background:#071438}
+.rkf-bottom-in{max-width:1280px;margin:0 auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.rkf-copy{font-size:12px;color:#8f9db7}
+.rkf-sig{font-family:Georgia,serif;font-style:italic;font-weight:700;font-size:20px;color:#ffc400}
+@media(max-width:900px){
+  .rkf-main{grid-template-columns:1fr 1fr;gap:22px 16px}
+  .rkf-brand,.rkf-contact{grid-column:1 / -1}
+}
+@media(max-width:700px){
+  .rkf-bottom-in{padding-bottom:90px}
+}
+</style>
+
+<footer class="rkf" id="contact">
+  <div class="rkf-main">
+    <div class="rkf-brand">
+      <div class="rkf-brandrow">
+        <div class="rkf-logo" id="rkfLogo"></div>
+        <div class="rkf-name" id="rkfName">The Rock <span>Solidarity Foundation</span></div>
+      </div>
+      <div class="rkf-tag" id="rkfTag"></div>
+      <p class="rkf-desc" id="footerDescText">Une initiative privée qui accompagne les entrepreneurs, les entreprises et les porteurs de projets dans leurs ambitions de développement.</p>
+    </div>
+
+    <div class="rkf-col">
+      <h4>Navigation</h4>
+      <a onclick="switchView('home')">Accueil</a>
+      <a onclick="openInfo('mission')">Notre Mission</a>
+      <a onclick="switchView('home'); setTimeout(function(){document.querySelector('#campagnes')?.scrollIntoView({behavior:'smooth'})},120)">Projets soutenus</a>
+      <a onclick="switchView('candidature')">Soumettre un projet</a>
+    </div>
+
+    <div class="rkf-col">
+      <h4>Programmes</h4>
+      <a onclick="openInfo('aide')">Aide financière</a>
+      <a onclick="openInfo('voitures')">Dons de voitures</a>
+      <a onclick="openInfo('transport')">Moyens de transport</a>
+      <a onclick="openInfo('projets')">Projets solidaires</a>
+    </div>
+
+    <div class="rkf-col">
+      <h4>Informations</h4>
+      <a onclick="switchView('criteres')">Critères d'attribution</a>
+      <a onclick="openStatsPage(3)">Transparence</a>
+      <a onclick="switchView('confidentialite')">Règles de confidentialité</a>
+      <a onclick="switchView('contact')">Contact &amp; Support</a>
+    </div>
+
+    <div class="rkf-col rkf-contact">
+      <h4>Nous contacter</h4>
+      <div class="rkf-contact-item" onclick="openWhatsAppChat()">
+        <div class="rkf-ic"><svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg></div>
+        <span><b>WhatsApp</b><span id="footerPhoneText">+229 01 02 03 04</span></span>
+      </div>
+      <div class="rkf-contact-item" onclick="location.href='mailto:'+document.getElementById('footerEmailText').textContent.trim()">
+        <div class="rkf-ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></div>
+        <span><b>E-mail</b><span id="footerEmailText">contact@therocksolidarity.org</span></span>
+      </div>
+      <button type="button" class="rkf-btn" onclick="switchView('contact')">
+        <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Nous contacter
+      </button>
+    </div>
+  </div>
+
+  <div class="rkf-bottom">
+    <div class="rkf-bottom-in">
+      <span class="rkf-copy">© 2026 The Rock Solidarity Foundation. Tous droits réservés.</span>
+      <span class="rkf-sig">Solidarité Plus</span>
+    </div>
+  </div>
+</footer>
+<script>
+const $ = (s, root=document) => root.querySelector(s);
+const $$ = (s, root=document) => [...root.querySelectorAll(s)];
+
+function escapeHtml(value) {
+  return String(value ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+const SUPABASE_CONFIG = {
+  url: 'https://mlxrhrlklevulxsshfar.supabase.co',
+  publishableKey: 'sb_publishable_Nx409KvlcNU1j5T3vTM0fg_o77Xz2PS',
+  table: 'site_data',
+  recordId: 1
+};
+
+let supabaseCache = null;
+let isSupabaseLoaded = false;
+
+function supabaseHeaders(extra) {
+  return Object.assign({
+    'apikey': SUPABASE_CONFIG.publishableKey,
+    'Authorization': `Bearer ${SUPABASE_CONFIG.publishableKey}`
+  }, extra || {});
+}
+
+async function fetchSupabaseData() {
+  if (isSupabaseLoaded && supabaseCache) return supabaseCache;
+  try {
+    const res = await fetch(`${SUPABASE_CONFIG.url}/rest/v1/${SUPABASE_CONFIG.table}?select=data&id=eq.${SUPABASE_CONFIG.recordId}`, {
+      headers: supabaseHeaders()
+    });
+    if(res.ok) {
+      const rows = await res.json();
+      if(rows && rows.length > 0) {
+        supabaseCache = rows[0].data || {};
+        isSupabaseLoaded = true;
+        applyHeaderBranding();
+        applyHeroSliderData();
+        applyContactFooterData();
+        return supabaseCache;
+      }
+    }
+  } catch(e) {}
+  return supabaseCache || {};
+}
+
+async function fetchLatestRemote() {
+  try {
+    const res = await fetch(`${SUPABASE_CONFIG.url}/rest/v1/${SUPABASE_CONFIG.table}?select=data&id=eq.${SUPABASE_CONFIG.recordId}`, {
+      headers: supabaseHeaders(),
+      cache: 'no-store'
+    });
+    if(res.ok) {
+      const rows = await res.json();
+      if(rows && rows.length > 0) return rows[0].data || {};
+    }
+  } catch(e) {}
+  return null;
+}
+
+async function getFreshBase() {
+  const latest = await fetchLatestRemote();
+  if(latest) return latest;
+  if(isSupabaseLoaded && supabaseCache) return supabaseCache;
+  return {};
+}
+
+// Fonctions exactes fournies par Claude pour lever l'erreur au lieu d'ignorer les échecs de persistance
+async function saveSupabaseData(newData) {
+  const base = `${SUPABASE_CONFIG.url}/rest/v1/${SUPABASE_CONFIG.table}`;
+
+  const res = await fetch(`${base}?id=eq.${SUPABASE_CONFIG.recordId}&select=id`, {
+    method: 'PATCH',
+    headers: supabaseHeaders({
+      'Content-Type': 'application/json',
+      'Prefer': 'return=representation'
+    }),
+    body: JSON.stringify({ data: newData })
+  });
+  if (!res.ok) {
+    const t = await res.text().catch(() => '');
+    throw new Error('Sauvegarde refusée (' + res.status + ') ' + t);
+  }
+  const rows = await res.json();
+  if (rows && rows.length > 0) return true;
+
+  // 0 ligne modifiée : on tente de créer la ligne
+  const res2 = await fetch(`${base}?on_conflict=id`, {
+    method: 'POST',
+    headers: supabaseHeaders({
+      'Content-Type': 'application/json',
+      'Prefer': 'resolution=merge-duplicates,return=representation'
+    }),
+    body: JSON.stringify({ id: SUPABASE_CONFIG.recordId, data: newData })
+  });
+  if (!res2.ok) {
+    const t = await res2.text().catch(() => '');
+    throw new Error('Création refusée (' + res2.status + ') ' + t);
+  }
+  const rows2 = await res2.json();
+  if (!rows2 || rows2.length === 0) {
+    throw new Error("Rien n'a été enregistré : vérifie les policies RLS de site_data.");
+  }
+  return true;
+}
+
+async function writeJSON(key, value) {
+  const base = await getFreshBase();
+  base[key] = value;
+  await saveSupabaseData(base);      // lève une erreur si échec
+  supabaseCache = base;              // cache mis à jour seulement si OK
+  isSupabaseLoaded = true;
+}
+
+async function writeJSONMany(updates) {
+  const base = await getFreshBase();
+  Object.assign(base, updates);
+  await saveSupabaseData(base);
+  supabaseCache = base;
+  isSupabaseLoaded = true;
+}
+
+function readJSON(key, fallback) {
+  if(supabaseCache && supabaseCache[key] !== undefined) {
+    return supabaseCache[key];
+  }
+  return fallback;
+}
+
+async function uploadMedia(file) {
+  const ext = (file.name.split('.').pop() || 'bin').toLowerCase().replace(/[^a-z0-9]/g, '');
+  const path = 'p_' + Date.now() + '_' + Math.random().toString(36).slice(2, 9) + '.' + ext;
+  const res = await fetch(`${SUPABASE_CONFIG.url}/storage/v1/object/media/${path}`, {
+    method: 'POST',
+    headers: supabaseHeaders({ 'Content-Type': file.type || 'application/octet-stream' }),
+    body: file
+  });
+  if (!res.ok) {
+    let d = '';
+    try { d = (await res.json()).message || ''; } catch (e) {}
+    throw new Error('Envoi du fichier ' + res.status + ' ' + d);
+  }
+  return `${SUPABASE_CONFIG.url}/storage/v1/object/public/media/${path}`;
+}
+
+function applyHeaderBranding() {
+  const brandName = readJSON('rock_brand_name', 'The Rock <span>Solidarity Foundation</span>');
+  const brandTag = readJSON('rock_brand_tag', 'Initiative indépendante · Non affiliée à Dwayne Douglas Johnson');
+  const brandLogo = readJSON('rock_brand_logo', '');
+
+  if($('#brandNameContainer')) $('#brandNameContainer').innerHTML = brandName;
+  if($('#brandTagContainer')) $('#brandTagContainer').textContent = brandTag;
+  
+  const markContainer = $('#brandMarkContainer');
+  if(markContainer) {
+    if(brandLogo) {
+      markContainer.innerHTML = `<img src="${brandLogo}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" alt="Logo">`;
+    } else {
+      markContainer.innerHTML = `
+        <svg viewBox="0 0 64 64" role="img" style="width:100%;height:100%;">
+          <defs><linearGradient id="lg1" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#075bff"/><stop offset="1" stop-color="#06358c"/></linearGradient><linearGradient id="lg2" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffd52e"/><stop offset="1" stop-color="#ff9f00"/></linearGradient></defs>
+          <path d="M32 56C24 49 7 38 5 24 3 11 18 3 29 13l3 3 4-4C48 2 62 11 59 25 56 39 42 49 32 56Z" fill="url(#lg1)"/>
+          <path d="M31 51C22 43 11 35 10 24c-1-8 7-13 14-9 4 2 6 6 8 9 3-5 7-10 13-10 7 0 12 6 10 13-2 10-15 20-24 24Z" fill="url(#lg2)" opacity=".98"/>
+          <path d="M17 29l10 9 8-10 5 4 8-11" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M23 22l-6 7 10 9" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/>
+        </svg>`;
+    }
+  }
+}
+
+function applyContactFooterData() {
+  const phoneVal = readJSON('rock_admin_phone', '+229 01 02 03 04');
+  const emailVal = readJSON('rock_admin_email', 'contact@therocksolidarity.org');
+
+  if($('#footerPhoneText')) $('#footerPhoneText').textContent = phoneVal;
+  if($('#footerEmailText')) $('#footerEmailText').textContent = emailVal;
+  if($('#contactViewPhone')) $('#contactViewPhone').textContent = phoneVal;
+  if($('#contactViewEmail')) $('#contactViewEmail').textContent = emailVal;
+}
+
+function applyHeroSliderData() {
+  const p1 = readJSON('rock_hero_p1', "Soutenons ensemble les projets qui bâtissent <em>un avenir meilleur</em>");
+  const p2 = readJSON('rock_hero_p2', "Chaque initiative solidaire mérite d'être portée vers le succès");
+  const p3 = readJSON('rock_hero_p3', "Des projets qui méritent une chance");
+
+  window.heroSliderPhrases = [
+    { title: p1, badge: "Des projets qui méritent une chance" },
+    { title: p2, badge: "Accompagner l'entrepreneuriat" },
+    { title: p3, badge: "Impact et Transparence" }
+  ];
+  updateHeroSlideContent();
+}
+
+let currentHeroIndex = 0;
+const heroSlidesData = [
+  { desc: "Nous accompagnons les entrepreneurs et les porteurs de projets qui ont besoin d'un nouvel élan." },
+  { desc: "Donnons vie aux idées novatrices qui dynamisent nos communautés locales." },
+  { desc: "Ensemble, bâtissons un réseau de soutien solide et pérenne." }
+];
+
+function updateHeroSlideContent() {
+  const slides = $$('.hero-slide', $('#heroSlider'));
+  const dots = $$('#heroDots button');
+  const titleEl = $('#heroSlideTitle');
+  const descEl = $('#heroSlideDesc');
+  const badgeEl = $('#heroSlideBadgeText');
+
+  slides.forEach((s, idx) => {
+    if(idx === currentHeroIndex) s.classList.add('active');
+    else s.classList.remove('active');
+  });
+
+  dots.forEach((d, idx) => {
+    if(idx === currentHeroIndex) d.classList.add('active');
+    else d.classList.remove('active');
+  });
+
+  const ti = currentHeroIndex % 3;
+  if(window.heroSliderPhrases && window.heroSliderPhrases[ti]) {
+    if(titleEl) titleEl.innerHTML = window.heroSliderPhrases[ti].title;
+    if(badgeEl) badgeEl.textContent = window.heroSliderPhrases[ti].badge;
+  }
+  if(descEl && heroSlidesData[ti]) {
+    descEl.textContent = heroSlidesData[ti].desc;
+  }
+}
+
+function nextHeroSlide() {
+  currentHeroIndex = (currentHeroIndex + 1) % 6;
+  updateHeroSlideContent();
+}
+
+function prevHeroSlide() {
+  currentHeroIndex = (currentHeroIndex - 1 + 6) % 6;
+  updateHeroSlideContent();
+}
+
+let heroInterval = setInterval(nextHeroSlide, 5000);
+
+document.addEventListener('DOMContentLoaded', () => {
+  $('#heroNext')?.addEventListener('click', () => {
+    clearInterval(heroInterval);
+    nextHeroSlide();
+    heroInterval = setInterval(nextHeroSlide, 5000);
+  });
+  $('#heroPrev')?.addEventListener('click', () => {
+    clearInterval(heroInterval);
+    prevHeroSlide();
+    heroInterval = setInterval(nextHeroSlide, 5000);
+  });
+  $$('#heroDots button').forEach((dot, idx) => {
+    dot.addEventListener('click', () => {
+      clearInterval(heroInterval);
+      currentHeroIndex = idx;
+      updateHeroSlideContent();
+      heroInterval = setInterval(nextHeroSlide, 5000);
+    });
+  });
+});
+
+const DEFAULT_ADMINS = [
+  { id: 'admin1', name: 'Le fondateur', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=160&h=160&fit=crop&crop=faces' },
+  { id: 'admin2', name: 'Marie Claire', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=160&h=160&fit=crop&crop=faces' },
+  { id: 'admin3', name: 'Marc Dupont', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=160&h=160&fit=crop&crop=faces' },
+  { id: 'admin4', name: 'Sarah Koffi', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=160&h=160&fit=crop&crop=faces' }
+];
+
+function getAdminsList() {
+  return readJSON('rock_admins_list', DEFAULT_ADMINS);
+}
+
+function openWhatsAppChat() {
+  const phone = (readJSON('rock_admin_phone', '+229 01 02 03 04')).replace(/[^0-9]/g, '');
+  const url = `https://wa.me/${phone}?text=${encodeURIComponent("Bonjour, je vous contacte depuis le site The Rock Solidarity Foundation.")}`;
+  window.open(url, '_blank');
+}
+
+let isAdminUnlocked = false;
+
+function updateAdminUIVisibility() {
+  const panel = $('#adminNavPanel');
+  if(panel) {
+    if(isAdminUnlocked) {
+      panel.classList.add('open');
+      updateAdminDossierBadge();
+    } else {
+      panel.classList.remove('open');
+    }
+  }
+}
+
+function updateAdminDossierBadge() {
+  const list = readJSON('rock_candidate_dossiers', []);
+  const badge = $('#adminDossierCountBadge');
+  if(badge) badge.textContent = list.length;
+}
+
+function adminLogout() {
+  isAdminUnlocked = false;
+  updateAdminUIVisibility();
+  renderPublicPosts();
+  showToast('🔒 Panneau administrateur verrouillé et masqué.');
+}
+
+function closeAdminLogin() {
+  $('#adminLoginOverlay')?.classList.remove('open');
+}
+
+function submitAdminLogin(event) {
+  event.preventDefault();
+  const pwdInput = $('#adm_loginPassword').value;
+  const correctPwd = readJSON('rock_admin_pwd', 'ROCK 7275 @');
+
+  if(pwdInput === correctPwd) {
+    isAdminUnlocked = true;
+    updateAdminUIVisibility();
+    renderPublicPosts();
+    closeAdminLogin();
+    showToast('🔓 Panneau admin démasqué avec succès !');
+    openDrawer();
+  } else {
+    showToast('❌ Mot de passe incorrect');
+  }
+  $('#adm_loginPassword').value = '';
+}
+
+let hamburgerTimer = null;
+let hamburgerProgressInterval = null;
+let pressStartTime = 0;
+const HOLD_DURATION = 10000;
+
+const hamburgerBtn = $('#hamburgerBtn');
+const hamburgerProgress = $('#hamburgerProgress');
+
+function startHamburgerHold(e) {
+  pressStartTime = Date.now();
+  let elapsed = 0;
+  if(hamburgerProgress) hamburgerProgress.style.width = '0%';
+
+  hamburgerProgressInterval = setInterval(() => {
+    elapsed = Date.now() - pressStartTime;
+    let pct = Math.min(100, (elapsed / HOLD_DURATION) * 100);
+    if(hamburgerProgress) hamburgerProgress.style.width = pct + '%';
+  }, 100);
+
+  hamburgerTimer = setTimeout(() => {
+    clearInterval(hamburgerProgressInterval);
+    if(hamburgerProgress) hamburgerProgress.style.width = '0%';
+    
+    if(isAdminUnlocked) {
+      adminLogout();
+      closeDrawer();
+    } else {
+      $('#adminLoginOverlay')?.classList.add('open');
+      closeDrawer();
+    }
+  }, HOLD_DURATION);
+}
+
+function cancelHamburgerHold() {
+  if(hamburgerTimer) clearTimeout(hamburgerTimer);
+  if(hamburgerProgressInterval) clearInterval(hamburgerProgressInterval);
+  if(hamburgerProgress) hamburgerProgress.style.width = '0%';
+}
+
+hamburgerBtn?.addEventListener('mousedown', startHamburgerHold);
+hamburgerBtn?.addEventListener('mouseup', cancelHamburgerHold);
+hamburgerBtn?.addEventListener('mouseleave', cancelHamburgerHold);
+hamburgerBtn?.addEventListener('touchstart', startHamburgerHold, {passive: true});
+hamburgerBtn?.addEventListener('touchend', cancelHamburgerHold);
+
+function openStatsPage(blockId) {
+  const titleEl = $('#statsPageHeaderTitle');
+  const subEl = $('#statsPageHeaderSub');
+  const contentArea = $('#statsPageContentArea');
+  if(!titleEl || !contentArea) return;
+
+  if(blockId === 1) {
+    titleEl.innerHTML = "<span>📊</span> Évolution des Projets Soutenus";
+    subEl.textContent = "Analyse détaillée par secteur d'activité et taux de réussite des initiatives accompagnées.";
+    contentArea.innerHTML = `
+      <p style="font-size:14px; color:#4a5568; line-height:1.6; margin-bottom:16px;">Ce rapport présente la répartition sectorielle et l'efficacité opérationnelle des projets sélectionnés par notre comité d'experts.</p>
+      <div class="stats-chart-container">
+        <div class="chart-bar-row"><span class="chart-bar-label">Entrepreneuriat</span><div class="chart-bar-track"><div class="chart-bar-fill" style="width:75%">6 projets</div></div></div>
+        <div class="chart-bar-row"><span class="chart-bar-label">Communautaire</span><div class="chart-bar-track"><div class="chart-bar-fill" style="width:50%">4 projets</div></div></div>
+        <div class="chart-bar-row"><span class="chart-bar-label">Éducation</span><div class="chart-bar-track"><div class="chart-bar-fill" style="width:40%">3 projets</div></div></div>
+        <div class="chart-bar-row"><span class="chart-bar-label">Autres</span><div class="chart-bar-track"><div class="chart-bar-fill" style="width:25%">1 projet</div></div></div>
+      </div>
+      <div style="background:#f8fafc; padding:16px; border-radius:12px; font-size:13px; color:#1e293b; margin-top:20px; border-left:4px solid var(--blue);">
+        <b>Indicateur clé :</b> 94% des porteurs de projets soutenus ont atteint leurs objectifs de développement à 6 mois.
+      </div>
+    `;
+  } else if(blockId === 2) {
+    titleEl.innerHTML = "<span>📈</span> Évolution Financière & Fonds Décaissés";
+    subEl.textContent = "Suivi trimestriel des décaissements et des investissements solidaires réalisés sur le terrain.";
+    contentArea.innerHTML = `
+      <p style="font-size:14px; color:#4a5568; line-height:1.6; margin-bottom:16px;">Transparence totale sur l'allocation des ressources financières aux entrepreneurs et structures partenaires.</p>
+      <div class="stats-chart-container">
+        <div class="chart-bar-row"><span class="chart-bar-label">Trimestre 1</span><div class="chart-bar-track"><div class="chart-bar-fill" style="width:40%">900 $</div></div></div>
+        <div class="chart-bar-row"><span class="chart-bar-label">Trimestre 2</span><div class="chart-bar-track"><div class="chart-bar-fill" style="width:65%">1 250 $</div></div></div>
+        <div class="chart-bar-row"><span class="chart-bar-label">Trimestre 3</span><div class="chart-bar-track"><div class="chart-bar-fill" style="width:85%">2 050 $</div></div></div>
+      </div>
+      <div style="background:#f8fafc; padding:16px; border-radius:12px; font-size:13px; color:#1e293b; margin-top:20px; border-left:4px solid var(--green);">
+        <b>Total cumulé :</b> 4 200 $ injectés directement dans l'économie réelle et solidaire.
+      </div>
+    `;
+  } else if(blockId === 3) {
+    titleEl.innerHTML = "<span>🔍</span> Transparence & Gouvernance";
+    subEl.textContent = "Indicateurs de conformité, traçabilité des dossiers et audits de terrain réguliers.";
+    contentArea.innerHTML = `
+      <p style="font-size:14px; color:#4a5568; line-height:1.6; margin-bottom:16px;">Chaque action menée par notre fondation est soumise à des critères stricts de vérification et de contrôle éthique.</p>
+      <div class="stats-chart-container">
+        <div class="chart-bar-row"><span class="chart-bar-label">Traçabilité</span><div class="chart-bar-track"><div class="chart-bar-fill" style="width:100%">100%</div></div></div>
+        <div class="chart-bar-row"><span class="chart-bar-label">Audits réalisés</span><div class="chart-bar-track"><div class="chart-bar-fill" style="width:95%">95%</div></div></div>
+        <div class="chart-bar-row"><span class="chart-bar-label">Satisfaction</span><div class="chart-bar-track"><div class="chart-bar-fill" style="width:98%">98%</div></div></div>
+      </div>
+      <div style="background:#f8fafc; padding:16px; border-radius:12px; font-size:13px; color:#1e293b; margin-top:20px; border-left:4px solid var(--gold);">
+        <b>Garantie éthique :</b> Publication mensuelle des reçus et des rapports d'impact validés par les administrateurs.
+      </div>
+    `;
+  }
+
+  switchView('statsPage');
+}
+
+const PAGE_DEFS = {
+  criteres: {
+    key: 'rock_page_criteres', container: '#standaloneCrit', title: '#pageCritTitle', body: '#pageCritBody', icon: '🎯',
+    label: "Critères d'attribution de l'aide",
+    defaultBody: `Pour bénéficier d'un accompagnement ou d'un soutien financier de la part de la fondation, chaque porteur de projet ou entrepreneur doit remplir les critères fondamentaux suivants :\n- **Utilité sociale et locale :** Le projet doit présenter un impact positif direct sur la communauté ou le développement économique local.\n- **Engagement et sérieux :** Fournir un dossier clair détaillant les objectifs, le plan d'utilisation des fonds et la motivation de l'équipe.\n- **Transparence financière :** Accepter de rendre compte de l'avancement des réalisations et de l'utilisation de l'aide allouée.\n- **Indépendance :** Le projet ne doit pas aller à l'encontre des valeurs de solidarité, d'éthique et de respect mutuel prônées par l'initiative.`
+  },
+  confidentialite: {
+    key: 'rock_page_confidentialite', container: '#standaloneConf', title: '#pageConfTitle', body: '#pageConfBody', icon: '🔒',
+    label: 'Règles de confidentialité',
+    defaultBody: `La protection de vos données personnelles est une priorité absolue pour The Rock Solidarity Foundation :\n- **Collecte minimale :** Seules les informations strictement nécessaires fournies via nos formulaires de contact ou de soutien sont conservées.\n- **Sécurité des échanges :** Les messages et dossiers partagés via notre messagerie sécurisée restent strictement confidentiels et ne sont jamais revendus à des tiers.\n- **Utilisation des médias :** Les documents ou photos partagés pour les projets le sont dans le cadre strict de l'évaluation et de la communication autorisée par le demandeur.`
+  },
+  contact: {
+    key: 'rock_page_contact', container: '#standaloneContact', title: '#pageContactTitle', body: '#pageContactBody', icon: '💬',
+    label: 'Contact & Support',
+    defaultBody: `Vous pouvez nous contacter directement via les coordonnées ci-dessous pour toute question relative à votre projet ou au suivi de votre dossier :`
+  }
+};
+
+const PAGE_THEMES = {
+  clair: { textColor: '#26365f', titleColor: '#082d72', bgColor: '#ffffff' },
+  dore:  { textColor: '#D4AF37', titleColor: '#FFD700', bgColor: '#1a1208' }
+};
+
+const PAGE_FONTS = {
+  'Inter, system-ui, sans-serif': 'Moderne (Inter)',
+  'Georgia, serif': 'Georgia (élégante)',
+  "'Times New Roman', serif": 'Times New Roman',
+  "'Trebuchet MS', sans-serif": 'Trebuchet',
+  "'Courier New', monospace": 'Courier'
+};
+
+function safeColor(value, fallback) {
+  return /^#[0-9a-fA-F]{6}$/.test(String(value || '')) ? value : fallback;
+}
+
+function renderRichText(raw) {
+  const inline = s => escapeHtml(s).replace(/\*\*(.+?)\*\*/g, '<b class="pg-accent">$1</b>');
+  const lines = String(raw || '').split(/\r?\n/);
+  let html = '';
+  let inList = false;
+  for (const line of lines) {
+    const t = line.trim();
+    if (t.startsWith('- ')) {
+      if (!inList) { html += '<ul>'; inList = true; }
+      html += '<li>' + inline(t.slice(2)) + '</li>';
+      continue;
+    }
+    if (inList) { html += '</ul>'; inList = false; }
+    if (!t) continue;
+    if (t.startsWith('## ')) html += '<h2 class="pg-sub">' + inline(t.slice(3)) + '</h2>';
+    else html += '<p>' + inline(t) + '</p>';
+  }
+  if (inList) html += '</ul>';
+  return html;
+}
+
+function applyPagesContent() {
+  for (const slug of Object.keys(PAGE_DEFS)) {
+    const def = PAGE_DEFS[slug];
+    const cfg = readJSON(def.key, null);
+    const box = $(def.container);
+    if (!cfg || !box) continue;
+
+    const titleEl = $(def.title);
+    const bodyEl = $(def.body);
+    if (cfg.title && titleEl) titleEl.innerHTML = `<span>${def.icon}</span> ${escapeHtml(cfg.title)}`;
+    if (cfg.body && bodyEl) {
+      let html = renderRichText(cfg.body);
+      if (slug === 'contact') {
+        html += `<ul><li><b>WhatsApp :</b> <span id="contactViewPhone"></span></li><li><b>E-mail :</b> <span id="contactViewEmail"></span></li></ul>`;
+      }
+      bodyEl.innerHTML = html;
+    }
+
+    if (cfg.styled) {
+      const size = Math.min(28, Math.max(12, parseInt(cfg.size, 10) || 15));
+      const font = PAGE_FONTS[cfg.font] ? cfg.font : 'Inter, system-ui, sans-serif';
+      box.classList.add('custom-style');
+      box.style.setProperty('--pg-bg', safeColor(cfg.bgColor, '#ffffff'));
+      box.style.setProperty('--pg-text', safeColor(cfg.textColor, '#26365f'));
+      box.style.setProperty('--pg-title', safeColor(cfg.titleColor, '#082d72'));
+      box.style.setProperty('--pg-font', font);
+      box.style.setProperty('--pg-size', size + 'px');
+    } else {
+      box.classList.remove('custom-style');
+    }
+  }
+  applyContactFooterData();
+}
+
+function pageFormBlock(slug) {
+  const def = PAGE_DEFS[slug];
+  const cfg = readJSON(def.key, null) || {};
+  const title = cfg.title || def.label;
+  const body = cfg.body || def.defaultBody;
+  const textColor = safeColor(cfg.textColor, PAGE_THEMES.clair.textColor);
+  const titleColor = safeColor(cfg.titleColor, PAGE_THEMES.clair.titleColor);
+  const bgColor = safeColor(cfg.bgColor, PAGE_THEMES.clair.bgColor);
+  const font = PAGE_FONTS[cfg.font] ? cfg.font : 'Inter, system-ui, sans-serif';
+  const size = Math.min(28, Math.max(12, parseInt(cfg.size, 10) || 15));
+
+  let fontOptions = '';
+  for (const [val, name] of Object.entries(PAGE_FONTS)) {
+    fontOptions += `<option value="${escapeHtml(val)}" ${val === font ? 'selected' : ''}>${escapeHtml(name)}</option>`;
+  }
+  const contactNote = slug === 'contact'
+    ? `<p style="font-size:11.5px;color:#64748b;margin:0;">Le numéro WhatsApp et l'e-mail sont ajoutés automatiquement sous votre texte.</p>`
+    : '';
+
+  return `
+    <details style="border:1px solid #e2e8f5; border-radius:12px; padding:10px 12px; background:#f8fafc;">
+      <summary style="font-weight:800; cursor:pointer; color:var(--navy); font-size:13.5px;">${def.icon} Page : ${escapeHtml(def.label)}</summary>
+      <div style="display:flex; flex-direction:column; gap:12px; margin-top:12px;">
+        <div class="admin-form-group" style="margin:0;"><label>Titre de la page :</label><input type="text" class="admin-form-input" id="adm_pg_${slug}_title" value="${escapeHtml(title)}"></div>
+        <div class="admin-form-group" style="margin:0;">
+          <label>Texte de la page :</label>
+          <textarea class="admin-form-textarea" style="min-height:170px;" id="adm_pg_${slug}_body">${escapeHtml(body)}</textarea>
+          <span style="font-size:11.5px;color:#64748b;">Astuce : <b>## Mon sous-titre</b> · <b>- une puce</b> · <b>**mot mis en couleur**</b></span>
+          ${contactNote}
+        </div>
+        <div class="admin-form-group" style="margin:0;">
+          <label>Thème rapide :</label>
+          <select class="admin-form-select" id="adm_pg_${slug}_theme" onchange="applyPageThemePreset('${slug}')">
+            <option value="">Personnalisé</option>
+            <option value="clair">Clair classique</option>
+            <option value="dore">Doré sur fond sombre ✨</option>
+          </select>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px;">
+          <div class="admin-form-group" style="margin:0;"><label>Texte</label><input type="color" class="admin-form-input" style="height:40px;padding:4px;" id="adm_pg_${slug}_textColor" value="${textColor}"></div>
+          <div class="admin-form-group" style="margin:0;"><label>Titres</label><input type="color" class="admin-form-input" style="height:40px;padding:4px;" id="adm_pg_${slug}_titleColor" value="${titleColor}"></div>
+          <div class="admin-form-group" style="margin:0;"><label>Fond</label><input type="color" class="admin-form-input" style="height:40px;padding:4px;" id="adm_pg_${slug}_bgColor" value="${bgColor}"></div>
+        </div>
+        <div style="display:grid; grid-template-columns:2fr 1fr; gap:8px;">
+          <div class="admin-form-group" style="margin:0;"><label>Police :</label><select class="admin-form-select" id="adm_pg_${slug}_font">${fontOptions}</select></div>
+          <div class="admin-form-group" style="margin:0;"><label>Taille (px) :</label><input type="number" min="12" max="28" class="admin-form-input" id="adm_pg_${slug}_size" value="${size}"></div>
+        </div>
+      </div>
+    </details>
+  `;
+}
+
+function applyPageThemePreset(slug) {
+  const choice = $(`#adm_pg_${slug}_theme`)?.value;
+  const theme = PAGE_THEMES[choice];
+  if (!theme) return;
+  $(`#adm_pg_${slug}_textColor`).value = theme.textColor;
+  $(`#adm_pg_${slug}_titleColor`).value = theme.titleColor;
+  $(`#adm_pg_${slug}_bgColor`).value = theme.bgColor;
+}
+
+let currentAdminActionType = null;
+let currentEditPostId = null;
+
+function openAdminForm(actionType, extraId) {
+  currentAdminActionType = actionType;
+  const overlay = $('#adminFormOverlay');
+  const titleEl = $('#adminFormTitle');
+  const contentEl = $('#adminFormContent');
+  if(!overlay || !contentEl) return;
+
+  closeDrawer();
+  let html = '';
+
+  if(actionType === 'entete') {
+    titleEl.textContent = "Modifier En-tête (Logo, Nom, Phrase)";
+    let curName = readJSON('rock_brand_name', 'The Rock <span>Solidarity Foundation</span>');
+    let curTag = readJSON('rock_brand_tag', 'Initiative indépendante · Non affiliée à Dwayne Douglas Johnson');
+    html = `
+      <div class="admin-form-group">
+        <label>Nom du site (HTML autorisé) :</label>
+        <input type="text" class="admin-form-input" id="adm_brandName" value="${escapeHtml(curName)}" required>
+      </div>
+      <div class="admin-form-group">
+        <label>Petite phrase de description en bas :</label>
+        <input type="text" class="admin-form-input" id="adm_brandTag" value="${escapeHtml(curTag)}" required>
+      </div>
+      <div class="admin-form-group">
+        <label>Logo :</label>
+        <input type="file" class="admin-form-input" id="adm_brandLogoFile" accept="image/*">
+      </div>
+      <div class="admin-form-actions">
+        <button type="button" class="custom-modal-btn cancel" onclick="closeAdminForm()">Annuler</button>
+        <button type="submit" class="custom-modal-btn confirm" style="background:var(--blue);">Enregistrer</button>
+      </div>
+    `;
+  } else if(actionType === 'menu_burger_config') {
+    titleEl.textContent = "⚙️ Configuration : Menu Burger & Textes";
+    let curAccueil = readJSON('menu_accueil', 'Accueil');
+    let curCampagnes = readJSON('menu_campagnes', 'Campagnes et projets');
+    let curCandidature = readJSON('menu_candidature', 'Soumettre un dossier de projet');
+    let curCriteres = readJSON('menu_criteres', "Critères d'attribution de l'aide");
+    let curConf = readJSON('menu_confidentialite', 'Règles de confidentialité');
+    let curContact = readJSON('menu_contact', 'Contact & Support');
+
+    let curPwd = readJSON('rock_admin_pwd', 'ROCK 7275 @');
+    let curChatLabel = readJSON('rock_chat_label', "Écrivez-nous sur WhatsApp");
+
+    html = `
+      <div style="max-height:60vh; overflow-y:auto; display:flex; flex-direction:column; gap:14px; padding-right:4px;">
+        <h3 style="font-size:14px; color:var(--blue); margin:0;">Options du Menu Burger</h3>
+        <div class="admin-form-group"><label>1. Accueil :</label><input type="text" class="admin-form-input" id="adm_m_acc" value="${escapeHtml(curAccueil)}" required></div>
+        <div class="admin-form-group"><label>2. Campagnes et projets :</label><input type="text" class="admin-form-input" id="adm_m_camp" value="${escapeHtml(curCampagnes)}" required></div>
+        <div class="admin-form-group"><label>3. Soumettre un dossier de projet :</label><input type="text" class="admin-form-input" id="adm_m_cand" value="${escapeHtml(curCandidature)}" required></div>
+        <div class="admin-form-group"><label>4. Critères d'attribution de l'aide :</label><input type="text" class="admin-form-input" id="adm_m_crit" value="${escapeHtml(curCriteres)}" required></div>
+        <div class="admin-form-group"><label>5. Règles de confidentialité :</label><input type="text" class="admin-form-input" id="adm_m_conf" value="${escapeHtml(curConf)}" required></div>
+        <div class="admin-form-group"><label>6. Contact & Support :</label><input type="text" class="admin-form-input" id="adm_m_cont" value="${escapeHtml(curContact)}" required></div>
+
+        <hr style="border:0; border-top:1px solid #e2e8f5; margin:6px 0;">
+        <h3 style="font-size:14px; color:var(--blue); margin:0;">Contenu des pages</h3>
+        ${pageFormBlock('criteres')}
+        ${pageFormBlock('confidentialite')}
+        ${pageFormBlock('contact')}
+
+        <hr style="border:0; border-top:1px solid #e2e8f5; margin:6px 0;">
+        <div class="admin-form-group"><label>Texte du bouton WhatsApp flottant :</label><input type="text" class="admin-form-input" id="adm_chatLabel" value="${escapeHtml(curChatLabel)}" required></div>
+        <div class="admin-form-group"><label>Mot de passe Administrateur :</label><input type="text" class="admin-form-input" id="adm_newPwd" value="${escapeHtml(curPwd)}" required></div>
+      </div>
+      <div class="admin-form-actions" style="margin-top:16px;">
+        <button type="button" class="custom-modal-btn cancel" onclick="closeAdminForm()">Annuler</button>
+        <button type="submit" class="custom-modal-btn confirm" style="background:var(--blue);">Enregistrer</button>
+      </div>
+    `;
+  } else if(actionType === 'bienvenue') {
+    titleEl.textContent = "Modification : Message de Bienvenue";
+    let curTitle = readJSON('rock_welcome_title', 'Centre Officiel de <span>The Rock Solidarity Foundation</span>');
+    let curSub = readJSON('rock_welcome_subtitle', 'Plateforme solidaire d\'accompagnement et de suivi des projets');
+    html = `
+      <div class="admin-form-group">
+        <label>Grand Titre (HTML autorisé) :</label>
+        <textarea class="admin-form-textarea" id="adm_welcomeTitle" required>${escapeHtml(curTitle)}</textarea>
+      </div>
+      <div class="admin-form-group">
+        <label>Sous-titre explicatif :</label>
+        <input type="text" class="admin-form-input" id="adm_welcomeSub" value="${escapeHtml(curSub)}" required>
+      </div>
+      <div class="admin-form-actions">
+        <button type="button" class="custom-modal-btn cancel" onclick="closeAdminForm()">Annuler</button>
+        <button type="submit" class="custom-modal-btn confirm" style="background:var(--blue);">Enregistrer</button>
+      </div>
+    `;
+  } else if(actionType === 'stats_impact') {
+    titleEl.textContent = "Configuration : Statistiques d'Impact";
+    let s1 = readJSON('rock_stat_1', '14');
+    let s2 = readJSON('rock_stat_2', '4 200 $');
+    let s3 = readJSON('rock_stat_3', '100%');
+    html = `
+      <div class="admin-form-group"><label>Valeur 1 :</label><input type="text" class="admin-form-input" id="adm_s1" value="${escapeHtml(s1)}" required></div>
+      <div class="admin-form-group"><label>Valeur 2 :</label><input type="text" class="admin-form-input" id="adm_s2" value="${escapeHtml(s2)}" required></div>
+      <div class="admin-form-group"><label>Valeur 3 :</label><input type="text" class="admin-form-input" id="adm_s3" value="${escapeHtml(s3)}" required></div>
+      <div class="admin-form-actions">
+        <button type="button" class="custom-modal-btn cancel" onclick="closeAdminForm()">Annuler</button>
+        <button type="submit" class="custom-modal-btn confirm" style="background:var(--blue);">Mettre à jour</button>
+      </div>
+    `;
+  } else if(actionType === 'gerer_admins') {
+    titleEl.textContent = "👥 Gérer les 4 Administrateurs";
+    const admins = getAdminsList();
+    html = `<div style="display:flex; flex-direction:column; gap:14px; max-height:60vh; overflow-y:auto;">`;
+    admins.forEach((adm, idx) => {
+      html += `
+        <div style="background:#f8fafc; border:1px solid #e2e8f5; border-radius:12px; padding:12px;">
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+            <img src="${escapeHtml(adm.avatar)}" style="width:40px;height:40px;border-radius:50%;object-fit:cover;border:1px solid #cbd5e1;" alt="Avatar">
+            <span style="font-weight:800; font-size:13.5px; color:var(--navy);">Administrateur ${idx + 1}</span>
+          </div>
+          <div class="admin-form-group" style="margin-bottom:8px;"><label>Nom :</label><input type="text" class="admin-form-input" id="adm_name_${idx}" value="${escapeHtml(adm.name)}" required></div>
+          <div class="admin-form-group" style="margin-bottom:0;"><label>Photo :</label><input type="file" class="admin-form-input" id="adm_avatar_file_${idx}" accept="image/*"></div>
+        </div>
+      `;
+    });
+    html += `</div><div class="admin-form-actions"><button type="button" class="custom-modal-btn cancel" onclick="closeAdminForm()">Annuler</button><button type="submit" class="custom-modal-btn confirm" style="background:var(--blue);">Enregistrer</button></div>`;
+  } else if(actionType === 'dossiers_recus') {
+    titleEl.textContent = "📁 Dossiers de projets soumis";
+    let dossiers = readJSON('rock_candidate_dossiers', []);
+    if(dossiers.length === 0) {
+      html = `<p style="font-size:13.5px; color:#53617f; padding:10px 0;">Aucun dossier soumis pour le moment.</p>`;
+    } else {
+      html = `<div style="display:flex; flex-direction:column; gap:12px; max-height:60vh; overflow-y:auto;">`;
+      dossiers.forEach((d, index) => {
+        html += `
+          <div style="background:#f8fafc; border:1px solid #e2e8f5; border-radius:12px; padding:12px; font-size:13px;">
+            <div style="font-weight:800; color:var(--navy); margin-bottom:2px;">${escapeHtml(d.projectTitle)}</div>
+            <div style="color:#53617f; font-size:12px; margin-bottom:6px;">Par : <b>${escapeHtml(d.name)}</b> (${escapeHtml(d.category)}) — Budget : ${escapeHtml(d.budget)}</div>
+            <p style="margin:0 0 8px; color:#1e293b; line-height:1.4;">${escapeHtml(d.description)}</p>
+            <div style="display:flex; justify-content:space-between; align-items:center; font-size:11.5px; color:#64748b;">
+              <span>Tél : ${escapeHtml(d.phone)}</span>
+              <button type="button" onclick="deleteDossier(${index})" style="background:#fee2e2; color:#dc2626; border:0; padding:4px 10px; border-radius:6px; font-weight:700; cursor:pointer;">Supprimer</button>
+            </div>
+          </div>
+        `;
+      });
+      html += `</div>`;
+    }
+  } else if(actionType === 'banniere') {
+    titleEl.textContent = "Gestion : Bannière / Slider";
+    let phrase1 = readJSON('rock_hero_p1', "Soutenons ensemble les projets qui bâtissent <em>un avenir meilleur</em>");
+    let phrase2 = readJSON('rock_hero_p2', "Chaque initiative solidaire mérite d'être portée vers le succès");
+    let phrase3 = readJSON('rock_hero_p3', "Des projets qui méritent une chance");
+    html = `
+      <div class="admin-form-group"><label>Phrase 1 :</label><textarea class="admin-form-textarea" style="min-height:70px;" id="adm_hero1" required>${escapeHtml(phrase1)}</textarea></div>
+      <div class="admin-form-group"><label>Phrase 2 :</label><textarea class="admin-form-textarea" style="min-height:70px;" id="adm_hero2" required>${escapeHtml(phrase2)}</textarea></div>
+      <div class="admin-form-group"><label>Phrase 3 :</label><textarea class="admin-form-textarea" style="min-height:70px;" id="adm_hero3" required>${escapeHtml(phrase3)}</textarea></div>
+      <div class="admin-form-actions"><button type="button" class="custom-modal-btn cancel" onclick="closeAdminForm()">Annuler</button><button type="submit" class="custom-modal-btn confirm" style="background:var(--blue);">Enregistrer</button></div>
+    `;
+  } else if(actionType === 'pied_page') {
+    titleEl.textContent = "Configuration : Pied de page";
+    let footerText = readJSON('rock_footer_desc', 'Une initiative privée qui accompagne les entrepreneurs...');
+    html = `
+      <div class="admin-form-group"><label>Description :</label><textarea class="admin-form-textarea" id="adm_footerDesc" required>${escapeHtml(footerText)}</textarea></div>
+      <div class="admin-form-actions"><button type="button" class="custom-modal-btn cancel" onclick="closeAdminForm()">Annuler</button><button type="submit" class="custom-modal-btn confirm" style="background:var(--blue);">Enregistrer</button></div>
+    `;
+  } else if(actionType === 'whatsapp_email') {
+    titleEl.textContent = "📱✉️ Modifier WhatsApp & E-mail";
+    let phoneVal = readJSON('rock_admin_phone', '+229 01 02 03 04');
+    let emailVal = readJSON('rock_admin_email', 'contact@therocksolidarity.org');
+    html = `
+      <div class="admin-form-group">
+        <label>Numéro WhatsApp :</label>
+        <input type="text" class="admin-form-input" id="adm_whatsappPhone" value="${escapeHtml(phoneVal)}" required>
+      </div>
+      <div class="admin-form-group">
+        <label>Compte E-mail :</label>
+        <input type="text" class="admin-form-input" id="adm_emailAddress" value="${escapeHtml(emailVal)}" required>
+      </div>
+      <div class="admin-form-actions">
+        <button type="button" class="custom-modal-btn cancel" onclick="closeAdminForm()">Annuler</button>
+        <button type="submit" class="custom-modal-btn confirm" style="background:var(--blue);">Enregistrer</button>
+      </div>
+    `;
+  } else if(actionType === 'faire_publication') {
+    titleEl.textContent = "Créer : + Faire une Publication";
+    const admins = getAdminsList();
+    let adminOptionsHtml = '';
+    admins.forEach((adm, idx) => { adminOptionsHtml += `<option value="${idx}">${escapeHtml(adm.name)}</option>`; });
+    html = `
+      <div class="admin-form-group"><label>Auteur :</label><select class="admin-form-select" id="adm_selectedAdminIndex">${adminOptionsHtml}</select></div>
+      <div class="admin-form-group"><label>Contenu :</label><textarea class="admin-form-textarea" id="adm_postText" placeholder="Écrivez votre message..." required></textarea></div>
+      <div class="admin-form-group"><label>Médias :</label><input type="file" class="admin-form-input" id="adm_postMediaFiles" accept="image/*,video/*" multiple></div>
+      <div class="admin-form-actions"><button type="button" class="custom-modal-btn cancel" onclick="closeAdminForm()">Annuler</button><button type="submit" class="custom-modal-btn confirm" style="background:var(--blue);">Publier</button></div>
+    `;
+  } else if(actionType === 'modifier_publication') {
+    titleEl.textContent = "✏️ Modifier la publication";
+    currentEditPostId = extraId || null;
+    const post = (readJSON('rock_custom_posts', []) || []).find(p => p.id === currentEditPostId);
+    if(!post) { currentAdminActionType = null; return; }
+    const admins = getAdminsList();
+    let authorOptions = `<option value="-1">Conserver l'auteur actuel (${escapeHtml(post.author || 'Le fondateur')})</option>`;
+    admins.forEach((adm, idx) => { authorOptions += `<option value="${idx}">${escapeHtml(adm.name)}</option>`; });
+    html = `
+      <div class="admin-form-group"><label>Auteur :</label><select class="admin-form-select" id="adm_editPostAuthor">${authorOptions}</select></div>
+      <div class="admin-form-group"><label>Contenu :</label><textarea class="admin-form-textarea" id="adm_editPostText" required>${escapeHtml(post.text || '')}</textarea></div>
+      <div class="admin-form-actions"><button type="button" class="custom-modal-btn cancel" onclick="closeAdminForm()">Annuler</button><button type="submit" class="custom-modal-btn confirm" style="background:var(--blue);">Enregistrer</button></div>
+    `;
+  }
+
+  contentEl.innerHTML = html;
+  overlay.classList.add('open');
+}
+
+function closeAdminForm() {
+  $('#adminFormOverlay')?.classList.remove('open');
+  currentAdminActionType = null;
+  currentEditPostId = null;
+}
+
+async function fileToDataUrl(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+async function submitAdminForm(event) {
+  event.preventDefault();
+  
+  try {
+    if(currentAdminActionType === 'entete') {
+      let bName = $('#adm_brandName').value.trim();
+      let bTag = $('#adm_brandTag').value.trim();
+      let logoFileInput = $('#adm_brandLogoFile');
+showToast('⏳ Enregistrement en cours…');
+      await writeJSON('rock_brand_name', bName);
+      await writeJSON('rock_brand_tag', bTag);
+if(logoFileInput && logoFileInput.files && logoFileInput.files[0]) {
+  showToast('⏳ Envoi du logo…');
+  const logoUrl = await uploadMedia(logoFileInput.files[0]);
+  await writeJSON('rock_brand_logo', logoUrl);
+}
+      applyHeaderBranding();
+      showToast('✅ En-tête mis à jour !');
+    } else if(currentAdminActionType === 'menu_burger_config') {
+      const updates = {
+        menu_accueil: $('#adm_m_acc').value.trim(),
+        menu_campagnes: $('#adm_m_camp').value.trim(),
+        menu_candidature: $('#adm_m_cand').value.trim(),
+        menu_criteres: $('#adm_m_crit').value.trim(),
+        menu_confidentialite: $('#adm_m_conf').value.trim(),
+        menu_contact: $('#adm_m_cont').value.trim(),
+        rock_chat_label: $('#adm_chatLabel').value.trim(),
+        rock_admin_pwd: $('#adm_newPwd').value.trim()
+      };
+
+      for (const slug of Object.keys(PAGE_DEFS)) {
+        const def = PAGE_DEFS[slug];
+        updates[def.key] = {
+          title: $(`#adm_pg_${slug}_title`).value.trim(),
+          body: $(`#adm_pg_${slug}_body`).value.trim(),
+          textColor: safeColor($(`#adm_pg_${slug}_textColor`).value, PAGE_THEMES.clair.textColor),
+          titleColor: safeColor($(`#adm_pg_${slug}_titleColor`).value, PAGE_THEMES.clair.titleColor),
+          bgColor: safeColor($(`#adm_pg_${slug}_bgColor`).value, PAGE_THEMES.clair.bgColor),
+          font: $(`#adm_pg_${slug}_font`).value,
+          size: Math.min(28, Math.max(12, parseInt($(`#adm_pg_${slug}_size`).value, 10) || 15)),
+          styled: true
+        };
+      }
+
+      await writeJSONMany(updates);
+      applyMenuTexts();
+      applyPagesContent();
+      showToast('✅ Menu et pages mis à jour !');
+    } else if(currentAdminActionType === 'bienvenue') {
+      let titleVal = $('#adm_welcomeTitle').value.trim();
+      let subVal = $('#adm_welcomeSub').value.trim();
+      await writeJSON('rock_welcome_title', titleVal);
+      await writeJSON('rock_welcome_subtitle', subVal);
+      if($('#welcomeTitleContainer')) $('#welcomeTitleContainer').innerHTML = titleVal;
+      if($('#welcomeSubtitleContainer')) $('#welcomeSubtitleContainer').textContent = subVal;
+      showToast('Message de bienvenue mis à jour !');
+    } else if(currentAdminActionType === 'stats_impact') {
+      let s1 = $('#adm_s1').value.trim();
+      let s2 = $('#adm_s2').value.trim();
+      let s3 = $('#adm_s3').value.trim();
+      await writeJSON('rock_stat_1', s1);
+      await writeJSON('rock_stat_2', s2);
+      await writeJSON('rock_stat_3', s3);
+      showToast('Statistiques mises à jour !');
+    } else if(currentAdminActionType === 'gerer_admins') {
+      let admins = getAdminsList();
+      for(let i = 0; i < admins.length; i++) {
+        let nameInput = $(`#adm_name_${i}`);
+        let fileInput = $(`#adm_avatar_file_${i}`);
+        if(nameInput) admins[i].name = nameInput.value.trim() || admins[i].name;
+        if(fileInput && fileInput.files && fileInput.files[0]) {
+          try { admins[i].avatar = await fileToDataUrl(fileInput.files[0]); } catch(e) {}
+        }
+      }
+      await writeJSON('rock_admins_list', admins);
+      renderPublicPosts();
+      showToast('Administrateurs mis à jour !');
+    } else if(currentAdminActionType === 'banniere') {
+      let p1 = $('#adm_hero1').value.trim();
+      let p2 = $('#adm_hero2').value.trim();
+      let p3 = $('#adm_hero3').value.trim();
+      await writeJSON('rock_hero_p1', p1);
+      await writeJSON('rock_hero_p2', p2);
+      await writeJSON('rock_hero_p3', p3);
+      applyHeroSliderData();
+      showToast('Bannière mise à jour !');
+    } else if(currentAdminActionType === 'pied_page') {
+      let descVal = $('#adm_footerDesc').value.trim();
+      await writeJSON('rock_footer_desc', descVal);
+      if($('#footerDescText')) $('#footerDescText').textContent = descVal;
+      showToast('Pied de page mis à jour !');
+    } else if(currentAdminActionType === 'whatsapp_email') {
+      let phoneVal = $('#adm_whatsappPhone').value.trim();
+      let emailVal = $('#adm_emailAddress').value.trim();
+      await writeJSON('rock_admin_phone', phoneVal);
+      await writeJSON('rock_admin_email', emailVal);
+      applyContactFooterData();
+      showToast('✅ WhatsApp et E-mail mis à jour !');
+    } else if(currentAdminActionType === 'faire_publication') {
+      let adminIdx = parseInt($('#adm_selectedAdminIndex').value, 10);
+      let admins = getAdminsList();
+      let selectedAdmin = admins[adminIdx] || admins[0];
+      let textVal = $('#adm_postText').value.trim();
+      let fileInput = $('#adm_postMediaFiles');
+      let mediaMetaList = [];
+      
+      if(fileInput && fileInput.files && fileInput.files.length > 0) {
+        for(let i = 0; i < fileInput.files.length; i++) {
+          let file = fileInput.files[i];
+          let isVideo = file.type.startsWith('video');
+          showToast('⏳ Envoi du fichier ' + (i + 1) + '/' + fileInput.files.length + '…');
+          const url = await uploadMedia(file);
+          mediaMetaList.push({ url: url, type: isVideo ? 'video' : 'image' });
+        }
+      }
+      
+      let customPosts = readJSON('rock_custom_posts', []);
+      customPosts.unshift({
+        id: 'post_' + Date.now(),
+        author: selectedAdmin.name,
+        avatar: selectedAdmin.avatar,
+        text: textVal,
+        createdAt: new Date().toISOString(),
+        media: mediaMetaList
+      });
+      
+      await writeJSON('rock_custom_posts', customPosts);
+      await renderPublicPosts();
+      showToast('Publication ajoutée !');
+    } else if(currentAdminActionType === 'modifier_publication') {
+      const postId = currentEditPostId;
+      const newText = $('#adm_editPostText').value.trim();
+      const authorIdx = parseInt($('#adm_editPostAuthor').value, 10);
+      const selAdmin = getAdminsList()[authorIdx];
+      const updatedPosts = (readJSON('rock_custom_posts', []) || []).map(p => {
+        if(p.id !== postId) return p;
+        const np = Object.assign({}, p, { text: newText });
+        if(selAdmin) { np.author = selAdmin.name; np.avatar = selAdmin.avatar; }
+        return np;
+      });
+      await writeJSON('rock_custom_posts', updatedPosts);
+      await renderPublicPosts();
+      showToast('✅ Publication modifiée !');
+    }
+
+    closeAdminForm();
+  } catch (error) {
+    console.error("Erreur :", error);
+    showToast("❌ Erreur : " + error.message);
+  }
+}
+
+async function deleteDossier(index) {
+  let dossiers = readJSON('rock_candidate_dossiers', []);
+  dossiers.splice(index, 1);
+  await writeJSON('rock_candidate_dossiers', dossiers);
+  updateAdminDossierBadge();
+  openAdminForm('dossiers_recus');
+  showToast('Dossier supprimé');
+}
+
+async function submitCandidatureProject(event) {
+  event.preventDefault();
+  const name = $('#cand_name').value.trim();
+  const projectTitle = $('#cand_projectTitle').value.trim();
+  const category = $('#cand_category').value;
+  const description = $('#cand_description').value.trim();
+  const budget = $('#cand_budget').value.trim();
+  const phone = $('#cand_phone').value.trim();
+
+  const newDossier = {
+    id: 'cand_' + Date.now(),
+    name, projectTitle, category, description, budget, phone,
+    createdAt: new Date().toISOString()
+  };
+
+  let dossiers = readJSON('rock_candidate_dossiers', []);
+  dossiers.unshift(newDossier);
+  await writeJSON('rock_candidate_dossiers', dossiers);
+
+  $('#projectSubmitForm').reset();
+  showToast('✅ Votre dossier a été soumis avec succès !');
+  switchView('home');
+}
+
+function formatLiveClockWithAgo(dateString) {
+  if (!dateString) return "";
+  const past = new Date(dateString);
+  if (isNaN(past.getTime())) return "";
+  const now = new Date();
+  const currentHours = String(now.getHours()).padStart(2, '0');
+  const currentMinutes = String(now.getMinutes()).padStart(2, '0');
+  const currentSeconds = String(now.getSeconds()).padStart(2, '0');
+  const liveClock = `${currentHours}:${currentMinutes}:${currentSeconds}`;
+  const diffSec = Math.floor((now - past) / 1000);
+
+  let agoText = "À l'instant";
+  if (diffSec >= 60) {
+    const diffMin = Math.floor(diffSec / 60);
+    if (diffMin < 60) agoText = `Il y a ${diffMin} min`;
+    else {
+      const diffHour = Math.floor(diffMin / 60);
+      if (diffHour < 24) agoText = `Il y a ${diffHour} h`;
+      else {
+        const diffDay = Math.floor(diffHour / 24);
+        agoText = diffDay === 1 ? "Il y a 1 jour" : `Il y a ${diffDay} jours`;
+      }
+    }
+  }
+  return `${liveClock} (${agoText})`;
+}
+
+function updateAllLiveClocks() {
+  $$('.live-clock-time').forEach(el => {
+    const dateStr = el.getAttribute('data-time');
+    if (dateStr) el.textContent = formatLiveClockWithAgo(dateStr);
+  });
+}
+setInterval(updateAllLiveClocks, 1000);
+
+const mediaUrlCache = {};
+async function resolvePostMedia(p) {
+  if (mediaUrlCache[p.id]) return mediaUrlCache[p.id];
+  let list = [];
+  if (Array.isArray(p.media) && p.media.length) {
+    for (const m of p.media) {
+      if (m.url) { list.push({ src: m.url, isVideo: m.type === 'video', isYoutube: m.type === 'youtube' }); continue; }
+      const src = typeof m === 'object' ? (m.src || m.url) : m;
+      const isYt = String(src).includes('youtube.com') || String(src).includes('youtu.be');
+      list.push({ src: src, isVideo: isYt || String(src).startsWith('data:video') || String(src).endsWith('.mp4'), isYoutube: isYt });
+    }
+  }
+  mediaUrlCache[p.id] = list;
+  return list;
+}
+
+function renderMediaGrid(mediaList, postId) {
+  if(!mediaList || mediaList.length === 0) return '';
+  const count = mediaList.length;
+  let gridClass = count === 2 ? 'fb-grid-2' : count === 3 ? 'fb-grid-3' : count >= 4 ? 'fb-grid-4-plus' : 'fb-grid-1';
+  let html = `<div class="meta-media-grid ${gridClass}">`;
+  const displayCount = Math.min(count, 4);
+
+  for(let i = 0; i < displayCount; i++) {
+    const m = mediaList[i];
+    const isOverlay = (i === 3 && count > 4);
+    const click = isOverlay ? '' : `onclick="openLightboxPost('${postId}', ${i}) "`;
+    let tag = '';
+    if(m.isYoutube) {
+      let ytEmbed = m.src;
+      if (ytEmbed.includes('watch?v=')) ytEmbed = ytEmbed.replace('watch?v=', 'embed/');
+      else if (ytEmbed.includes('youtu.be/')) ytEmbed = ytEmbed.replace('youtu.be/', 'www.youtube.com/embed/');
+      tag = `<div class="media-item-wrap"><div class="youtube-container"><iframe src="${ytEmbed}" title="YouTube video player" allowfullscreen></iframe><div class="youtube-touch-overlay" onclick="openLightboxPost('${postId}', ${i})"></div></div></div>`;
+    } else if(m.isVideo) {
+      tag = `<div class="media-item-wrap" ${click}><video src="${m.src}" preload="metadata" muted></video><div class="video-play-badge"><div class="play-circle"><svg viewBox="0 0 24 24"><polygon points="6,3 20,12 6,21"></polygon></svg></div></div></div>`;
+    } else {
+      tag = `<div class="media-item-wrap" ${click}><img src="${m.src}" alt="Média"></div>`;
+    }
+    if(isOverlay) {
+      html += `<div class="grid-more-overlay grid-item-${i}">${tag}<div class="grid-more-badge" onclick="openLightboxPost('${postId}', ${i})">+${count - 4}</div></div>`;
+    } else {
+      html += `<div class="grid-item-${i}">${tag}</div>`;
+    }
+  }
+  html += `</div>`;
+  return html;
+}
+
+let currentLightboxItems = [], currentLightboxIndex = 0;
+function openLightboxPost(postId, mediaIndex = 0) {
+  currentLightboxItems = mediaUrlCache[postId] || [];
+  if(!currentLightboxItems.length) return;
+  currentLightboxIndex = mediaIndex;
+  showLightboxItem();
+  $('#fbLightbox')?.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function showLightboxItem() {
+  if(!currentLightboxItems.length) return;
+  const item = currentLightboxItems[currentLightboxIndex];
+  $('#lightboxCounter').textContent = `${currentLightboxIndex + 1} / ${currentLightboxItems.length}`;
+  const container = $('#lightboxContainer');
+  if(container) {
+    if(item.isYoutube) {
+      let ytEmbed = item.src;
+      if (ytEmbed.includes('watch?v=')) ytEmbed = ytEmbed.replace('watch?v=', 'embed/');
+      container.innerHTML = `<iframe src="${ytEmbed}?autoplay=1" style="width:88vw;height:78vh;border:0" allowfullscreen></iframe>`;
+    } else if(item.isVideo) {
+      container.innerHTML = `<video src="${item.src}" controls autoplay style="max-width:88vw;max-height:78vh"></video>`;
+    } else {
+      container.innerHTML = `<img src="${item.src}" alt="Zoom">`;
+    }
+  }
+}
+
+function nextLightboxItem() {
+  if(!currentLightboxItems.length) return;
+  currentLightboxIndex = (currentLightboxIndex + 1) % currentLightboxItems.length;
+  showLightboxItem();
+}
+
+function prevLightboxItem() {
+  if(!currentLightboxItems.length) return;
+  currentLightboxIndex = (currentLightboxIndex - 1 + currentLightboxItems.length) % currentLightboxItems.length;
+  showLightboxItem();
+}
+
+function closeLightbox() {
+  $('#fbLightbox')?.classList.remove('open');
+  $('#lightboxContainer').innerHTML = '';
+  document.body.style.overflow = '';
+}
+
+let touchStartX = 0;
+let touchEndX = 0;
+
+document.addEventListener('DOMContentLoaded', () => {
+  $('#lightboxNextBtn')?.addEventListener('click', nextLightboxItem);
+  $('#lightboxPrevBtn')?.addEventListener('click', prevLightboxItem);
+
+  const lightboxBody = $('#lightboxBody');
+  if(lightboxBody) {
+    lightboxBody.addEventListener('touchstart', e => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, {passive: true});
+
+    lightboxBody.addEventListener('touchend', e => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipeGesture();
+    }, {passive: true});
+  }
+});
+
+function handleSwipeGesture() {
+  const threshold = 50;
+  if (touchEndX < touchStartX - threshold) {
+    nextLightboxItem();
+  }
+  if (touchEndX > touchStartX + threshold) {
+    prevLightboxItem();
+  }
+}
+
+const LIKES_KEY = 'rock_post_likes';
+const USER_LIKES_KEY = 'rock_user_likes_status';
+const COMMENTS_KEY = 'rock_post_comments';
+const COMMENT_LIKES_KEY = 'rock_comment_likes';
+
+function getLikesData() { return readJSON(LIKES_KEY, {}); }
+function getUserLikesStatus() { return readJSON(USER_LIKES_KEY, {}); }
+function getCommentsData() { return readJSON(COMMENTS_KEY, {}); }
+function getCommentLikesData() { return readJSON(COMMENT_LIKES_KEY, {}); }
+
+const STICKER_STORE_KEY = 'rock_user_post_stickers';
+function getUserStickers() {
+  try { return JSON.parse(localStorage.getItem(STICKER_STORE_KEY) || '{}') || {}; } catch(e) { return {}; }
+}
+function setUserSticker(postId, emoji) {
+  const all = getUserStickers();
+  if(emoji) all[postId] = emoji; else delete all[postId];
+  try { localStorage.setItem(STICKER_STORE_KEY, JSON.stringify(all)); } catch(e) {}
+}
+
+async function handleLikeClick(postId) {
+  let userStatus = getUserLikesStatus();
+  let likes = getLikesData();
+  let currentLikes = likes[postId] !== undefined ? likes[postId] : 0;
+  
+  if(userStatus[postId]) {
+    currentLikes = Math.max(0, currentLikes - 1);
+    userStatus[postId] = false;
+    setUserSticker(postId, null);
+  } else {
+    currentLikes += 1;
+    userStatus[postId] = true;
+  }
+  
+  likes[postId] = currentLikes;
+  await writeJSON(LIKES_KEY, likes);
+  await writeJSON(USER_LIKES_KEY, userStatus);
+  updateLikeButtonUI(postId);
+}
+
+function updateLikeButtonUI(postId) {
+  const btn = $(`#like-btn-${postId}`);
+  const countSpan = $(`#like-count-${postId}`);
+  const userStatus = getUserLikesStatus();
+  const likes = getLikesData();
+  const currentLikes = likes[postId] !== undefined ? likes[postId] : 0;
+  if(countSpan) countSpan.textContent = currentLikes;
+  const icon = $(`#like-icon-${postId}`);
+  if(icon) {
+    const st = getUserStickers()[postId];
+    icon.textContent = st || '❤';
+    icon.classList.toggle('has-sticker', !!st);
+  }
+  if(btn) {
+    if(userStatus[postId]) btn.classList.add('liked');
+    else btn.classList.remove('liked');
+  }
+}
+
+async function stickToLike(postId, emoji) {
+  $$('.sticker-picker-popup').forEach(p => p.classList.remove('open'));
+  setUserSticker(postId, emoji);
+  try {
+    if(!getUserLikesStatus()[postId]) await handleLikeClick(postId);
+  } catch(e) {}
+  updateLikeButtonUI(postId);
+  const icon = $(`#like-icon-${postId}`);
+  if(icon) {
+    icon.classList.remove('sticker-pop');
+    void icon.offsetWidth;
+    icon.classList.add('sticker-pop');
+  }
+}
+
+function stickerPopupLikeHtml(postId) {
+  const list = ['😀', '❤️', '🔥', '👏', '🎉', '👍', '🙏', '✨'];
+  return list.map(emo => `<div class="sticker-option" onclick="stickToLike('${postId}', '${emo}')">${emo}</div>`).join('');
+}
+
+function toggleCommentsSection(postId) {
+  const section = $(`#comments-sec-${postId}`);
+  if(section) section.classList.toggle('open');
+}
+
+function toggleStickerPicker(pickerId, event) {
+  if(event) event.stopPropagation();
+  const picker = $(`#${pickerId}`);
+  if(picker) {
+    const isOpen = picker.classList.contains('open');
+    $$('.sticker-picker-popup').forEach(p => p.classList.remove('open'));
+    if(!isOpen) picker.classList.add('open');
+  }
+}
+
+function insertStickerToCommentInput(postId, stickerEmoji) {
+  const input = $(`#comment-input-${postId}`);
+  if(input) {
+    input.value += stickerEmoji;
+    input.focus();
+  }
+  $$('.sticker-picker-popup').forEach(p => p.classList.remove('open'));
+}
+
+function insertStickerToReplyInput(replyInputId, stickerEmoji) {
+  const input = $(`#${replyInputId}`);
+  if(input) {
+    input.value += stickerEmoji;
+    input.focus();
+  }
+  $$('.sticker-picker-popup').forEach(p => p.classList.remove('open'));
+}
+
+function toggleReplyBox(commentId) {
+  const box = $(`#reply-box-${commentId}`);
+  if(box) box.classList.toggle('open');
+}
+
+async function submitCommentOrReply(event, postId, parentCommentId = null) {
+  event.preventDefault();
+  const inputId = parentCommentId ? `reply-input-${parentCommentId}` : `comment-input-${postId}`;
+  const input = $(`#${inputId}`);
+  if(!input) return;
+  const text = input.value.trim();
+  if(!text) return;
+
+  const commentsData = getCommentsData();
+  if(!commentsData[postId]) commentsData[postId] = [];
+
+  const newEntry = {
+    id: 'c_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+    author: 'Visiteur',
+    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&h=120&fit=crop&crop=faces',
+    text: text,
+    createdAt: new Date().toISOString(),
+    parentId: parentCommentId,
+    masked: false,
+    likes: 0
+  };
+
+  commentsData[postId].push(newEntry);
+  await writeJSON(COMMENTS_KEY, commentsData);
+  input.value = '';
+  renderCommentsList(postId);
+}
+
+async function handleCommentLike(commentId) {
+  let commentLikes = getCommentLikesData();
+  let userCommentLikes = readJSON('rock_user_comment_likes', {});
+  
+  let currentLikes = commentLikes[commentId] !== undefined ? commentLikes[commentId] : 0;
+  if(userCommentLikes[commentId]) {
+    currentLikes = Math.max(0, currentLikes - 1);
+    userCommentLikes[commentId] = false;
+  } else {
+    currentLikes += 1;
+    userCommentLikes[commentId] = true;
+  }
+  commentLikes[commentId] = currentLikes;
+  await writeJSON(COMMENT_LIKES_KEY, commentLikes);
+  await writeJSON('rock_user_comment_likes', userCommentLikes);
+  
+  $$(`[data-comment-id="${commentId}"]`).forEach(el => {
+    const span = el.querySelector('.comment-like-count');
+    if(span) span.textContent = currentLikes > 0 ? currentLikes : '';
+    const btn = el.querySelector('.comment-like-btn');
+    if(btn) {
+      if(userCommentLikes[commentId]) btn.classList.add('liked');
+      else btn.classList.remove('liked');
+    }
+  });
+}
+
+function closeAllMenus() {
+  $$('.post-menu-dropdown.open').forEach(m => m.classList.remove('open'));
+  $$('.comment-menu-dropdown.open').forEach(m => m.classList.remove('open'));
+  $$('.sticker-picker-popup.open').forEach(p => p.classList.remove('open'));
+}
+
+function togglePostMenu(event, postId) {
+  event.stopPropagation();
+  const menu = $(`#post-menu-${postId}`);
+  const wasOpen = menu ? menu.classList.contains('open') : false;
+  closeAllMenus();
+  if(menu && !wasOpen) menu.classList.add('open');
+}
+
+function toggleCommentMenu(event, commentId) {
+  event.stopPropagation();
+  const menu = $(`#comment-menu-${commentId}`);
+  const wasOpen = menu ? menu.classList.contains('open') : false;
+  closeAllMenus();
+  if(menu && !wasOpen) menu.classList.add('open');
+}
+
+document.addEventListener('click', closeAllMenus);
+
+async function toggleMaskComment(postId, commentId) {
+  closeAllMenus();
+  if(!isAdminUnlocked) return;
+  const commentsData = getCommentsData();
+  const list = commentsData[postId] || [];
+  for(let c of list) {
+    if(c.id === commentId) {
+      c.masked = !c.masked;
+      break;
+    }
+  }
+  await writeJSON(COMMENTS_KEY, commentsData);
+  renderCommentsList(postId);
+  showToast('Mise à jour du statut du commentaire');
+}
+
+async function deleteComment(postId, commentId) {
+  closeAllMenus();
+  if(!isAdminUnlocked) return;
+  confirmModal('Supprimer le commentaire ?', 'Cette action est définitive.', async () => {
+    const commentsData = getCommentsData();
+    function collectIdsToRemove(id, items) {
+      let ids = [id];
+      items.filter(i => i.parentId === id).forEach(sub => {
+        ids = ids.concat(collectIdsToRemove(sub.id, items));
+      });
+      return ids;
+    }
+    const list = commentsData[postId] || [];
+    const idsToRemove = collectIdsToRemove(commentId, list);
+    commentsData[postId] = list.filter(i => !idsToRemove.includes(i.id));
+    await writeJSON(COMMENTS_KEY, commentsData);
+    renderCommentsList(postId);
+    showToast('🗑️ Commentaire supprimé');
+  }, 'Supprimer');
+}
+
+function renderCommentTree(postId, allComments, parentId = null, depth = 0) {
+  const children = allComments.filter(c => (c.parentId || null) === parentId);
+  if(children.length === 0) return '';
+
+  const emojis = ['😀', '❤️', '🔥', '👏', '🎉', '👍', '🙏', '✨'];
+  let stickerPopupHtml = (replyInputId) => {
+    let sHtml = '';
+    emojis.forEach(emo => {
+      sHtml += `<div class="sticker-option" onclick="insertStickerToReplyInput('${replyInputId}', '${emo}')">${emo}</div>`;
+    });
+    return sHtml;
+  };
+
+  let html = '';
+  for(const c of children) {
+    if(c.masked && !isAdminUnlocked) continue;
+
+    const commentLikes = getCommentLikesData();
+    const userCommentLikes = readJSON('rock_user_comment_likes', {});
+    const cLikes = commentLikes[c.id] || 0;
+    const isLiked = userCommentLikes[c.id] ? 'liked' : '';
+    const maskedBadge = (c.masked && isAdminUnlocked) ? `<span class="comment-masked-badge">🙈 Masqué</span>` : '';
+    const nestedClass = depth > 0 ? 'is-nested' : '';
+    const replyInputId = `reply-input-${c.id}`;
+    const replyStickerPickerId = `sticker-picker-${replyInputId}`;
+
+    const adminMenu = isAdminUnlocked ? `
+      <div class="comment-menu-wrap">
+        <button type="button" class="comment-menu-btn" onclick="toggleCommentMenu(event, '${c.id}')">⋮</button>
+        <div class="comment-menu-dropdown" id="comment-menu-${c.id}">
+          <button type="button" class="comment-menu-item" onclick="toggleMaskComment('${postId}', '${c.id}')">${c.masked ? '👁️ Afficher' : '🙈 Masquer'}</button>
+          <button type="button" class="comment-menu-item danger" onclick="deleteComment('${postId}', '${c.id}')">🗑️ Supprimer</button>
+        </div>
+      </div>
+    ` : '';
+
+    html += `
+      <div class="comment-item ${nestedClass}" data-comment-id="${c.id}">
+        <div class="comment-main-row">
+          <img class="comment-avatar" src="${escapeHtml(c.avatar)}" alt="Avatar">
+          <div class="comment-body-content">
+            <div class="comment-header-row">
+              <span class="comment-author-name">${escapeHtml(c.author)}${maskedBadge}</span>
+              ${adminMenu}
+            </div>
+            <div>${escapeHtml(c.text)}</div>
+            <div class="comment-actions-row">
+              <button type="button" class="comment-action-link comment-like-btn ${isLiked}" onclick="handleCommentLike('${c.id}')">❤ <span class="comment-like-count">${cLikes > 0 ? cLikes : ''}</span></button>
+              <button type="button" class="comment-action-link" onclick="toggleReplyBox('${c.id}')">Répondre</button>
+            </div>
+            <div class="reply-box-container" id="reply-box-${c.id}">
+              <form class="comment-form" onsubmit="submitCommentOrReply(event, '${postId}', '${c.id}')">
+                <input type="text" class="comment-input" id="${replyInputId}" placeholder="Écrire une réponse..." required>
+                <button type="button" class="sticker-trigger-btn" onclick="toggleStickerPicker('${replyStickerPickerId}', event)">😊</button>
+                <div class="sticker-picker-popup" id="${replyStickerPickerId}">${stickerPopupHtml(replyInputId)}</div>
+                <button type="submit" class="comment-submit">Répondre</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        ${renderCommentTree(postId, allComments, c.id, depth + 1)}
+      </div>
+    `;
+  }
+  return html;
+}
+
+function renderCommentsList(postId) {
+  const container = $(`#comments-list-${postId}`);
+  const countSpan = $(`#comment-count-${postId}`);
+  if(!container) return;
+  const commentsData = getCommentsData();
+  const list = commentsData[postId] || [];
+  if(countSpan) countSpan.textContent = list.length;
+  container.innerHTML = renderCommentTree(postId, list, null, 0);
+}
+
+function getPostLink(postId) {
+  return location.href.split('#')[0] + '#' + postId;
+}
+
+async function copyPostLink(postId) {
+  closeAllMenus();
+  const link = getPostLink(postId);
+  try {
+    await navigator.clipboard.writeText(link);
+  } catch(e) {
+    const ta = document.createElement('textarea');
+    ta.value = link;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); } catch(_) {}
+    ta.remove();
+  }
+  showToast('🔗 Lien copié !');
+}
+
+async function sharePost(postId) {
+  closeAllMenus();
+  const link = getPostLink(postId);
+  if(navigator.share) {
+    try {
+      await navigator.share({ title: 'The Rock Solidarity Foundation', text: "Découvrez cette publication", url: link });
+      return;
+    } catch(e) {}
+  }
+  copyPostLink(postId);
+}
+
+function confirmModal(title, message, onConfirm, confirmLabel) {
+  const overlayEl = $('#customModalOverlay');
+  $('#modalTitle').textContent = title;
+  $('#modalMessage').textContent = message;
+  const okBtn = $('#modalConfirmBtn');
+  const cancelBtn = $('#modalCancelBtn');
+  okBtn.textContent = confirmLabel || 'Confirmer';
+  const close = () => overlayEl.classList.remove('open');
+  okBtn.onclick = async () => { close(); await onConfirm(); };
+  cancelBtn.onclick = close;
+  overlayEl.classList.add('open');
+}
+
+function editPost(postId) {
+  closeAllMenus();
+  if(!isAdminUnlocked) return;
+  openAdminForm('modifier_publication', postId);
+}
+
+function deletePost(postId) {
+  closeAllMenus();
+  if(!isAdminUnlocked) return;
+  confirmModal('Supprimer la publication ?', 'Cette action est définitive.', async () => {
+    const remaining = (readJSON('rock_custom_posts', []) || []).filter(p => p.id !== postId);
+    try { await writeJSON('rock_custom_posts', remaining); } catch(e) { return; }
+    await renderPublicPosts();
+    showToast('🗑️ Publication supprimée');
+  }, 'Supprimer');
+}
+
+async function renderPublicPosts() {
+  await fetchSupabaseData();
+  applyMenuTexts();
+  applyHeaderBranding();
+  applyHeroSliderData();
+  applyContactFooterData();
+  applyPagesContent();
+
+  const container = $('#dynamicFeedContainer');
+  if(!container) return;
+  let customPosts = readJSON('rock_custom_posts', []);
+  const admins = getAdminsList();
+
+  customPosts = customPosts.map((p, idx) => {
+    if (!p.createdAt && !p.date) {
+      const d = new Date(); d.setHours(d.getHours() - (idx + 1) * 4);
+      p.createdAt = d.toISOString();
+    }
+    if(!p.avatar) { p.avatar = admins[0].avatar; p.author = admins[0].name; }
+    return p;
+  });
+
+  const commentsData = getCommentsData();
+  let html = '';
+  const emojis = ['😀', '❤️', '🔥', '👏', '🎉', '👍', '🙏', '✨'];
+
+  for (const p of customPosts) {
+    const mediaList = await resolvePostMedia(p);
+    const mediaHtml = renderMediaGrid(mediaList, p.id);
+    const rawDate = p.createdAt || p.date;
+    const formattedText = formatLiveClockWithAgo(rawDate);
+    const commentsList = commentsData[p.id] || [];
+    const mainCommentInputId = `comment-input-${p.id}`;
+    const mainStickerPickerId = `sticker-picker-main-${p.id}`;
+
+    let stickerPopupHtml = (pickerId) => {
+      let sHtml = '';
+      emojis.forEach(emo => {
+        sHtml += `<div class="sticker-option" onclick="insertStickerToCommentInput('${p.id}', '${emo}')">${emo}</div>`;
+      });
+      return sHtml;
+    };
+
+    const adminMenuItems = isAdminUnlocked ? `
+          <div class="post-menu-sep"></div>
+          <button type="button" class="post-menu-item" onclick="editPost('${p.id}')">✏️ Modifier</button>
+          <button type="button" class="post-menu-item danger" onclick="deletePost('${p.id}')">🗑️ Supprimer</button>` : '';
+
+    html += `
+      <article class="post" id="${p.id}">
+        <div class="post-head">
+          <div class="post-author-group">
+            <img class="project-avatar" src="${escapeHtml(p.avatar)}" alt="Avatar">
+            <div>
+              <div class="post-author">${escapeHtml(p.author || 'Le fondateur')} <span class="verified">✓</span></div>
+              <div class="post-meta live-clock-time" data-time="${rawDate}">${formattedText}</div>
+            </div>
+          </div>
+          <div class="post-menu-wrap">
+            <button type="button" class="post-menu-btn" aria-label="Options" onclick="togglePostMenu(event, '${p.id}')">⋮</button>
+            <div class="post-menu-dropdown" id="post-menu-${p.id}">
+              <button type="button" class="post-menu-item" onclick="sharePost('${p.id}')">📤 Partager</button>
+              <button type="button" class="post-menu-item" onclick="copyPostLink('${p.id}')">🔗 Copier le lien</button>${adminMenuItems}
+            </div>
+          </div>
+        </div>
+        <p class="post-text">${escapeHtml(p.text)}</p>
+        ${mediaHtml}
+        <div class="post-actions-bar">
+          <button type="button" class="post-action-btn" id="like-btn-${p.id}" onclick="handleLikeClick('${p.id}')">
+            <span class="like-head"><span class="like-icon" id="like-icon-${p.id}">❤</span> <span>J'aime</span> (</span><span id="like-count-${p.id}">0</span>)
+          </button>
+          <div style="position:relative; display:inline-flex; flex:1; justify-content:center;">
+            <button type="button" class="post-action-btn" onclick="toggleStickerPicker('${mainStickerPickerId}', event)">
+              😊 Stickers
+            </button>
+            <div class="sticker-picker-popup" id="${mainStickerPickerId}" style="left:50%; transform:translateX(-50%);">${stickerPopupLikeHtml(p.id)}</div>
+          </div>
+          <button type="button" class="post-action-btn" onclick="toggleCommentsSection('${p.id}')">
+            <span><span>Commenter</span> (</span><span id="comment-count-${p.id}">${commentsList.length}</span>)
+          </button>
+        </div>
+        <div class="post-comments-section" id="comments-sec-${p.id}">
+          <form class="comment-form" onsubmit="submitCommentOrReply(event, '${p.id}', null)">
+            <input type="text" class="comment-input" id="${mainCommentInputId}" placeholder="Écrire un commentaire..." required>
+            <button type="button" class="sticker-trigger-btn" onclick="toggleStickerPicker('comment-sticker-picker-${p.id}', event)">😊</button>
+            <div class="sticker-picker-popup" id="comment-sticker-picker-${p.id}">${stickerPopupHtml('comment-sticker-picker-' + p.id)}</div>
+            <button type="submit" class="comment-submit">Publier</button>
+          </form>
+          <div id="comments-list-${p.id}" style="display:flex; flex-direction:column; gap:8px; margin-top:8px;"></div>
+        </div>
+      </article>
+    `;
+  }
+  container.innerHTML = html;
+  for (const p of customPosts) {
+    updateLikeButtonUI(p.id);
+    renderCommentsList(p.id);
+  }
+}
+
+function scrollToHashPost() {
+  const h = location.hash ? location.hash.slice(1) : '';
+  if(h.startsWith('post_')) {
+    const el = document.getElementById(h);
+    if(el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+function applyMenuTexts() {
+  if($('#menu_link_accueil')) $('#menu_link_accueil').textContent = readJSON('menu_accueil', 'Accueil');
+  if($('#menu_link_campagnes')) $('#menu_link_campagnes').textContent = readJSON('menu_campagnes', 'Campagnes et projets');
+  if($('#menu_link_candidature')) $('#menu_link_candidature').textContent = readJSON('menu_candidature', 'Soumettre un dossier de projet');
+  if($('#menu_link_criteres')) $('#menu_link_criteres').textContent = readJSON('menu_criteres', "Critères d'attribution de l'aide");
+  if($('#menu_link_confidentialite')) $('#menu_link_confidentialite').textContent = readJSON('menu_confidentialite', 'Règles de confidentialité');
+  if($('#menu_link_contact')) $('#menu_link_contact').textContent = readJSON('menu_contact', 'Contact & Support');
+
+  const chatLabel = readJSON('rock_chat_label', "Écrivez-nous sur WhatsApp");
+  if($('#chatLabelText')) $('#chatLabelText').textContent = chatLabel;
+}
+
+function showToast(msg) {
+  const t = $('#toast');
+  if(!t) return;
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+function switchView(viewName) {
+  $$('.site-view').forEach(v => v.classList.remove('active-view'));
+  if(viewName === 'criteres') $('#viewCriteres')?.classList.add('active-view');
+  else if(viewName === 'confidentialite') $('#viewConfidentialite')?.classList.add('active-view');
+  else if(viewName === 'candidature') $('#viewCandidature')?.classList.add('active-view');
+  else if(viewName === 'statsPage') $('#viewStatsPage')?.classList.add('active-view');
+  else if(viewName === 'contact') $('#viewContact')?.classList.add('active-view');
+  else $('#viewHome')?.classList.add('active-view');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  closeDrawer();
+}
+
+const drawer = $('#mobileDrawer');
+const overlay = $('#drawerOverlay');
+function openDrawer() { drawer?.classList.add('open'); overlay?.classList.add('open'); document.body.style.overflow = 'hidden'; }
+function closeDrawer() { drawer?.classList.remove('open'); overlay?.classList.remove('open'); document.body.style.overflow = ''; }
+
+$('#hamburgerBtn')?.addEventListener('click', openDrawer);
+$('#drawerClose')?.addEventListener('click', closeDrawer);
+overlay?.addEventListener('click', closeDrawer);
+
+document.addEventListener('DOMContentLoaded', async () => {
+  isAdminUnlocked = false;
+  updateAdminUIVisibility();
+  await fetchSupabaseData();
+  await renderPublicPosts();
+  scrollToHashPost();
+  
+  $('#lightboxBackBtn')?.addEventListener('click', closeLightbox);
+  $('#fbLightbox')?.addEventListener('click', e => { if(e.target === $('#fbLightbox')) closeLightbox(); });
+});
+</script>
+<script>
+fileToDataUrl = function(file) { return uploadMedia(file); };
+</script>
+<script>
+const MY_LIKES_KEY = 'rock_my_likes';
+function getMyLikes() {
+  try { return JSON.parse(localStorage.getItem(MY_LIKES_KEY) || '{}') || {}; } catch (e) { return {}; }
+}
+function setMyLike(id, v) {
+  const a = getMyLikes();
+  if (v) a[id] = true; else delete a[id];
+  try { localStorage.setItem(MY_LIKES_KEY, JSON.stringify(a)); } catch (e) {}
+}
+getUserLikesStatus = function () { return getMyLikes(); };
+
+handleLikeClick = async function (postId) {
+  window._likeBusy = window._likeBusy || {};
+  if (window._likeBusy[postId]) return;
+  window._likeBusy[postId] = true;
+
+  const wasLiked = !!getMyLikes()[postId];
+  const delta = wasLiked ? -1 : 1;
+  const prevSticker = getUserStickers()[postId];
+  supabaseCache = supabaseCache || {};
+  const cur = Object.assign({}, getLikesData());
+  const prevCount = cur[postId] || 0;
+
+  cur[postId] = Math.max(0, prevCount + delta);
+  supabaseCache[LIKES_KEY] = cur;
+  setMyLike(postId, !wasLiked);
+  if (wasLiked) setUserSticker(postId, null);
+  updateLikeButtonUI(postId);
+
+  try {
+    const base = await getFreshBase();
+    const fresh = Object.assign({}, base[LIKES_KEY] || {});
+    fresh[postId] = Math.max(0, (fresh[postId] || 0) + delta);
+    base[LIKES_KEY] = fresh;
+    await saveSupabaseData(base);
+    supabaseCache = base;
+    isSupabaseLoaded = true;
+    updateLikeButtonUI(postId);
+  } catch (e) {
+    setMyLike(postId, wasLiked);
+    if (wasLiked && prevSticker) setUserSticker(postId, prevSticker);
+    cur[postId] = prevCount;
+    supabaseCache[LIKES_KEY] = cur;
+    updateLikeButtonUI(postId);
+    showToast("❌ J'aime non enregistré : " + e.message);
+  } finally {
+    window._likeBusy[postId] = false;
+  }
+};
+</script>
+<script>
+const SITE_CACHE_KEY = 'rock_site_cache_v1';
+
+try {
+  const c = JSON.parse(localStorage.getItem(SITE_CACHE_KEY) || 'null');
+  if (c && typeof c === 'object') supabaseCache = c;
+} catch (e) {}
+
+if (!supabaseCache) {
+  const ov = document.createElement('div');
+  ov.id = 'bootcover';
+  ov.style.cssText = 'position:fixed;inset:0;z-index:99998;background:#f4f6ff;display:grid;place-items:center;font:600 15px sans-serif;color:#082d72';
+  ov.textContent = 'Chargement…';
+  document.body.appendChild(ov);
+  window._rmBoot = () => ov.remove();
+  setTimeout(window._rmBoot, 12000);
+}
+
+fetchSupabaseData = async function () {
+  if (isSupabaseLoaded && supabaseCache) return supabaseCache;
+  const hadCache = !!supabaseCache;
+  const load = async () => {
+    for (let i = 0; i < 3; i++) {
+      const r = await fetchLatestRemote();
+      if (r) {
+        supabaseCache = r;
+        isSupabaseLoaded = true;
+        try { localStorage.setItem(SITE_CACHE_KEY, JSON.stringify(r)); } catch (e) {}
+        return r;
+      }
+      await new Promise(s => setTimeout(s, 1500));
+    }
+    return null;
+  };
+  if (hadCache) {
+    load().then(r => { if (r) renderPublicPosts(); });
+    return supabaseCache;
+  }
+  const r = await load();
+  if (window._rmBoot) setTimeout(window._rmBoot, 300);
+  return r || supabaseCache || {};
+};
+const _ahbOriginal = applyHeaderBranding;
+applyHeaderBranding = function () {
+  _ahbOriginal();
+  try {
+    if (supabaseCache && supabaseCache.rock_brand_logo !== undefined) {
+      localStorage.setItem('rock_brand_fast', JSON.stringify({
+        logo: supabaseCache.rock_brand_logo,
+        name: supabaseCache.rock_brand_name,
+        tag: supabaseCache.rock_brand_tag
+      }));
+    }
+  } catch (e) {}
+};
+const _ahb2 = applyHeaderBranding;
+applyHeaderBranding = function () {
+  var m = document.getElementById('brandMarkContainer');
+  var oldImg = m && m.querySelector('img');
+  _ahb2();
+  var newImg = m && m.querySelector('img');
+  if (oldImg && newImg && oldImg !== newImg &&
+      oldImg.getAttribute('src') === newImg.getAttribute('src')) {
+    newImg.replaceWith(oldImg);
+  }
+};
+
+setInterval(async function () {
+  if (document.hidden) return;
+  try {
+    var r = await fetchLatestRemote();
+    if (!r || !supabaseCache) return;
+    var logoChanged = r.rock_brand_logo !== supabaseCache.rock_brand_logo;
+    var textChanged = r.rock_brand_name !== supabaseCache.rock_brand_name ||
+                      r.rock_brand_tag !== supabaseCache.rock_brand_tag;
+    if (!logoChanged && !textChanged) return;
+    var apply = function () {
+      supabaseCache.rock_brand_logo = r.rock_brand_logo;
+      supabaseCache.rock_brand_name = r.rock_brand_name;
+      supabaseCache.rock_brand_tag = r.rock_brand_tag;
+      applyHeaderBranding();
+    };
+    if (logoChanged && r.rock_brand_logo) {
+      var im = new Image();
+      im.onload = apply;
+      im.onerror = apply;
+      im.src = r.rock_brand_logo;
+    } else {
+      apply();
+    }
+  } catch (e) {}
+}, 60000);
+(function () {
+  var s = document.createElement('style');
+  s.textContent = '.fb-lightbox-content video{pointer-events:auto !important;}';
+  document.head.appendChild(s);
+
+  var lb = document.getElementById('lightboxBody');
+  if (lb) {
+    lb.addEventListener('touchstart', function (e) {
+      window._noSwipe = false;
+      var t = e.target;
+      if (t && t.tagName === 'VIDEO' && e.touches && e.touches[0]) {
+        var r = t.getBoundingClientRect();
+        if (e.touches[0].clientY > r.bottom - 80) window._noSwipe = true;
+      }
+    }, true);
+    var _hs = handleSwipeGesture;
+    handleSwipeGesture = function () {
+      if (window._noSwipe) { window._noSwipe = false; return; }
+      _hs();
+    };
+  }
+})();
+const _saveOriginal = saveSupabaseData;
+saveSupabaseData = async function (d) {
+  const ok = await _saveOriginal(d);
+  try { localStorage.setItem(SITE_CACHE_KEY, JSON.stringify(d)); } catch (e) {}
+  return ok;
+};
+
+getFreshBase = async function () {
+  const latest = await fetchLatestRemote();
+  if (latest) return latest;
+  throw new Error('Lecture impossible : sauvegarde annulée pour protéger vos données.');
+};
+</script>
+<script>
+(function () {
+  const o = document.getElementById('bootcover');
+  if (o) o.remove();
+  window._rmBoot = function () {};
+  const feed = document.getElementById('dynamicFeedContainer');
+  if (feed && !feed.children.length && !supabaseCache) {
+    feed.innerHTML = '<style>@keyframes shim{0%{opacity:.5}50%{opacity:1}100%{opacity:.5}}.skl{height:260px;border-radius:18px;background:#e9eef9;margin-bottom:16px;animation:shim 1.2s infinite}</style><div class="skl"></div><div class="skl"></div>';
+  }
+})();
+</script>
+<script>
+submitCommentOrReply = async function (event, postId, parentCommentId = null) {
+  event.preventDefault();
+  const inputId = parentCommentId ? `reply-input-${parentCommentId}` : `comment-input-${postId}`;
+  const input = $(`#${inputId}`);
+  if (!input) return;
+  const text = input.value.trim();
+  if (!text) return;
+
+  const btn = event.target.querySelector('.comment-submit');
+  if (btn) btn.disabled = true;
+
+  const entry = {
+    id: 'c_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7),
+    author: 'Visiteur',
+    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&h=120&fit=crop&crop=faces',
+    text: text,
+    createdAt: new Date().toISOString(),
+    parentId: parentCommentId,
+    masked: false,
+    likes: 0
+  };
+
+  try {
+    const base = await getFreshBase();
+    const all = Object.assign({}, base[COMMENTS_KEY] || {});
+    all[postId] = (all[postId] || []).concat([entry]);
+    base[COMMENTS_KEY] = all;
+    await saveSupabaseData(base);
+    supabaseCache = base;
+    isSupabaseLoaded = true;
+    input.value = '';
+    renderCommentsList(postId);
+  } catch (e) {
+    showToast('❌ Commentaire non envoyé : ' + e.message);
+  } finally {
+    if (btn) btn.disabled = false;
+  }
+};
+</script>
+<script>
+window.addEventListener('unhandledrejection', e => showToast('❌ Erreur : ' + ((e.reason && e.reason.message) || e.reason)));
+window.addEventListener('error', e => showToast('❌ Erreur script : ' + e.message));
+
+submitCommentOrReply = async function (event, postId, parentCommentId = null) {
+  event.preventDefault();
+  showToast('⏳ Envoi du commentaire…');
+  const input = $(parentCommentId ? `#reply-input-${parentCommentId}` : `#comment-input-${postId}`);
+  if (!input || !input.value.trim()) return;
+  const text = input.value.trim();
+  const entry = {
+    id: 'c_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7),
+    author: 'Visiteur',
+    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&h=120&fit=crop&crop=faces',
+    text: text, createdAt: new Date().toISOString(),
+    parentId: parentCommentId, masked: false, likes: 0
+  };
+  const all = Object.assign({}, getCommentsData());
+  const before = all[postId] || [];
+  all[postId] = before.concat([entry]);
+  supabaseCache = supabaseCache || {};
+  supabaseCache[COMMENTS_KEY] = all;
+  input.value = '';
+  renderCommentsList(postId);
+  try {
+    const base = await getFreshBase();
+    const fresh = Object.assign({}, base[COMMENTS_KEY] || {});
+    fresh[postId] = (fresh[postId] || []).concat([entry]);
+    base[COMMENTS_KEY] = fresh;
+    await saveSupabaseData(base);
+    supabaseCache = base;
+    showToast('✅ Commentaire enregistré');
+  } catch (e) {
+    all[postId] = before;
+    supabaseCache[COMMENTS_KEY] = all;
+    renderCommentsList(postId);
+    showToast('❌ Commentaire non enregistré : ' + e.message);
+  }
+};
+</script>
+<script>
+const _INT = { comments: {}, likes: {}, mine: {} };
+const _VID = (() => {
+  let v = null;
+  try { v = localStorage.getItem('rock_vid'); } catch (e) {}
+  if (!v) {
+    v = 'v_' + Date.now() + Math.random().toString(36).slice(2, 10);
+    try { localStorage.setItem('rock_vid', v); } catch (e) {}
+  }
+  return v;
+})();
+
+async function _sb(path, method, body, prefer) {
+  const h = { 'Content-Type': 'application/json' };
+  if (prefer) h['Prefer'] = prefer;
+  const res = await fetch(`${SUPABASE_CONFIG.url}/rest/v1/${path}`, {
+    method: method || 'GET',
+    headers: supabaseHeaders(h),
+    body: body ? JSON.stringify(body) : undefined
+  });
+  if (!res.ok) throw new Error('(' + res.status + ') ' + (await res.text().catch(() => '')).slice(0, 150));
+  return (method || 'GET') === 'GET' ? res.json() : null;
+}
+
+getCommentsData = () => _INT.comments;
+getLikesData = () => _INT.likes;
+getUserLikesStatus = () => _INT.mine;
+
+async function _loadInt() {
+  const [cs, ls] = await Promise.all([
+    _sb('post_comments?select=post_id,data&order=created_at.asc'),
+    _sb('post_likes?select=post_id,visitor')
+  ]);
+  _INT.comments = {}; _INT.likes = {}; _INT.mine = {};
+  cs.forEach(r => { (_INT.comments[r.post_id] = _INT.comments[r.post_id] || []).push(r.data); });
+  ls.forEach(r => {
+    _INT.likes[r.post_id] = (_INT.likes[r.post_id] || 0) + 1;
+    if (r.visitor === _VID) _INT.mine[r.post_id] = true;
+  });
+}
+function _refreshInt() {
+  $$('article.post').forEach(a => { updateLikeButtonUI(a.id); renderCommentsList(a.id); });
+}
+
+const _rp = renderPublicPosts;
+renderPublicPosts = async function () {
+  await _rp();
+  try {
+    await _loadInt();
+    _refreshInt();
+  } catch (e) {
+    showToast('❌ Chargement likes/commentaires : ' + e.message);
+  }
+};
+submitCommentOrReply = async function (event, postId, parentCommentId = null) {
+  event.preventDefault();
+  const input = $(parentCommentId ? `#reply-input-${parentCommentId}` : `#comment-input-${postId}`);
+  if (!input || !input.value.trim()) return;
+  const entry = {
+    id: 'c_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7),
+    author: 'Visiteur',
+    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&h=120&fit=crop&crop=faces',
+    text: input.value.trim(),
+    createdAt: new Date().toISOString(),
+    parentId: parentCommentId, masked: false, likes: 0
+  };
+  input.value = '';
+  (_INT.comments[postId] = _INT.comments[postId] || []).push(entry);
+  renderCommentsList(postId);
+  try {
+  await _sb('post_comments', 'POST', { id: entry.id, post_id: postId, data: entry });
+  showToast('✅ Commentaire enregistré');
+  } catch (e) {
+    _INT.comments[postId] = _INT.comments[postId].filter(c => c.id !== entry.id);
+    renderCommentsList(postId);
+    showToast('❌ Commentaire non enregistré : ' + e.message);
+  }
+};
+
+handleLikeClick = async function (postId) {
+  window._likeBusy = window._likeBusy || {};
+  if (window._likeBusy[postId]) return;
+  window._likeBusy[postId] = true;
+  const wasLiked = !!_INT.mine[postId];
+  _INT.likes[postId] = Math.max(0, (_INT.likes[postId] || 0) + (wasLiked ? -1 : 1));
+  if (wasLiked) { delete _INT.mine[postId]; setUserSticker(postId, null); }
+  else _INT.mine[postId] = true;
+  updateLikeButtonUI(postId);
+  try {
+    if (wasLiked) {
+      await _sb(`post_likes?post_id=eq.${encodeURIComponent(postId)}&visitor=eq.${encodeURIComponent(_VID)}`, 'DELETE');
+    } else {
+      await _sb('post_likes', 'POST', { post_id: postId, visitor: _VID });
+    }
+  } catch (e) {
+    _INT.likes[postId] = Math.max(0, (_INT.likes[postId] || 0) + (wasLiked ? 1 : -1));
+    if (wasLiked) _INT.mine[postId] = true; else delete _INT.mine[postId];
+    updateLikeButtonUI(postId);
+    showToast("❌ J'aime non enregistré : " + e.message);
+  } finally {
+    window._likeBusy[postId] = false;
+  }
+};
+</script>
+<script>
+(function () {
+  const o = document.getElementById('bootcover');
+  if (!o) return;
+  o.textContent = '';
+  o.innerHTML = '<style>@keyframes bcspin{to{transform:rotate(360deg)}}</style><div style="width:38px;height:38px;border:4px solid #dbe5ff;border-top-color:#075bff;border-radius:50%;animation:bcspin .8s linear infinite"></div>';
+  const rm = window._rmBoot;
+  window._rmBoot = function () {
+    o.style.transition = 'opacity .4s';
+    o.style.opacity = '0';
+    setTimeout(() => o.remove(), 450);
+  };
+})();
+</script>
+<script>
+let dp;
+const ib = document.getElementById('installBtn');
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault(); dp = e; ib.style.display = 'block';
+});
+ib.addEventListener('click', async () => {
+  if (!dp) return;
+  dp.prompt(); await dp.userChoice;
+  dp = null; ib.style.display = 'none';
+});
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(()=>{});
+}
+</script>
+<style>
+.goog-te-banner-frame, iframe.skiptranslate { display:none !important; }
+body { top:0 !important; }
+#google_translate_element { display:none; }
+.goog-te-spinner-pos, .goog-te-spinner-animation, .goog-te-spinner { display:none !important; }
+#goog-gt-tt, .goog-tooltip, .goog-text-highlight { display:none !important; box-shadow:none !important; background:none !important; }
+.skiptranslate { display:none !important; }
+[class*="VIpgJd-ZVi9od"], .goog-te-gadget, .goog-te-spinner-pos { display:none !important; visibility:hidden !important; opacity:0 !important; width:0 !important; height:0 !important; }
+img[src*="gstatic.com/images/branding"], img[src*="translate.google"] { display:none !important; }
+</style>
+<div id="google_translate_element"></div>
+<script>
+(function () {
+  var l = (navigator.language || 'fr').toLowerCase();
+  var map = { 'zh': 'zh-CN', 'he': 'iw' };
+  var code = l.indexOf('zh-tw') === 0 || l.indexOf('zh-hk') === 0 ? 'zh-TW'
+           : (map[l.split('-')[0]] || l.split('-')[0]);
+  if (code === 'fr') return;
+  document.cookie = 'googtrans=/fr/' + code + ';path=/';
+  window.googleTranslateElementInit = function () {
+    new google.translate.TranslateElement(
+      { pageLanguage: 'fr', autoDisplay: false },
+      'google_translate_element'
+    );
+  };
+  var s = document.createElement('script');
+  s.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+  document.body.appendChild(s);
+})();
+</script>
+<script>
+(function () {
+  var L = navigator.language || 'fr';
+  var rtf = null;
+  try { rtf = new Intl.RelativeTimeFormat(L, { numeric: 'auto', style: 'long' }); } catch (e) {}
+
+  window.formatLiveClockWithAgo = function (ds) {
+    if (!ds) return '';
+    var past = new Date(ds);
+    if (isNaN(past.getTime())) return '';
+    var now = new Date();
+    var p = function (n) { return String(n).padStart(2, '0'); };
+    var clock = p(now.getHours()) + ':' + p(now.getMinutes()) + ':' + p(now.getSeconds());
+    var d = Math.floor((now - past) / 1000);
+    var ago;
+    if (rtf) {
+      if (d < 60) ago = rtf.format(0, 'second');
+      else if (d < 3600) ago = rtf.format(-Math.floor(d / 60), 'minute');
+      else if (d < 86400) ago = rtf.format(-Math.floor(d / 3600), 'hour');
+      else ago = rtf.format(-Math.floor(d / 86400), 'day');
+    } else {
+      ago = Math.floor(d / 60) + ' min';
+    }
+    return clock + ' (' + ago + ')';
+  };
+
+  function tick() {
+    document.querySelectorAll('.live-clock-time').forEach(function (el) {
+      el.setAttribute('translate', 'no');
+      el.classList.add('notranslate');
+      var t = el.getAttribute('data-time');
+      if (t) el.textContent = window.formatLiveClockWithAgo(t);
+    });
+  }
+  setInterval(tick, 1000);
+  tick();
+})();
+</script>
+<script>
+(function () {
+  // >>> COLLE ICI TON CLIENT ID GOOGLE <<<
+  var GOOGLE_CLIENT_ID = '648109430866-511scjl7ib4bjg703uu7341gn7n43htj.apps.googleusercontent.com';
+
+  var USER_KEY = 'rock_google_user';
+  var SESSION_DAYS = 30;
+  var wall = document.getElementById('rkWall');
+  var html = document.documentElement;
+  var currentUser = null;
+  var configured = GOOGLE_CLIENT_ID.indexOf('GOOGLE_CLIENT_ID') !== 0;
+  function initialsOf(name, email) {
+    var src = (name || '').trim();
+    var letters = '';
+    if (src) {
+      var parts = src.split(/\s+/).filter(Boolean);
+      letters = parts.length > 1 ? parts[0][0] + parts[1][0] : parts[0].slice(0, 2);
+    } else {
+      letters = (email || '?').split('@')[0].replace(/[^a-zA-Z0-9]/g, '').slice(0, 2) || '?';
+    }
+    return letters.toUpperCase();
+  }
+  var COLORS = ['#075bff', '#16a34a', '#d97706', '#7c3aed', '#db2777', '#0d9488', '#dc2626', '#0891b2'];
+  function initialsAvatar(name, email) {
+    var t = initialsOf(name, email);
+    var seed = (email || name || t).charCodeAt(0) || 0;
+    var bg = COLORS[seed % COLORS.length];
+    var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120"><rect width="120" height="120" fill="' + bg +
+      '"/><text x="50%" y="50%" dy=".35em" text-anchor="middle" font-family="Arial,sans-serif" font-size="48" font-weight="700" fill="#fff">' +
+      t + '</text></svg>';
+    return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+  }
+
+  window._rk = {
+    getUser: function () { return currentUser; },
+    isConfigured: function () { return configured; },
+    lock: function () { lock(); },
+    initialsOf: initialsOf,
+    initialsAvatar: initialsAvatar
+  };
+
+  function decodeJwt(token) {
+    var b = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+    return JSON.parse(decodeURIComponent(escape(atob(b))));
+  }
+  function loadSaved() {
+    try {
+      var u = JSON.parse(localStorage.getItem(USER_KEY) || 'null');
+      if (u && u.sub && u.until > Date.now()) return u;
+    } catch (e) {}
+    return null;
+  }
+  function save(u) { try { localStorage.setItem(USER_KEY, JSON.stringify(u)); } catch (e) {} }
+
+  function lock() {
+    wall.classList.add('show');
+    html.classList.add('rk-locked');
+    document.getElementById('rkUserChip').classList.remove('show');
+  }
+  function unlock() {
+    wall.classList.remove('show');
+    html.classList.remove('rk-locked');
+  }
+  ['touchmove', 'wheel'].forEach(function (ev) {
+    wall.addEventListener(ev, function (e) { e.preventDefault(); }, { passive: false });
+  });
+
+  function showUser(u) {
+    currentUser = u;
+    var chip = document.getElementById('rkUserChip');
+    document.getElementById('rkChipImg').src = u.picture || initialsAvatar(u.name, u.email);
+    document.getElementById('rkChipName').textContent = u.name || initialsOf(u.name, u.email);
+    chip.classList.add('show');
+    unlock();
+  }
+
+  function onGoogle(resp) {
+    try {
+      var p = decodeJwt(resp.credential);
+      var u = {
+        sub: p.sub, name: p.name || '', email: p.email || '', picture: p.picture || '',
+        until: Date.now() + SESSION_DAYS * 86400000
+      };
+      save(u);
+      showUser(u);
+    } catch (e) {
+      var er = document.getElementById('rkWallErr');
+      er.style.display = 'block';
+      er.textContent = 'Connexion impossible, réessaie.';
+    }
+  }
+    document.getElementById('rkLogout').addEventListener('click', function () {
+    try { localStorage.removeItem(USER_KEY); } catch (e) {}
+    try { google.accounts.id.disableAutoSelect(); } catch (e) {}
+    currentUser = null;
+    lock();
+  });
+
+  var taps = 0, tapTimer = null;
+  document.getElementById('rkWallIcon').addEventListener('click', function () {
+    taps++;
+    clearTimeout(tapTimer);
+    tapTimer = setTimeout(function () { taps = 0; }, 2000);
+    if (taps >= 5) { taps = 0; document.getElementById('adminLoginOverlay').classList.add('open'); }
+  });
+  var _origAdminLogin = window.submitAdminLogin;
+  window.submitAdminLogin = function (e) {
+    _origAdminLogin(e);
+    if (isAdminUnlocked) unlock();
+  };
+
+  function initGoogle() {
+    google.accounts.id.initialize({
+      client_id: GOOGLE_CLIENT_ID,
+      callback: onGoogle,
+      auto_select: false
+    });
+    google.accounts.id.renderButton(document.getElementById('rkGoogleBtn'), {
+      theme: 'outline', size: 'large', shape: 'pill', text: 'continue_with', locale: 'fr', width: 280
+    });
+  }
+    var saved = loadSaved();
+  if (saved) {
+    showUser(saved);
+  } else if (configured) {
+    lock();
+  } else {
+    console.warn('Connexion Google : Client ID non configuré, le mur est désactivé.');
+  }
+
+  if (configured) {
+    var s = document.createElement('script');
+    s.src = 'https://accounts.google.com/gsi/client';
+    s.async = true; s.defer = true;
+    s.onload = initGoogle;
+    document.head.appendChild(s);
+  }
+
+  function guard(name) {
+    var orig = window[name];
+    if (typeof orig !== 'function') return;
+    window[name] = function () {
+      if (configured && !currentUser && !isAdminUnlocked) { lock(); return; }
+      return orig.apply(this, arguments);
+    };
+  }
+  ['handleLikeClick', 'handleCommentLike', 'stickToLike', 'submitCandidatureProject'].forEach(guard);
+})();
+</script>
+<script>
+(function () {
+  var rk = window._rk;
+
+  window.submitCommentOrReply = async function (event, postId, parentCommentId) {
+    event.preventDefault();
+    parentCommentId = parentCommentId || null;
+    if (rk.isConfigured() && !rk.getUser()) { rk.lock(); return; }
+    var input = $(parentCommentId ? '#reply-input-' + parentCommentId : '#comment-input-' + postId);
+    if (!input || !input.value.trim()) return;
+    var u = rk.getUser() || { sub: '', name: 'Visiteur', email: '', picture: '' };
+    var entry = {
+      id: 'c_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7),
+      author: u.name || rk.initialsOf(u.name, u.email),
+      avatar: u.picture || rk.initialsAvatar(u.name, u.email),
+      uid: u.sub,
+      text: input.value.trim(),
+      createdAt: new Date().toISOString(),
+      parentId: parentCommentId, masked: false, likes: 0
+    };
+    input.value = '';
+    (_INT.comments[postId] = _INT.comments[postId] || []).push(entry);
+    renderCommentsList(postId);
+    try {
+      await _sb('post_comments', 'POST', { id: entry.id, post_id: postId, data: entry });
+      showToast('✅ Commentaire enregistré');
+    } catch (e) {
+      _INT.comments[postId] = _INT.comments[postId].filter(function (c) { return c.id !== entry.id; });
+      renderCommentsList(postId);
+      showToast('❌ Commentaire non enregistré : ' + e.message);
+    }
+  };
+
+  var _rcl = window.renderCommentsList;
+  window.renderCommentsList = function (postId) {
+    _rcl(postId);
+    document.querySelectorAll('#comments-list-' + postId + ' .comment-avatar').forEach(function (img) {
+      img.referrerPolicy = 'no-referrer';
+      img.onerror = function () {
+        img.onerror = null;
+        var nm = img.parentNode.querySelector('.comment-author-name');
+        img.src = rk.initialsAvatar(nm ? nm.textContent : '', '');
+      };
+    });
+  };
+})();
+</script>
+<style>
+.post-new{animation:postIn .45s ease}
+@keyframes postIn{from{opacity:0;transform:translateY(-14px)}to{opacity:1;transform:none}}
+</style>
+<script>
+(function () {
+  var INT_KEY = 'rock_int_cache_v1';
+  var EMOJIS = ['😀','❤️','🔥','👏','🎉','👍','🙏','✨'];
+  var fallbackDates = {};
+  var firstPaintDone = false;
+  var busy = false, retries = 0;
+
+  try {
+    var ic = JSON.parse(localStorage.getItem(INT_KEY) || 'null');
+    if (ic) { _INT.comments = ic.comments || {}; _INT.likes = ic.likes || {}; _INT.mine = ic.mine || {}; }
+  } catch (e) {}
+
+  function mediaOf(p) {
+    var list = [];
+    if (Array.isArray(p.media)) {
+      p.media.forEach(function (m) {
+        if (m && m.url) { list.push({ src: m.url, isVideo: m.type === 'video', isYoutube: m.type === 'youtube' }); return; }
+        var src = typeof m === 'object' ? (m.src || m.url) : m;
+        var yt = String(src).indexOf('youtube.com') > -1 || String(src).indexOf('youtu.be') > -1;
+        list.push({ src: src, isVideo: yt || String(src).indexOf('data:video') === 0 || String(src).slice(-4) === '.mp4', isYoutube: yt });
+      });
+    }
+    return list;
+  }
+
+  function postHtml(p, rawDate) {
+    var id = p.id;
+    var mediaList = mediaOf(p);
+    mediaUrlCache[id] = mediaList;
+    var commentsList = getCommentsData()[id] || [];
+    var stickersC = EMOJIS.map(function (e) {
+      return '<div class="sticker-option" onclick="insertStickerToCommentInput(\'' + id + '\', \'' + e + '\')">' + e + '</div>';
+    }).join('');
+    var adminItems = isAdminUnlocked
+      ? '<div class="post-menu-sep"></div>' +
+        '<button type="button" class="post-menu-item" onclick="editPost(\'' + id + '\')">✏️ Modifier</button>' +
+        '<button type="button" class="post-menu-item danger" onclick="deletePost(\'' + id + '\')">🗑️ Supprimer</button>'
+      : '';
+    var mainPicker = 'sticker-picker-main-' + id;
+    return '' +
+    '<article class="post" id="' + id + '">' +
+      '<div class="post-head">' +
+        '<div class="post-author-group">' +
+          '<img class="project-avatar" src="' + escapeHtml(p.avatar) + '" alt="Avatar">' +
+          '<div><div class="post-author">' + escapeHtml(p.author || 'Le fondateur') + ' <span class="verified">✓</span></div>' +
+          '<div class="post-meta live-clock-time" data-time="' + rawDate + '">' + formatLiveClockWithAgo(rawDate) + '</div></div>' +
+        '</div>' +
+        '<div class="post-menu-wrap">' +
+          '<button type="button" class="post-menu-btn" aria-label="Options" onclick="togglePostMenu(event, \'' + id + '\')">⋮</button>' +
+          '<div class="post-menu-dropdown" id="post-menu-' + id + '">' +
+            '<button type="button" class="post-menu-item" onclick="sharePost(\'' + id + '\')">📤 Partager</button>' +
+            '<button type="button" class="post-menu-item" onclick="copyPostLink(\'' + id + '\')">🔗 Copier le lien</button>' + adminItems +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+      '<p class="post-text">' + escapeHtml(p.text) + '</p>' +
+      renderMediaGrid(mediaList, id) +
+      '<div class="post-actions-bar">' +
+        '<button type="button" class="post-action-btn" id="like-btn-' + id + '" onclick="handleLikeClick(\'' + id + '\')">' +
+          '<span class="like-head"><span class="like-icon" id="like-icon-' + id + '">❤</span> <span>J\'aime</span> (</span><span id="like-count-' + id + '">0</span>)' +
+        '</button>' +
+        '<div style="position:relative; display:inline-flex; flex:1; justify-content:center;">' +
+          '<button type="button" class="post-action-btn" onclick="toggleStickerPicker(\'' + mainPicker + '\', event)">😊 Stickers</button>' +
+          '<div class="sticker-picker-popup" id="' + mainPicker + '" style="left:50%; transform:translateX(-50%);">' + stickerPopupLikeHtml(id) + '</div>' +
+        '</div>' +
+        '<button type="button" class="post-action-btn" onclick="toggleCommentsSection(\'' + id + '\')">' +
+          '<span><span>Commenter</span> (</span><span id="comment-count-' + id + '">' + commentsList.length + '</span>)' +
+        '</button>' +
+      '</div>' +
+      '<div class="post-comments-section" id="comments-sec-' + id + '">' +
+        '<form class="comment-form" onsubmit="submitCommentOrReply(event, \'' + id + '\', null)">' +
+          '<input type="text" class="comment-input" id="comment-input-' + id + '" placeholder="Écrire un commentaire..." required>' +
+          '<button type="button" class="sticker-trigger-btn" onclick="toggleStickerPicker(\'comment-sticker-picker-' + id + '\', event)">😊</button>' +
+          '<div class="sticker-picker-popup" id="comment-sticker-picker-' + id + '">' + stickersC + '</div>' +
+          '<button type="submit" class="comment-submit">Publier</button>' +
+        '</form>' +
+        '<div id="comments-list-' + id + '" style="display:flex; flex-direction:column; gap:8px; margin-top:8px;"></div>' +
+      '</div>' +
+    '</article>';
+  }
+
+  function paint(final) {
+    var container = document.getElementById('dynamicFeedContainer');
+    if (!container) return;
+    var admins = getAdminsList();
+    var posts = (readJSON('rock_custom_posts', []) || []).map(function (p, idx) {
+      var q = Object.assign({}, p);
+      if (!q.createdAt && !q.date) {
+        if (!fallbackDates[q.id]) { var d = new Date(); d.setHours(d.getHours() - (idx + 1) * 4); fallbackDates[q.id] = d.toISOString(); }
+        q.createdAt = fallbackDates[q.id];
+      }
+      if (!q.avatar) { q.avatar = admins[0].avatar; q.author = admins[0].name; }
+      return q;
+    });
+    if (!posts.length && !final) return;
+
+    Array.prototype.slice.call(container.children).forEach(function (ch) {
+      if (!(ch.tagName === 'ARTICLE' && ch.classList.contains('post'))) ch.remove();
+    });
+
+    var existing = {};
+    Array.prototype.forEach.call(container.children, function (a) { existing[a.id] = a; });
+
+    var order = [], keep = new Set(), toFill = [];
+    posts.forEach(function (p) {
+      var rawDate = p.createdAt || p.date;
+      var sig = JSON.stringify([p.author, p.avatar, p.text, p.media, rawDate, isAdminUnlocked]);
+      var el = existing[p.id];
+      if (!el || el.getAttribute('data-sig') !== sig) {
+        var tmp = document.createElement('div');
+        tmp.innerHTML = postHtml(p, rawDate).trim();
+        var fresh = tmp.firstElementChild;
+        fresh.setAttribute('data-sig', sig);
+        if (!el && firstPaintDone) fresh.classList.add('post-new');
+        el = fresh;
+        toFill.push(p.id);
+      }
+      keep.add(el);
+      order.push(el);
+    });
+
+    var ref = container.firstElementChild;
+    order.forEach(function (el) {
+      if (el === ref) ref = ref.nextElementSibling;
+      else container.insertBefore(el, ref);
+    });
+    Array.prototype.slice.call(container.children).forEach(function (ch) { if (!keep.has(ch)) ch.remove(); });
+
+    toFill.forEach(function (id) { updateLikeButtonUI(id); renderCommentsList(id); });
+  }
+
+  function applyAll() {
+    applyMenuTexts(); applyHeaderBranding(); applyHeroSliderData(); applyContactFooterData(); applyPagesContent();
+  }
+
+  async function refreshBg() {
+    if (busy) return;
+    busy = true;
+    try {
+      var pInt = _loadInt().then(function () { return true; }, function () { return false; });
+      var r = await fetchLatestRemote();
+      if (r) {
+        supabaseCache = r; isSupabaseLoaded = true;
+        try { localStorage.setItem('rock_site_cache_v1', JSON.stringify(r)); } catch (e) {}
+        applyAll();
+        paint(true);
+      } else if (!document.querySelector('#dynamicFeedContainer article.post') && retries < 4) {
+        retries++; setTimeout(refreshBg, 3000);
+      }
+      if (await pInt) {
+        try { localStorage.setItem(INT_KEY, JSON.stringify({ comments: _INT.comments, likes: _INT.likes, mine: _INT.mine })); } catch (e) {}
+        _refreshInt();
+      }
+    } finally { busy = false; }
+  }
+
+  window.renderPublicPosts = async function () {
+    applyAll();
+    paint(isSupabaseLoaded);
+    firstPaintDone = true;
+    refreshBg();
+  };
+
+  window.renderPublicPosts();
+
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) refreshBg(); });
+})();
+</script>
+<style>
+#brandMarkContainer svg{display:none!important}
+</style>
+<script>
+(function () {
+  var K_DATA = 'rock_logo_locked';
+  var K_URL = 'rock_logo_locked_url';
+  var box = document.getElementById('brandMarkContainer');
+
+  function show(src) {
+    if (!box || !src) return;
+    var cur = box.querySelector('img');
+    if (cur && cur.getAttribute('src') === src) return;
+    var im = new Image();
+    im.alt = 'Logo';
+    im.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:50%;';
+    im.onload = function () { box.innerHTML = ''; box.appendChild(im); };
+    im.src = src;
+  }
+
+  function lockLogo(url) {
+    fetch(url).then(function (r) { return r.blob(); }).then(function (b) {
+      var f = new FileReader();
+      f.onload = function () {
+        try {
+          localStorage.setItem(K_DATA, f.result);
+          localStorage.setItem(K_URL, url);
+        } catch (e) {}
+        show(f.result);
+      };
+      f.readAsDataURL(b);
+    }).catch(function () { show(url); });
+  }
+
+  var saved = null;
+  try { saved = localStorage.getItem(K_DATA); } catch (e) {}
+  if (saved) show(saved);
+
+  applyHeaderBranding = function () {
+    var name = readJSON('rock_brand_name', 'The Rock <span>Solidarity Foundation</span>');
+    var tag = readJSON('rock_brand_tag', 'Initiative indépendante · Non affiliée à Dwayne Douglas Johnson');
+    var n = document.getElementById('brandNameContainer');
+    var t = document.getElementById('brandTagContainer');
+    if (n) n.innerHTML = name;
+    if (t) t.textContent = tag;
+
+    var logo = readJSON('rock_brand_logo', '');
+    if (!logo) return;
+    var lastUrl = null;
+    try { lastUrl = localStorage.getItem(K_URL); } catch (e) {}
+    if (logo === lastUrl && saved) return;
+    if (String(logo).indexOf('data:') === 0) {
+      try { localStorage.setItem(K_DATA, logo); localStorage.setItem(K_URL, logo); } catch (e) {}
+      show(logo);
+    } else {
+      lockLogo(logo);
+    }
+  };
+})();
+</script>
+<script>
+(function () {
+  var src = document.getElementById('brandMarkContainer');
+  var nameSrc = document.getElementById('brandNameContainer');
+  var tagSrc = document.getElementById('brandTagContainer');
+  var logo = document.getElementById('rkfLogo');
+  var name = document.getElementById('rkfName');
+  var tag = document.getElementById('rkfTag');
+  var FALLBACK = '<svg viewBox="0 0 64 64"><defs><linearGradient id="fl1" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#075bff"/><stop offset="1" stop-color="#06358c"/></linearGradient><linearGradient id="fl2" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffd52e"/><stop offset="1" stop-color="#ff9f00"/></linearGradient></defs><path d="M32 56C24 49 7 38 5 24 3 11 18 3 29 13l3 3 4-4C48 2 62 11 59 25 56 39 42 49 32 56Z" fill="url(#fl1)"/><path d="M31 51C22 43 11 35 10 24c-1-8 7-13 14-9 4 2 6 6 8 9 3-5 7-10 13-10 7 0 12 6 10 13-2 10-15 20-24 24Z" fill="url(#fl2)"/><path d="M17 29l10 9 8-10 5 4 8-11" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+  function sync() {
+    if (!logo) return;
+    var img = src && src.querySelector('img');
+    var cur = logo.querySelector('img');
+    if (img && img.getAttribute('src')) {
+      if (!cur || cur.getAttribute('src') !== img.getAttribute('src')) {
+        logo.innerHTML = '<img alt="Logo" src="' + img.getAttribute('src').replace(/"/g, '&quot;') + '">';
+      }
+    } else if (!cur && !logo.firstChild) {
+      logo.innerHTML = FALLBACK;
+    }
+    if (nameSrc && name && name.innerHTML !== nameSrc.innerHTML) name.innerHTML = nameSrc.innerHTML;
+    if (tagSrc && tag && tag.textContent !== tagSrc.textContent) tag.textContent = tagSrc.textContent;
+  }
+
+  sync();
+  var opts = { childList: true, subtree: true, attributes: true, characterData: true };
+  [src, nameSrc, tagSrc].forEach(function (el) {
+    if (el) new MutationObserver(sync).observe(el, opts);
+  });
+  setInterval(sync, 1000);
+  window.addEventListener('load', sync);
+  setTimeout(sync, 500); setTimeout(sync, 2000); setTimeout(sync, 5000);
+})();
+</script>
+<script>
+(function () {
+  var KEY = 'rock_info_pages';
+  var DEFS = {
+    mission: { label: 'En savoir plus (Notre Mission)', icon: '🎯', cta: 'criteres', ctaLabel: "Voir les critères d'attribution →",
+      title: 'Notre Mission',
+      body: ["Apporter une aide financière et matérielle aux personnes dans le besoin, soutenir leurs projets et contribuer à l'amélioration de leurs conditions de vie.",
+        "## Nos engagements",
+        "- **Solidarité :** accompagner chaque personne avec respect et écoute.",
+        "- **Transparence :** rendre compte de l'utilisation de chaque aide.",
+        "- **Impact :** soutenir des projets utiles à la communauté."].join('\n') },
+    aide: { label: 'Aide Financière', icon: '💰', cta: 'candidature', ctaLabel: 'Faire ma demande →',
+      title: 'Aide Financière',
+      body: ["Un soutien pour vos besoins essentiels et le lancement de vos projets.",
+        "## Comment ça marche",
+        "- Remplissez le formulaire de demande.",
+        "- Notre comité étudie votre dossier.",
+        "- Vous êtes contacté pour la suite."].join('\n') },
+    voitures: { label: 'Dons de Voitures', icon: '🚗', cta: 'candidature', ctaLabel: 'Faire ma demande →',
+      title: 'Dons de Voitures',
+      body: ["Un véhicule pour faciliter vos déplacements, votre travail et votre quotidien.",
+        "## Comment ça marche",
+        "- Présentez votre besoin dans le formulaire.",
+        "- Votre dossier est étudié par le comité.",
+        "- Vous êtes contacté pour la suite."].join('\n') },
+    transport: { label: 'Moyens de Transport', icon: '🚌', cta: 'candidature', ctaLabel: 'Faire ma demande →',
+      title: 'Moyens de Transport',
+      body: ["Bouger, travailler, réussir : des solutions de mobilité pour les porteurs de projets.",
+        "## Comment ça marche",
+        "- Décrivez votre activité et votre besoin.",
+        "- Le comité évalue la demande.",
+        "- Vous recevez une réponse."].join('\n') },
+    projets: { label: 'Projets Solidaires', icon: '🌱', cta: 'candidature', ctaLabel: 'Faire ma demande →',
+      title: 'Projets Solidaires',
+      body: ["Ensemble pour un avenir meilleur : nous soutenons les initiatives qui créent de la valeur.",
+        "## Comment ça marche",
+        "- Présentez votre projet et son impact attendu.",
+        "- Le comité étudie votre dossier.",
+        "- Vous êtes accompagné dans sa réalisation."].join('\n') }
+  };
+  var SLUGS = ['mission', 'aide', 'voitures', 'transport', 'projets'];
+
+  function getInfo(slug) {
+    var all = readJSON(KEY, {}) || {};
+    var s = all[slug] || {};
+    return { title: s.title || DEFS[slug].title, body: s.body || DEFS[slug].body };
+  }
+
+  window.openInfo = function (slug) {
+    var d = DEFS[slug]; if (!d) return;
+    var info = getInfo(slug);
+    $('#infoPageTitle').innerHTML = '<span>' + d.icon + '</span> ' + escapeHtml(info.title);
+    $('#infoPageBody').innerHTML = renderRichText(info.body);
+    $('#infoPageCta').innerHTML = '<button type="button" class="cta-apply-btn" style="padding:13px 24px;font-size:14px" onclick="switchView(\'' + d.cta + '\')">' + escapeHtml(d.ctaLabel) + '</button>';
+    switchView('info');
+  };
+
+  var _sv = switchView;
+  window.switchView = function (v) {
+    if (v === 'info') {
+      $$('.site-view').forEach(function (x) { x.classList.remove('active-view'); });
+      $('#viewInfo').classList.add('active-view');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      closeDrawer();
+      return;
+    }
+    _sv(v);
+  };
+
+  var mb = document.querySelector('.mission-btn');
+  if (mb) mb.onclick = function () { openInfo('mission'); };
+  document.querySelectorAll('.prog-card button').forEach(function (b, i) {
+    b.onclick = function () { openInfo(SLUGS[i + 1]); };
+  });
+
+  var panel = document.getElementById('adminNavPanel');
+  if (panel) {
+    var ab = document.createElement('button');
+    ab.type = 'button';
+    ab.className = 'admin-btn admin-btn-orange';
+    ab.innerHTML = 'Messages Mission & Programmes <span>📝</span>';
+    ab.onclick = function () { openAdminForm('infos_programmes'); };
+    panel.appendChild(ab);
+  }
+
+  var _oaf = openAdminForm;
+  window.openAdminForm = function (type, extra) {
+    if (type !== 'infos_programmes') return _oaf(type, extra);
+    currentAdminActionType = 'infos_programmes';
+    closeDrawer();
+    $('#adminFormTitle').textContent = '📝 Messages Mission & Programmes';
+    var html = '<div style="max-height:60vh;overflow-y:auto;display:flex;flex-direction:column;gap:10px;">';
+    SLUGS.forEach(function (slug) {
+      var d = DEFS[slug], info = getInfo(slug);
+      html += '<details style="border:1px solid #e2e8f5;border-radius:12px;padding:10px 12px;background:#f8fafc;">' +
+        '<summary style="font-weight:800;cursor:pointer;color:var(--navy);font-size:13.5px;">' + d.icon + ' ' + escapeHtml(d.label) + '</summary>' +
+        '<div style="display:flex;flex-direction:column;gap:10px;margin-top:12px;">' +
+        '<div class="admin-form-group" style="margin:0;"><label>Titre :</label><input type="text" class="admin-form-input" id="adm_info_' + slug + '_title" value="' + escapeHtml(info.title) + '"></div>' +
+        '<div class="admin-form-group" style="margin:0;"><label>Message :</label><textarea class="admin-form-textarea" style="min-height:170px;" id="adm_info_' + slug + '_body">' + escapeHtml(info.body) + '</textarea>' +
+        '<span style="font-size:11.5px;color:#64748b;">Astuce : <b>## Sous-titre</b> · <b>- une puce</b> · <b>**mot en gras**</b></span></div>' +
+        '</div></details>';
+    });
+    html += '</div><div class="admin-form-actions"><button type="button" class="custom-modal-btn cancel" onclick="closeAdminForm()">Annuler</button>' +
+      '<button type="submit" class="custom-modal-btn confirm" style="background:var(--blue);">Enregistrer</button></div>';
+    $('#adminFormContent').innerHTML = html;
+    $('#adminFormOverlay').classList.add('open');
+  };
+
+  var _saf = submitAdminForm;
+  window.submitAdminForm = async function (ev) {
+    if (currentAdminActionType !== 'infos_programmes') return _saf(ev);
+    ev.preventDefault();
+    try {
+      var obj = {};
+      SLUGS.forEach(function (slug) {
+        obj[slug] = {
+          title: $('#adm_info_' + slug + '_title').value.trim(),
+          body: $('#adm_info_' + slug + '_body').value.trim()
+        };
+      });
+      showToast('⏳ Enregistrement en cours…');
+      await writeJSON(KEY, obj);
+      closeAdminForm();
+      showToast('✅ Messages enregistrés !');
+    } catch (e) {
+      showToast('❌ Erreur : ' + e.message);
+    }
+  };
+})();
+</script>
+</body>
+</html>
