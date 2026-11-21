@@ -4171,5 +4171,39 @@ img[src*="gstatic.com/images/branding"], img[src*="translate.google"] { display:
   }, 8000);
 })();
 </script>
+<script>
+(function () {
+  var st = document.createElement('style');
+  st.textContent =
+    '.comment-form .sticker-trigger-btn{position:static;right:auto;flex:none;font-size:20px;padding:0 4px}' +
+    '.comment-form .comment-input{padding-right:14px}' +
+    '.comment-form .comment-submit{flex:none}';
+  document.head.appendChild(st);
+
+  function stopBubble() {
+    if (window.event && window.event.stopPropagation) window.event.stopPropagation();
+  }
+
+  insertStickerToCommentInput = function (postId, emoji) {
+    stopBubble();
+    var input = document.getElementById('comment-input-' + postId);
+    if (input) { input.value += emoji; input.focus(); }
+  };
+
+  insertStickerToReplyInput = function (replyInputId, emoji) {
+    stopBubble();
+    var input = document.getElementById(replyInputId);
+    if (input) { input.value += emoji; input.focus(); }
+  };
+
+  var _origSubmit = submitCommentOrReply;
+  submitCommentOrReply = async function () {
+    document.querySelectorAll('.comment-form .sticker-picker-popup').forEach(function (p) {
+      p.classList.remove('open');
+    });
+    return _origSubmit.apply(this, arguments);
+  };
+})();
+</script>
 </body>
 </html>
