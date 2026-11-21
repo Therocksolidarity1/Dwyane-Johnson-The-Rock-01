@@ -4727,4 +4727,135 @@ img[src*="gstatic.com/images/branding"], img[src*="translate.google"] { display:
   };
 })();
 </script></body>
+<script>
+(function () {
+  var PKEY = 'rock_admin_profiles';
+  var COLORS = {rouge:'#dc2626',bleu:'#075bff',vert:'#16a34a',or:'#d4a017',jaune:'#eab308',orange:'#ea580c',violet:'#7c3aed',rose:'#db2777',gris:'#64748b',noir:'#101a38',marine:'#082d72',turquoise:'#0d9488'};
+  var names = Object.keys(COLORS).join('|');
+  var reColor = new RegExp('\\[(' + names + '|#[0-9a-fA-F]{6})\\](.+?)\\[\\/\\]', 'g');
+
+  var st = document.createElement('style');
+  st.textContent =
+    '.ap-inline{display:grid;grid-template-columns:repeat(var(--n,1),1fr);gap:10px;margin:16px 0}' +
+    '.ap-in{margin:0}' +
+    '.ap-in img,.ap-in video{width:100%;display:block;max-height:380px;object-fit:cover;border-radius:12px;cursor:pointer;background:#e9eef9}' +
+    '.ap-in figcaption{font-size:12.5px;color:#53617f;margin-top:6px;line-height:1.4;text-align:center}' +
+    '.ap-posters{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:14px;padding:6px}' +
+    '.ap-poster{position:relative;aspect-ratio:3/4;border-radius:6px;overflow:hidden;border:6px solid #fff;box-shadow:0 10px 26px rgba(8,45,114,.28);background:#0b1b45}' +
+    '.ap-poster:nth-child(odd){transform:rotate(-1.4deg)}' +
+    '.ap-poster:nth-child(even){transform:rotate(1.4deg)}' +
+    '.ap-poster img,.ap-poster video{width:100%;height:100%;object-fit:cover;display:block;cursor:pointer}' +
+    '.ap-pcap{position:absolute;left:0;right:0;bottom:0;padding:24px 10px 10px;background:linear-gradient(transparent,rgba(5,10,30,.88));color:#fff;font-size:12.5px;font-weight:700;pointer-events:none}';
+  document.head.appendChild(st);
+
+  function inl(s) {
+    s = escapeHtml(s);
+    s = s.replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+    s = s.replace(/\[gras\](.+?)\[\/\]/g, '<b>$1</b>');
+    s = s.replace(/\[italique\](.+?)\[\/\]/g, '<i>$1</i>');
+    s = s.replace(/\[grand\](.+?)\[\/\]/g, '<span style="font-size:1.35em;font-weight:800">$1</span>');
+    s = s.replace(reColor, function (m, c, t) {
+      return '<span style="color:' + (COLORS[c] || c) + '">' + t + '</span>';
+    });
+    return s;
+  }
+
+  function mediaCell(gal, i, id) {
+    var g = gal[i];
+    var el = g.type === 'video'
+      ? '<video src="' + escapeHtml(g.url) + '" controls playsinline preload="metadata"></video>'
+      : '<img src="' + escapeHtml(g.url) + '" alt="" loading="lazy" onclick="openLightboxPost(\'profile_' + id + '\',' + i + ')">';
+    return '<figure class="ap-in">' + el + (g.caption ? '<figcaption>' + escapeHtml(g.caption) + '</figcaption>' : '') + '</figure>';
+  }
+
+  function posterCell(gal, i, id) {
+    var g = gal[i];
+    var el = g.type === 'video'
+      ? '<video src="' + escapeHtml(g.url) + '" controls playsinline preload="metadata"></video>'
+      : '<img src="' + escapeHtml(g.url) + '" alt="" loading="lazy" onclick="openLightboxPost(\'profile_' + id + '\',' + i + ')">';
+    return '<div class="ap-poster">' + el + (g.caption ? '<div class="ap-pcap">' + escapeHtml(g.caption) + '</div>' : '') + '</div>';
+  }
+
+  function render(raw, gal, id, used) {
+    var lines = String(raw || '').split(/\r?\n/), html = '', inList = false;
+    function closeList() { if (inList) { html += '</ul>'; inList = false; } }
+    lines.forEach(function (line) {
+      var t = line.trim();
+      var m = t.match(/^\[(?:media|image|video):\s*([\d,\s]+)\]$/i);
+      if (m) {
+        closeList();
+        var ids = m[1].split(',').map(function (x) { return parseInt(x, 10) - 1; }).filter(function (i) { return gal[i]; });
+        if (ids.length) {
+          html += '<div class="ap-inline" style="--n:' + Math.min(ids.length, 3) + '">';
+          ids.forEach(function (i) { used[i] = true; html += mediaCell(gal, i, id); });
+          html += '</div>';
+        }
+        return;
+      }
+      if (t.indexOf('- ') === 0) {
+        if (!inList) { html += '<ul>'; inList = true; }
+        html += '<li>' + inl(t.slice(2)) + '</li>';
+        return;
+      }
+      closeList();
+      if (!t) return;
+      if (t.indexOf('## ') === 0) { html += '<h2 class="pg-sub">' + inl(t.slice(3)) + '</h2>'; return; }
+      if (t.indexOf('[centre]') === 0) { html += '<p style="text-align:center">' + inl(t.slice(8).trim()) + '</p>'; return; }
+      html += '<p>' + inl(t) + '</p>';
+    });
+    closeList();
+    return html;
+  }
+
+  window.openAdminProfile = function (adminId) {
+    var list = getAdminsList() || [], adm = null;
+    for (var i = 0; i < list.length; i++) if (list[i].id === adminId) { adm = list[i]; break; }
+    if (!adm) return;
+    var all = readJSON(PKEY, {}) || {};
+    var prof = all[adminId] || {};
+    var gal = Array.isArray(prof.gallery) ? prof.gallery : [];
+    mediaUrlCache['profile_' + adminId] = gal.map(function (g) {
+      return { src: g.url, isVideo: g.type === 'video', isYoutube: false };
+    });
+
+    var used = {};
+    var html = '<div class="ap-head"><img class="ap-avatar" src="' + escapeHtml(adm.avatar) + '" alt="">' +
+      '<div><h1 class="ap-name">' + escapeHtml(adm.name) + '</h1>' +
+      (prof.tagline ? '<p class="ap-tagline">' + escapeHtml(prof.tagline) + '</p>' : '') + '</div></div>';
+    html += prof.bio ? render(prof.bio, gal, adminId, used) : '<p style="color:#64748b">Profil en cours de rédaction.</p>';
+
+    var rest = [];
+    gal.forEach(function (g, i) { if (!used[i]) rest.push(i); });
+    if (rest.length) {
+      html += '<div class="ap-posters">';
+      rest.forEach(function (i) { html += posterCell(gal, i, adminId); });
+      html += '</div>';
+    }
+    document.getElementById('adminProfileContent').innerHTML = html;
+    switchView('adminProfile');
+  };
+
+  var _oaf4 = window.openAdminForm;
+  window.openAdminForm = function (type, extra) {
+    var r = _oaf4(type, extra);
+    if (type === 'profils_admins') {
+      try {
+        var box = $('#adminFormContent');
+        box.querySelectorAll('input[id*="_cap_"]').forEach(function (inp) {
+          var m = inp.id.match(/_cap_(\d+)$/);
+          if (m) {
+            var n = parseInt(m[1], 10) + 1;
+            inp.placeholder = 'Légende (élément n°' + n + ' : [media:' + n + '])';
+          }
+        });
+        var help = document.createElement('div');
+        help.style.cssText = 'background:#fff8e1;border:1px solid #f1d98a;border-radius:10px;padding:10px;font-size:12px;color:#26365f;line-height:1.5;margin-bottom:10px';
+        help.innerHTML = '<b>Codes :</b> [rouge]texte[/] · [gras]…[/] · [italique]…[/] · [grand]…[/] · [centre] au début d\'une ligne · [media:1] ou [media:1,2] seul sur une ligne pour placer des photos/vidéos. Les non placées vont en bas en affiches. Si vous supprimez un élément, les numéros suivants changent.';
+        box.insertBefore(help, box.firstChild);
+      } catch (e) {}
+    }
+    return r;
+  };
+})();
+</script>
 </html>
