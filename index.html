@@ -658,7 +658,22 @@ html.rk-locked, html.rk-locked body { overflow: hidden !important; height: 100%;
 </style>
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
-</head>
+<script>
+(function(){
+  var l=(navigator.language||'fr').toLowerCase().split('-')[0];
+  if(l==='fr')return;
+  var s=document.createElement('style');
+  s.id='rkTrHide';
+  s.textContent='body{visibility:hidden!important}';
+  document.head.appendChild(s);
+  var done=false;
+  function reveal(){if(done)return;done=true;var e=document.getElementById('rkTrHide');if(e)e.remove();}
+  new MutationObserver(function(){
+    if(/translated-(ltr|rtl)/.test(document.documentElement.className))setTimeout(reveal,350);
+  }).observe(document.documentElement,{attributes:true,attributeFilter:['class']});
+  setTimeout(reveal,4000);
+})();
+</script></head>
 <body>
 
 <header class="topbar">
