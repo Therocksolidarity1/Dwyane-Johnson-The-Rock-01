@@ -661,7 +661,7 @@ html.rk-locked, html.rk-locked body { overflow: hidden !important; height: 100%;
 <script>
 (function(){
   var l=(navigator.language||'fr').toLowerCase().split('-')[0];
-  if(l==='fr')return;
+  return;if(l==='fr')return;
   var s=document.createElement('style');
   s.id='rkTrHide';
   s.textContent='body{visibility:hidden!important}';
