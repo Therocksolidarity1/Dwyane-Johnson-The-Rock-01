@@ -4205,5 +4205,93 @@ img[src*="gstatic.com/images/branding"], img[src*="translate.google"] { display:
   };
 })();
 </script>
+<script>
+(function () {
+  var KEY = 'rock_comment_likers';
+  var CKEY = 'rock_post_comments';
+  var busy = {};
+
+  function all() { return (supabaseCache && supabaseCache[KEY]) || {}; }
+  function likers(id) { return all()[id] || {}; }
+  function me() { return window.rkGetUser && window.rkGetUser(); }
+
+  function paint(el) {
+    var id = el.getAttribute('data-comment-id');
+    var u = me();
+    var n = Object.keys(likers(id)).length;
+    var span = el.querySelector('.comment-like-count');
+    if (span) span.textContent = n > 0 ? n : '';
+    var btn = el.querySelector('.comment-like-btn');
+    if (btn) btn.classList.toggle('liked', !!(u && u.sub && likers(id)[u.sub]));
+  }
+  function paintAll(root) {
+    (root || document).querySelectorAll('[data-comment-id]').forEach(paint);
+  }
+
+  var _origList = renderCommentsList;
+  renderCommentsList = function (postId) {
+    _origList.apply(this, arguments);
+    var c = document.getElementById('comments-list-' + postId);
+    if (c) paintAll(c);
+  };
+
+  handleCommentLike = async function (commentId) {
+    var u = me();
+    if (!u || !u.sub) { showToast('Connecte-toi d\'abord'); return; }
+    if (busy[commentId]) return;
+    busy[commentId] = true;
+
+    supabaseCache = supabaseCache || {};
+    var old = supabaseCache[KEY] || {};
+    var had = !!(old[commentId] && old[commentId][u.sub]);
+    function apply(map) {
+      var m = Object.assign({}, map || {});
+      var l = Object.assign({}, m[commentId] || {});
+      if (had) delete l[u.sub]; else l[u.sub] = 1;
+      m[commentId] = l;
+      return m;
+    }
+
+    supabaseCache[KEY] = apply(old);
+    paintAll();
+
+    try {
+      var base = await getFreshBase();
+      base[KEY] = apply(base[KEY]);
+      await saveSupabaseData(base);
+      supabaseCache = base;
+      isSupabaseLoaded = true;
+      paintAll();
+    } catch (e) {
+      supabaseCache[KEY] = old;
+      paintAll();
+      showToast('❌ J\'aime non enregistré : ' + e.message);
+    } finally {
+      busy[commentId] = false;
+    }
+  };
+
+  setInterval(async function () {
+    if (document.hidden) return;
+    for (var k in busy) { if (busy[k]) return; }
+    var ae = document.activeElement;
+    if (ae && ae.classList && ae.classList.contains('comment-input') && ae.value) return;
+    try {
+      var r = await fetchLatestRemote();
+      if (!r || !supabaseCache) return;
+      var cChanged = JSON.stringify(r[CKEY] || {}) !== JSON.stringify(supabaseCache[CKEY] || {});
+      var lChanged = JSON.stringify(r[KEY] || {}) !== JSON.stringify(supabaseCache[KEY] || {});
+      if (!cChanged && !lChanged) return;
+      supabaseCache[CKEY] = r[CKEY] || {};
+      supabaseCache[KEY] = r[KEY] || {};
+      if (cChanged) {
+        document.querySelectorAll('article.post').forEach(function (a) { renderCommentsList(a.id); });
+      } else {
+        paintAll();
+      }
+    } catch (e) {}
+  }, 8000);
+})();
+</script>
 </body>
 </html>
