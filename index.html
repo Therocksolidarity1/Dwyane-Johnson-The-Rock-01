@@ -143,8 +143,11 @@ a{color:inherit;text-decoration:none}
 .impact-stat-card:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(7, 41, 105, 0.15); }
 .impact-stat-card::after {
   content: attr(data-more);
+    content: none !important;
   position: absolute; bottom: 6px; left: 0; right: 0; font-size: 9.5px; font-weight: 700; opacity: 0.7;
 }
+.impact-stat-more { margin-top: 8px; font-size: 9.5px; font-weight: 700; opacity: 0.7; line-height: 1.3; }
+.impact-stat-label { min-height: 2.6em; line-height: 1.3; }
 .impact-stat-card:nth-child(1) { background: linear-gradient(135deg, #eef4ff, #d9e7ff); color: #072d72; }
 .impact-stat-card:nth-child(2) { background: linear-gradient(135deg, #eefdf2, #d1fae5); color: #065f46; }
 .impact-stat-card:nth-child(3) { background: linear-gradient(135deg, #fffbeb, #fef3c7); color: #92400e; }
@@ -843,14 +846,17 @@ html.rk-locked, html.rk-locked body { overflow: hidden !important; height: 100%;
       <div class="impact-stat-card" data-more="📄 Voir la page de statistiques" onclick="openStatsPage(1)">
         <div class="impact-stat-number" id="statVal1">14</div>
         <div class="impact-stat-label">Projets soutenus</div>
+        <div class="impact-stat-more">📄 Voir la page de statistiques</div>
       </div>
       <div class="impact-stat-card" data-more="📄 Voir la page de statistiques" onclick="openStatsPage(2)">
         <div class="impact-stat-number" id="statVal2">4 200 $</div>
         <div class="impact-stat-label">Fonds décaissés</div>
+        <div class="impact-stat-more">📄 Voir la page de statistiques</div>
       </div>
       <div class="impact-stat-card" data-more="📄 Voir la page de statistiques" onclick="openStatsPage(3)">
         <div class="impact-stat-number" id="statVal3">100%</div>
         <div class="impact-stat-label">Transparence & Suivi</div>
+        <div class="impact-stat-more">📄 Voir la page de statistiques</div>
       </div>
     </div>
 <style>
