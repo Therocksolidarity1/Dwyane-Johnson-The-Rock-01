@@ -4894,4 +4894,34 @@ img[src*="gstatic.com/images/branding"], img[src*="translate.google"] { display:
   };
 })();
 </script>
+<script>
+(function () {
+  var VIEWS = {
+    criteres: 'viewCriteres', confidentialite: 'viewConfidentialite', candidature: 'viewCandidature',
+    statsPage: 'viewStatsPage', contact: 'viewContact', info: 'viewInfo', adminProfile: 'viewAdminProfile'
+  };
+  var _sv = window.switchView;
+  try { if (history.state && history.state.rkView) history.replaceState(null, ''); } catch (e) {}
+  window.switchView = function (v) {
+    var atView = !!(history.state && history.state.rkView);
+    _sv(v);
+    try {
+      if (VIEWS[v]) {
+        if (atView) history.replaceState({ rkView: v }, '');
+        else history.pushState({ rkView: v }, '');
+      } else if (atView) {
+        history.back();
+      }
+    } catch (e) {}
+  };
+  window.addEventListener('popstate', function (e) {
+    if (e.state && e.state.rkLb) return;
+    var target = (e.state && e.state.rkView) || 'home';
+    var want = VIEWS[target] || 'viewHome';
+    var cur = document.querySelector('.site-view.active-view');
+    if (cur && cur.id === want) return;
+    _sv(target);
+  });
+})();
+</script>
 </html>
