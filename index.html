@@ -4749,6 +4749,42 @@ img[src*="gstatic.com/images/branding"], img[src*="translate.google"] { display:
   document.head.appendChild(st);
 
   function inl(s) {
+          var src = escapeHtml(s), out = '', last = 0, stack = [], m, k;
+    var re = /\*\*|\[(\/)?([^\[\]\n]{0,40})\]/g;
+    function tag(name) {
+      var n = String(name).trim().toLowerCase(), c = null, mm;
+      if (n === 'gras') return ['<b>', '</b>'];
+      if (n === 'italique') return ['<i>', '</i>'];
+      if (n === 'souligne' || n === 'souligné') return ['<u>', '</u>'];
+      if (n === 'grand') return ['<span style="font-size:1.35em;font-weight:800">', '</span>'];
+      mm = n.match(/^(?:couleur|color)\s*[=:]\s*(.+)$/);
+      if (mm) n = mm[1].trim();
+      if (Object.prototype.hasOwnProperty.call(COLORS, n)) c = COLORS[n];
+      else if (/^#(?:[0-9a-f]{3}|[0-9a-f]{6})$/.test(n)) c = n;
+      return c ? ['<span style="color:' + c + '">', '</span>'] : null;
+    }
+    while ((m = re.exec(src))) {
+      out += src.slice(last, m.index);
+      last = re.lastIndex;
+      if (m[0] === '**') {
+        var idx = -1;
+        for (k = stack.length - 1; k >= 0; k--) { if (stack[k].star) { idx = k; break; } }
+        if (idx < 0) { out += '<b>'; stack.push({ o: '<b>', c: '</b>', star: true }); }
+        else {
+          var above = stack.splice(idx);
+          for (k = above.length - 1; k >= 0; k--) out += above[k].c;
+          for (k = 1; k < above.length; k++) { out += above[k].o; stack.push(above[k]); }
+        }
+      } else if (m[1]) {
+        if (stack.length) out += stack.pop().c; else out += m[0];
+      } else {
+        var t = tag(m[2]);
+        if (t) { out += t[0]; stack.push({ o: t[0], c: t[1] }); } else out += m[0];
+      }
+    }
+    out += src.slice(last);
+    while (stack.length) out += stack.pop().c;
+    return out;
     s = escapeHtml(s);
     s = s.replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
     s = s.replace(/\[gras\](.+?)\[\/\]/g, '<b>$1</b>');
